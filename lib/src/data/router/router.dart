@@ -1,0 +1,159 @@
+import 'package:flutter/material.dart';
+import 'package:hef/src/data/models/chat_model.dart';
+import 'package:hef/src/data/models/events_model.dart';
+import 'package:hef/src/data/models/user_model.dart';
+import 'package:hef/src/interface/screens/main_page.dart';
+import 'package:hef/src/interface/screens/main_pages/admin/allocate_member.dart';
+import 'package:hef/src/interface/screens/main_pages/admin/member_creation.dart';
+import 'package:hef/src/interface/screens/main_pages/chat/chat_screen.dart';
+import 'package:hef/src/interface/screens/main_pages/event/event_member_list.dart';
+import 'package:hef/src/interface/screens/main_pages/event/view_more_event.dart';
+import 'package:hef/src/interface/screens/main_pages/login_page.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/about_us.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/add_product.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/send_analytic_req.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/change_number.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/activity_page.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/district.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/profile_analytics.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/states.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/levels/zones.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/my_businesses.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/my_events.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/my_products.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/my_reviews.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/my_subscription.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/privacy_policy.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/request_nfc.dart';
+import 'package:hef/src/interface/screens/main_pages/menuPages/terms.dart';
+import 'package:hef/src/interface/screens/main_pages/news_page.dart';
+import 'package:hef/src/interface/screens/main_pages/notification_page.dart';
+import 'package:hef/src/interface/screens/main_pages/profile/card.dart';
+import 'package:hef/src/interface/screens/main_pages/profile/editUser.dart';
+import 'package:hef/src/interface/screens/main_pages/profile/profile_preview.dart';
+import 'package:hef/src/interface/screens/main_pages/profile/profile_preview_withUserId.dart';
+
+import 'package:hef/src/interface/screens/splash_screen.dart';
+
+Route<dynamic> generateRoute(RouteSettings? settings) {
+  switch (settings?.name) {
+    case 'Splash':
+      return MaterialPageRoute(builder: (context) => SplashScreen());
+    case 'PhoneNumber':
+      return MaterialPageRoute(builder: (context) => PhoneNumberScreen());
+    case 'MainPage':
+      return MaterialPageRoute(builder: (context) => const MainPage());
+    case 'ProfileCompletion':
+      return MaterialPageRoute(
+          builder: (context) => const ProfileCompletionScreen());
+    case 'Card':
+      UserModel user = settings?.arguments as UserModel;
+      return MaterialPageRoute(
+          builder: (context) => ProfileCard(
+                user: user,
+              ));
+    case 'ProfilePreview':
+      UserModel user = settings?.arguments as UserModel;
+      return MaterialPageRoute(
+          builder: (context) => ProfilePreview(
+                user: user,
+              ));
+    case 'ProfilePreviewUsingID':
+      String userId = settings?.arguments as String;
+      return MaterialPageRoute(
+          builder: (context) => ProfilePreviewUsingId(
+                userId: userId,
+              ));
+    case 'ViewMoreEvent':
+      Event event = settings?.arguments as Event;
+      return MaterialPageRoute(
+          builder: (context) => ViewMoreEventPage(
+                event: event,
+              ));
+    case 'MemberAllocation':
+      UserModel newUser = settings?.arguments as UserModel;
+      return MaterialPageRoute(
+          builder: (context) => AllocateMember(
+                newUser: newUser,
+              ));
+    case 'EventMemberList':
+      Event event = settings?.arguments as Event;
+      return MaterialPageRoute(
+          builder: (context) => EventMemberList(
+                event: event,
+              ));
+    case 'EditUser':
+      return MaterialPageRoute(builder: (context) => EditUser());
+    case 'IndividualPage':
+              final args = settings?.arguments as Map<String, dynamic>?;
+          Participant sender = args?['sender'];
+          Participant receiver = args?['receiver'];
+
+      return MaterialPageRoute(builder: (context) => IndividualPage(receiver: receiver,sender: sender,));
+    case 'ChangeNumber':
+      return MaterialPageRoute(builder: (context) => ChangeNumberPage());
+    case 'NotificationPage':
+      return MaterialPageRoute(builder: (context) => NotificationPage());
+    case 'AboutPage':
+      return MaterialPageRoute(builder: (context) => AboutPage());
+    case 'News':
+      return MaterialPageRoute(builder: (context) => NewsPage());
+    case 'MemberCreation':
+      return MaterialPageRoute(builder: (context) => MemberCreationPage());
+    case 'MyEvents':
+      return MaterialPageRoute(builder: (context) => MyEventsPage());
+    case 'MyProducts':
+      return MaterialPageRoute(builder: (context) => MyProductPage());
+    case 'EnterProductsPage':
+      return MaterialPageRoute(builder: (context) => EnterProductsPage());
+    case 'MyBusinesses':
+      return MaterialPageRoute(builder: (context) => MyBusinessesPage());
+    case 'AnalyticsPage':
+      return MaterialPageRoute(builder: (context) => AnalyticsPage());
+    case 'SendAnalyticRequest':
+      return MaterialPageRoute(builder: (context) => SendAnalyticRequestPage());
+
+    case 'RequestNFC':
+      return MaterialPageRoute(builder: (context) => RequestNFCPage());
+    case 'MyReviews':
+      return MaterialPageRoute(builder: (context) => MyReviewsPage());
+    case 'States':
+      return MaterialPageRoute(builder: (context) => StatesPage());
+
+    case 'MySubscriptionPage':
+      return MaterialPageRoute(builder: (context) => MySubscriptionPage());
+
+    case 'Terms':
+      return MaterialPageRoute(builder: (context) => TermsAndConditionsPage());
+
+    case 'PrivacyPolicy':
+      return MaterialPageRoute(builder: (context) => PrivacyPolicyPage());
+
+
+
+    case 'ProfileAnalytics':
+      UserModel user = settings?.arguments as UserModel;
+      return MaterialPageRoute(
+          builder: (context) => ProfileAnalyticsPage(
+                user: user,
+              ));
+    case 'ActivityPage':
+      String chapterId = settings?.arguments as String;
+      return MaterialPageRoute(
+          builder: (context) => ActivityPage(
+                chapterId: chapterId,
+              ));
+    default:
+      return MaterialPageRoute(
+        builder: (context) => Scaffold(
+          body: Center(
+            child: Text('No path for ${settings?.name}'),
+          ),
+        ),
+      );
+  }
+}
