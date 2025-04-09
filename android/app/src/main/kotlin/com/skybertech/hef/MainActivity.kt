@@ -1,4 +1,4 @@
-package com.skybertech.hef
+package com.skybertech.itcc
 
 import io.flutter.embedding.android.FlutterActivity
 
