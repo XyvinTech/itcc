@@ -155,13 +155,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(     color: kPrimaryColor,
-              'assets/svg/images/flower_full.svg',
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Image.asset(     color: kPrimaryColor,
+            child: Image.asset(
               'assets/pngs/splash_logo.png',
             ),
           ),
