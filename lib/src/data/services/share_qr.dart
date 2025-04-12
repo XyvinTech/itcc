@@ -2,15 +2,15 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -128,7 +128,7 @@ Future<void> captureAndShareWidgetScreenshot(BuildContext context) async {
                           child: QrImageView(
                             size: 285,
                             data:
-                                'https://admin.hefconnect.in/user/${user.uid}',
+                                'https://admin.itccconnect.in/user/${user.uid}',
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -223,6 +223,6 @@ Future<void> captureAndShareWidgetScreenshot(BuildContext context) async {
   Share.shareXFiles(
     [XFile(file.path)],
     text:
-        'Check out my profile on HEF!:\n https://admin.hefconnect.in/user/${userId}',
+        'Check out my profile on ITCC!:\n https://admin.itccconnect.in/user/${userId}',
   );
 }

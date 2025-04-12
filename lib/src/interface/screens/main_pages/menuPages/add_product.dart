@@ -1,19 +1,19 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:hef/src/data/api_routes/products_api/products_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/product_model.dart';
-import 'package:hef/src/data/notifiers/user_notifier.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/custom_widgets/custom_textFormField.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/products_api/products_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/product_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/edit_user.dart';
-import 'package:hef/src/data/services/image_upload.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/edit_user.dart';
+import 'package:itcc/src/data/services/image_upload.dart';
 
 class EnterProductsPage extends ConsumerStatefulWidget {
   final bool isEditing;
@@ -152,7 +152,8 @@ class _EnterProductsPageState extends ConsumerState<EnterProductsPage> {
                 child: SizedBox(
                   width: 100,
                   height: 100,
-                  child: Image.asset(scale: 5, 'assets/pngs/splash_logo.png'),
+                  child:
+                      Image.asset(scale: 5, 'assets/svg/icons/itcc_logo.svg'),
                 ),
               ),
               bottom: PreferredSize(

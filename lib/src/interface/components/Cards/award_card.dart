@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/interface/components/DropDown/remove_edit_dropdown.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/interface/components/DropDown/remove_edit_dropdown.dart';
 
 class AwardCard extends StatelessWidget {
   final VoidCallback? onRemove;
@@ -36,7 +36,7 @@ class AwardCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
-                          award.image??''), // Replace with your image path
+                          award.image ?? ''), // Replace with your image path
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.only(

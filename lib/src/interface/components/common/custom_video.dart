@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/models/promotion_model.dart';
+import 'package:itcc/src/data/models/promotion_model.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+
 Widget customVideo({required BuildContext context, required Promotion video}) {
   final videoUrl = video.link;
 

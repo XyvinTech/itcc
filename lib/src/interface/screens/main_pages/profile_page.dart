@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/data/services/share_qr.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/services/share_qr.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -347,7 +347,8 @@ class ProfilePage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                      scale: 5, 'assets/pngs/splash_logo.png'),
+                                      scale: 5,
+                                      'assets/svg/icons/itcc_logo.svg'),
                                   Spacer(),
                                   RichText(
                                     text: TextSpan(

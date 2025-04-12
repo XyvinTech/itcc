@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/models/attendance_user_model.dart';
-import 'package:hef/src/data/models/events_model.dart';
-import 'package:hef/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/data/models/attendance_user_model.dart';
+import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:hef/src/data/globals.dart';
+import 'package:itcc/src/data/globals.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'events_api.g.dart';
 
@@ -39,10 +39,7 @@ Future<List<Event>> fetchEvents(Ref ref) async {
   }
 }
 
-
-
-Future<Event> fetchEventById(
-  id) async {
+Future<Event> fetchEventById(id) async {
   final url = Uri.parse('$baseUrl/event/single/$id');
   print('Requesting URL: $url');
   final response = await http.get(
@@ -55,7 +52,7 @@ Future<Event> fetchEventById(
   print('hello');
   print(json.decode(response.body)['status']);
   if (response.statusCode == 200) {
-       final dynamic data = json.decode(response.body)['data'];
+    final dynamic data = json.decode(response.body)['data'];
     print(data['products']);
 
     return Event.fromJson(data);
@@ -67,7 +64,9 @@ Future<Event> fetchEventById(
 }
 
 @riverpod
-Future<AttendanceUserListModel> fetchEventAttendance(FetchEventAttendanceRef ref,{required String eventId}) async {
+Future<AttendanceUserListModel> fetchEventAttendance(
+    FetchEventAttendanceRef ref,
+    {required String eventId}) async {
   final url = Uri.parse('$baseUrl/event/attend/$eventId');
   print('Requesting URL: $url');
   final response = await http.get(
@@ -80,7 +79,6 @@ Future<AttendanceUserListModel> fetchEventAttendance(FetchEventAttendanceRef ref
   print('hello');
   print(json.decode(response.body)['status']);
   if (response.statusCode == 200) {
-
     final dynamic data = json.decode(response.body)['data'];
     return AttendanceUserListModel.fromJson(data);
   } else {

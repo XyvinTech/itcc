@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hef/src/data/api_routes/review_api/review_api.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/interface/components/common/review_barchart.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-
+import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 
 class ReviewsState extends StateNotifier<int> {
   ReviewsState() : super(1);
@@ -66,9 +65,7 @@ class _MyReviewsPageState extends ConsumerState<MyReviewsPage> {
             body: asyncReviews.when(
               loading: () => Center(child: LoadingAnimation()),
               error: (error, stackTrace) {
-                return Center(
-                  child:Text('No Reviews')
-                );
+                return Center(child: Text('No Reviews'));
               },
               data: (reviews) {
                 final ratingDistribution = getRatingDistribution(reviews);
@@ -85,7 +82,8 @@ class _MyReviewsPageState extends ConsumerState<MyReviewsPage> {
                       if (totalReviews != 0)
                         Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: ReviewBarChart(reviews: reviews,
+                          child: ReviewBarChart(
+                            reviews: reviews,
                           ),
                         ),
                       if (reviews.isNotEmpty)

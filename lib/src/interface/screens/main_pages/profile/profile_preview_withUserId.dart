@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hef/src/data/api_routes/review_api/review_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/data/services/extract_level_details.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/data/services/save_contact.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/Cards/award_card.dart';
-import 'package:hef/src/interface/components/Cards/certificate_card.dart';
-import 'package:hef/src/interface/components/common/review_barchart.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/components/shimmers/preview_shimmer.dart';
+import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/services/extract_level_details.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/services/save_contact.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/Cards/award_card.dart';
+import 'package:itcc/src/interface/components/Cards/certificate_card.dart';
+import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/components/shimmers/preview_shimmer.dart';
 import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -106,7 +106,8 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                     Positioned(
                         child: Opacity(
                             opacity: .2,
-                            child: SvgPicture.asset(     color: kPrimaryColor,
+                            child: SvgPicture.asset(
+                                color: kPrimaryColor,
                                 'assets/svg/images/previewFlower.svg'))),
                     SingleChildScrollView(
                       child: Column(
@@ -143,10 +144,9 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                           ),
                                         )
                                       : SvgPicture.asset(
-                                                    'assets/svg/icons/dummy_person_large.svg'),
+                                          'assets/svg/icons/dummy_person_large.svg'),
                                   const SizedBox(height: 10),
-                                  Text(user.name ?? '',
-                                      style: kHeadTitleSB),
+                                  Text(user.name ?? '', style: kHeadTitleSB),
                                   const SizedBox(height: 5),
                                   const SizedBox(width: 10),
                                   Padding(
@@ -311,7 +311,7 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                       padding: const EdgeInsets.only(left: 10),
                                       child: Image.asset(
                                           scale: 5,
-                                          'assets/pngs/splash_logo.png'),
+                                          'assets/svg/icons/itcc_logo.svg'),
                                     ),
                                     Text(
                                       'Member ID: ${user.memberId}',

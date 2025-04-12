@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/api_routes/events_api/events_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/interface/screens/main_pages/event/attendance_marked.dart';
+import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/interface/screens/main_pages/event/attendance_marked.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScannerPage extends StatefulWidget {
@@ -60,7 +60,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
                 ).then((_) {
                   // Reset navigating state when returning to this page
                   setState(() {
-                    
                     _isNavigating = false;
                   });
 

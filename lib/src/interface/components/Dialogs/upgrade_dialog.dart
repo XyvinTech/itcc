@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/chapter_api/chapter_details.dart';
-import 'package:hef/src/data/models/level_models/chapter_model.dart';
-import 'package:hef/src/data/notifiers/user_notifier.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_subscription.dart';
+import 'package:itcc/src/data/api_routes/chapter_api/chapter_details.dart';
+import 'package:itcc/src/data/models/level_models/chapter_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_subscription.dart';
 
 class UpgradeDialog extends StatelessWidget {
   const UpgradeDialog({Key? key}) : super(key: key);

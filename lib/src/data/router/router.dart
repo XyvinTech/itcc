@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/models/events_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/interface/screens/main_page.dart';
-import 'package:hef/src/interface/screens/main_pages/admin/allocate_member.dart';
-import 'package:hef/src/interface/screens/main_pages/admin/member_creation.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/chat_screen.dart';
-import 'package:hef/src/interface/screens/main_pages/event/event_member_list.dart';
-import 'package:hef/src/interface/screens/main_pages/event/view_more_event.dart';
-import 'package:hef/src/interface/screens/main_pages/login_page.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/about_us.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/add_product.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/send_analytic_req.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/change_number.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/activity_page.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/district.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/profile_analytics.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/states.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/zones.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_businesses.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_events.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_products.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_reviews.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_subscription.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/privacy_policy.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/request_nfc.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/terms.dart';
-import 'package:hef/src/interface/screens/main_pages/news_page.dart';
-import 'package:hef/src/interface/screens/main_pages/notification_page.dart';
-import 'package:hef/src/interface/screens/main_pages/profile/card.dart';
-import 'package:hef/src/interface/screens/main_pages/profile/editUser.dart';
-import 'package:hef/src/interface/screens/main_pages/profile/profile_preview.dart';
-import 'package:hef/src/interface/screens/main_pages/profile/profile_preview_withUserId.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/interface/screens/main_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/admin/allocate_member.dart';
+import 'package:itcc/src/interface/screens/main_pages/admin/member_creation.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
+import 'package:itcc/src/interface/screens/main_pages/event/event_member_list.dart';
+import 'package:itcc/src/interface/screens/main_pages/event/view_more_event.dart';
+import 'package:itcc/src/interface/screens/main_pages/login_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/about_us.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/add_product.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/send_analytic_req.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/change_number.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/activity_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/district.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/profile_analytics.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/states.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/zones.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_businesses.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_events.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_products.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_reviews.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_subscription.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/privacy_policy.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/request_nfc.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/terms.dart';
+import 'package:itcc/src/interface/screens/main_pages/news_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/notification_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/card.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/editUser.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview_withUserId.dart';
 
-import 'package:hef/src/interface/screens/splash_screen.dart';
+import 'package:itcc/src/interface/screens/splash_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings? settings) {
   switch (settings?.name) {
@@ -89,11 +89,15 @@ Route<dynamic> generateRoute(RouteSettings? settings) {
     case 'EditUser':
       return MaterialPageRoute(builder: (context) => EditUser());
     case 'IndividualPage':
-              final args = settings?.arguments as Map<String, dynamic>?;
-          Participant sender = args?['sender'];
-          Participant receiver = args?['receiver'];
+      final args = settings?.arguments as Map<String, dynamic>?;
+      Participant sender = args?['sender'];
+      Participant receiver = args?['receiver'];
 
-      return MaterialPageRoute(builder: (context) => IndividualPage(receiver: receiver,sender: sender,));
+      return MaterialPageRoute(
+          builder: (context) => IndividualPage(
+                receiver: receiver,
+                sender: sender,
+              ));
     case 'ChangeNumber':
       return MaterialPageRoute(builder: (context) => ChangeNumberPage());
     case 'NotificationPage':
@@ -132,8 +136,6 @@ Route<dynamic> generateRoute(RouteSettings? settings) {
 
     case 'PrivacyPolicy':
       return MaterialPageRoute(builder: (context) => PrivacyPolicyPage());
-
-
 
     case 'ProfileAnalytics':
       UserModel user = settings?.arguments as UserModel;

@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/promotion_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/promotion_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'promotion_api.g.dart';

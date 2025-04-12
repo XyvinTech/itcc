@@ -5,36 +5,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hef/src/data/api_routes/events_api/events_api.dart';
-import 'package:hef/src/data/api_routes/news_api/news_api.dart';
-import 'package:hef/src/data/api_routes/notification_api/notification_api.dart';
-import 'package:hef/src/data/api_routes/promotion_api/promotion_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/promotion_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/data/router/nav_router.dart';
-import 'package:hef/src/data/services/launch_url.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/interface/components/Drawer/drawer.dart';
-import 'package:hef/src/interface/components/common/custom_video.dart';
-import 'package:hef/src/interface/components/custom_widgets/custom_news.dart';
-import 'package:hef/src/interface/components/custom_widgets/event_Card.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/components/shimmers/promotion_shimmers.dart';
-import 'package:hef/src/interface/screens/main_pages/news_page.dart';
-import 'package:hef/src/interface/screens/main_pages/notification_page.dart';
+import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
+import 'package:itcc/src/data/api_routes/news_api/news_api.dart';
+import 'package:itcc/src/data/api_routes/notification_api/notification_api.dart';
+import 'package:itcc/src/data/api_routes/promotion_api/promotion_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/promotion_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/router/nav_router.dart';
+import 'package:itcc/src/data/services/launch_url.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/Drawer/drawer.dart';
+import 'package:itcc/src/interface/components/common/custom_video.dart';
+import 'package:itcc/src/interface/components/custom_widgets/custom_news.dart';
+import 'package:itcc/src/interface/components/custom_widgets/event_Card.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/components/shimmers/promotion_shimmers.dart';
+import 'package:itcc/src/interface/screens/main_pages/news_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/notification_page.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:hef/src/interface/components/shimmers/dashboard_shimmer.dart';
-import 'package:hef/src/interface/components/ModalSheets/date_filter_sheet.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
-import 'package:hef/src/interface/screens/web_view_screen.dart';
+import 'package:itcc/src/interface/components/shimmers/dashboard_shimmer.dart';
+import 'package:itcc/src/interface/components/ModalSheets/date_filter_sheet.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
+import 'package:itcc/src/interface/screens/web_view_screen.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   final UserModel user;
@@ -230,15 +230,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   const WebViewScreen(
                                                 color: kPrimaryColor,
                                                 url:
-                                                    'https://www.hefconnect.com/',
-                                                title: 'HEF Connect',
+                                                    'https://www.itccconnect.com/',
+                                                title: 'ITCC Connect',
                                               ),
                                             ),
                                           );
                                         },
                                         child: Image.asset(
                                             scale: 5,
-                                            'assets/pngs/splash_logo.png'),
+                                            'assets/svg/icons/itcc_logo.svg'),
                                       ),
                                       SizedBox(
                                         width: 20,

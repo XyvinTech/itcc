@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:hef/src/data/api_routes/people_api/people_api.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/api_routes/people_api/people_api.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'people_notifier.g.dart';
 
@@ -61,7 +61,8 @@ class PeopleNotifier extends _$PeopleNotifier {
     }
   }
 
-  Future<void> searchUsers(String query, {String? districtFilter, List<String>? tagsFilter}) async {
+  Future<void> searchUsers(String query,
+      {String? districtFilter, List<String>? tagsFilter}) async {
     isLoading = true;
     pageNo = 1;
     users = [];

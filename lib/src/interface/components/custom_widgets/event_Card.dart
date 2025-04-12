@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/models/events_model.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+
 Widget eventWidget({
   bool withImage = true,
   required BuildContext context,
   required Event event,
 }) {
   String formattedDate = '';
-  
+
   if (event.eventDate != null) {
     try {
       DateTime date = DateTime.parse(event.eventDate.toString()).toLocal();
@@ -39,7 +40,8 @@ Widget eventWidget({
               Stack(
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     width: MediaQuery.sizeOf(context).width * .95,
                     height: 190,
                     decoration: BoxDecoration(

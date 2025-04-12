@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/product_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/product_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 
 class UserNotifier extends StateNotifier<AsyncValue<UserModel>> {
   final StateNotifierProviderRef<UserNotifier, AsyncValue<UserModel>> ref;
@@ -32,7 +32,7 @@ class UserNotifier extends StateNotifier<AsyncValue<UserModel>> {
   Future<void> _fetchUserDetails() async {
     try {
       log('Fetching user details');
-      final user = await ref.read( fetchUserDetailsProvider(id).future);
+      final user = await ref.read(fetchUserDetailsProvider(id).future);
       state = AsyncValue.data(user ?? UserModel());
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);

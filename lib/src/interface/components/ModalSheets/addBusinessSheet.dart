@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:hef/src/data/api_routes/business_api/business_api.dart';
+import 'package:itcc/src/data/api_routes/business_api/business_api.dart';
 
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/services/image_upload.dart';
-import 'package:hef/src/interface/components/DropDown/addBusiness_type.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/services/image_upload.dart';
+import 'package:itcc/src/interface/components/DropDown/addBusiness_type.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 
 class ShowAdddBusinessSheet extends StatefulWidget {
   final Future<File?> Function() pickImage;

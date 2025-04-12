@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/group_info.dart';
-import 'package:hef/src/data/models/group_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/group_info.dart';
+import 'package:itcc/src/data/models/group_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'group_api.g.dart';
-
 
 @riverpod
 Future<List<GroupModel>> getGroupList(

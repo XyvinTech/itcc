@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/edit_user.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/data/utils/secure_storage.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/edit_user.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/utils/secure_storage.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-
 
 class ChangeNumberPage extends StatefulWidget {
   @override
@@ -173,9 +172,8 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
       // Show success dialog
       await _showSuccessDialog();
 
-         await SecureStorage.delete('token');
-                   await SecureStorage.delete('id');
-                  
+      await SecureStorage.delete('token');
+      await SecureStorage.delete('id');
 
       NavigationService navigatorKey = NavigationService();
       navigatorKey.pushNamedAndRemoveUntil('PhoneNumber');
@@ -238,14 +236,12 @@ class _ChangeNumberPageState extends State<ChangeNumberPage> {
       },
     );
 
-
     await Future.delayed(Duration(seconds: 3));
 
     Navigator.of(context).pop();
 
-         await SecureStorage.delete('token');
-                   await SecureStorage.delete('id');
-                  
+    await SecureStorage.delete('token');
+    await SecureStorage.delete('id');
 
     NavigationService navigatorKey = NavigationService();
     navigatorKey.pushNamedAndRemoveUntil('PhoneNumber');

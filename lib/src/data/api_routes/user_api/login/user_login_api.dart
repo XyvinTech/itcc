@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hef/src/data/globals.dart';
+import 'package:itcc/src/data/globals.dart';
 
 Future<Map<String, String>> submitPhoneNumber(
     String countryCode, BuildContext context, String phone) async {
@@ -113,7 +113,7 @@ Future<Map<String, dynamic>> verifyUserDB(
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseBody = jsonDecode(response.body);
-    log(responseBody.toString(),name: 'LOGIN SUCCESS');
+    log(responseBody.toString(), name: 'LOGIN SUCCESS');
     snackbarService.showSnackBar(responseBody['message']);
     return responseBody['data'];
   } else if (response.statusCode == 400) {
@@ -124,7 +124,7 @@ Future<Map<String, dynamic>> verifyUserDB(
   } else {
     final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
-    log(responseBody.toString(),name: 'LOGIN FAILED');
+    log(responseBody.toString(), name: 'LOGIN FAILED');
     snackbarService.showSnackBar(responseBody['message']);
     return {};
   }

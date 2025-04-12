@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/analytics_api/analytics_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/models/analytics_model.dart';
-import 'package:hef/src/data/notifiers/user_notifier.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/interface/components/ModalSheets/analytics.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/analytics_api/analytics_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/models/analytics_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/ModalSheets/analytics.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 

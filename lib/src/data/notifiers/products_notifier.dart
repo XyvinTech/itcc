@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:hef/src/data/api_routes/products_api/products_api.dart';
-import 'package:hef/src/data/models/product_model.dart';
+import 'package:itcc/src/data/api_routes/products_api/products_api.dart';
+import 'package:itcc/src/data/models/product_model.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

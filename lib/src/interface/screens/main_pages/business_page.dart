@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/interface/screens/main_pages/bussiness_products/business_view.dart';
-import 'package:hef/src/interface/screens/main_pages/bussiness_products/product_view.dart';
-import 'package:hef/src/interface/screens/main_pages/chat_page.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/interface/screens/main_pages/bussiness_products/business_view.dart';
+import 'package:itcc/src/interface/screens/main_pages/bussiness_products/product_view.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat_page.dart';
 
 class BusinessPage extends StatelessWidget {
   const BusinessPage({super.key});

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/api_routes/chat_api/chat_api.dart';
-import 'package:hef/src/data/api_routes/levels_api/levels_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/notifiers/people_notifier.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
+import 'package:itcc/src/data/api_routes/levels_api/levels_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/notifiers/people_notifier.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/chat_screen.dart';
-import 'package:hef/src/interface/screens/main_pages/profile/profile_preview.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'dart:async';

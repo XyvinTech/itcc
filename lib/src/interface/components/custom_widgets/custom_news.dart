@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget newsCard({

@@ -3,21 +3,21 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/app_version_model.dart';
-import 'package:hef/src/data/services/deep_link_service.dart';
-import 'package:hef/src/data/services/launch_url.dart';
-import 'package:hef/src/data/utils/secure_storage.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/app_version_model.dart';
+import 'package:itcc/src/data/services/deep_link_service.dart';
+import 'package:itcc/src/data/services/launch_url.dart';
+import 'package:itcc/src/data/utils/secure_storage.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/main.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/services/getFcmToken.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
+import 'package:itcc/main.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/services/getFcmToken.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
 
 import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
 import 'package:flutter_upgrade_version/models/package_info.dart';
@@ -156,7 +156,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           Align(
             alignment: Alignment.center,
             child: Image.asset(
-              'assets/pngs/splash_logo.png',
+              'assets/svg/icons/itcc_logo.svg',
             ),
           ),
           if (hasVersionCheckError)

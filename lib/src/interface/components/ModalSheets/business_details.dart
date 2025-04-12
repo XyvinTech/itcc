@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/api_routes/chat_api/chat_api.dart';
-import 'package:hef/src/data/api_routes/review_api/review_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/business_model.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/common/review_barchart.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/chat_screen.dart';
+import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
+import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/business_model.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
 
 class BusinessDetailsModalSheet extends StatelessWidget {
   final VoidCallback onButtonPressed;
@@ -79,7 +79,7 @@ class BusinessDetailsModalSheet extends StatelessWidget {
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   return SvgPicture.asset(
-                                  'assets/svg/icons/dummy_person_small.svg');
+                                      'assets/svg/icons/dummy_person_small.svg');
                                 },
                               ),
                             ),

@@ -1,39 +1,46 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 part 'people_api.g.dart';
+
 @riverpod
 Future<List<UserModel>> fetchActiveUsers(Ref ref,
-    {int pageNo = 1, int limit = 20, String? query, String? district, List<String>? tags}) async {
+    {int pageNo = 1,
+    int limit = 20,
+    String? query,
+    String? district,
+    List<String>? tags}) async {
   // Construct the base URL
   Uri url = Uri.parse('$baseUrl/user/list?pageNo=$pageNo&limit=$limit');
 
   // Append query parameter if provided
   Map<String, String> queryParams = {};
-  
+
   if (query != null && query.isNotEmpty) {
     queryParams['search'] = query;
   }
-  
+
   if (district != null && district.isNotEmpty) {
     queryParams['district'] = district;
   }
 
   if (tags != null && tags.isNotEmpty) {
-    queryParams['tags'] = tags.join(','); // Convert list to comma-separated string
+    queryParams['tags'] =
+        tags.join(','); // Convert list to comma-separated string
   }
 
   if (queryParams.isNotEmpty) {
-    url = Uri.parse('$baseUrl/user/list?pageNo=$pageNo&limit=$limit&${Uri(queryParameters: queryParams).query}');
+    url = Uri.parse(
+        '$baseUrl/user/list?pageNo=$pageNo&limit=$limit&${Uri(queryParameters: queryParams).query}');
   }
 
   log('requesting url:$url');
-  
+
   final response = await http.get(
     url,
     headers: {

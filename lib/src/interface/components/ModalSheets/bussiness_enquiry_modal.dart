@@ -1,15 +1,14 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/chat_api/chat_api.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/business_model.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/custom_widgets/user_tile.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/chat_screen.dart';
+import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/business_model.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/custom_widgets/user_tile.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
 
 void businessEnquiry({
   required BuildContext context,
@@ -52,7 +51,8 @@ void businessEnquiry({
                     return Padding(
                       padding:
                           const EdgeInsets.only(left: 10, right: 10, top: 10),
-                      child: buildUserInfo(businessAuthor,businesss,context), // Reuse widget here
+                      child: buildUserInfo(businessAuthor, businesss,
+                          context), // Reuse widget here
                     );
                   },
                 ),
@@ -71,7 +71,8 @@ void businessEnquiry({
                         return customButton(
                           label: buttonText,
                           onPressed: () async {
-                            messageSheet(businessAuthor: businessAuthor,
+                            messageSheet(
+                                businessAuthor: businessAuthor,
                                 context: context,
                                 onButtonPressed: () async {},
                                 buttonText: 'SEND MESSAGE',
@@ -119,9 +120,6 @@ void businessEnquiry({
     },
   );
 }
-
-
-
 
 void messageSheet({
   required BuildContext context,
@@ -174,7 +172,8 @@ void messageSheet({
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, bottom: 10, top: 10),
-                      child: buildUserInfo(businessAuthor,feed,context), // Reuse widget here
+                      child: buildUserInfo(
+                          businessAuthor, feed, context), // Reuse widget here
                     ),
 
                     const SizedBox(height: 10),

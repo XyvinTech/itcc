@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/custom_widgets/custom_textFormField.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
 
 class ContactEditor extends StatefulWidget {
   final String value;

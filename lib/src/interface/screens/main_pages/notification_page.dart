@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:hef/src/data/api_routes/notification_api/notification_api.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/notification_api/notification_api.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});

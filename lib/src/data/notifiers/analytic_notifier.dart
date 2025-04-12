@@ -1,8 +1,8 @@
 import 'dart:developer';
-import 'package:hef/src/data/api_routes/analytics_api/analytics_api.dart';
-import 'package:hef/src/data/api_routes/business_api/business_api.dart';
-import 'package:hef/src/data/models/analytics_model.dart';
-import 'package:hef/src/data/models/business_model.dart';
+import 'package:itcc/src/data/api_routes/analytics_api/analytics_api.dart';
+import 'package:itcc/src/data/api_routes/business_api/business_api.dart';
+import 'package:itcc/src/data/models/analytics_model.dart';
+import 'package:itcc/src/data/models/business_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'analytic_notifier.g.dart';
 

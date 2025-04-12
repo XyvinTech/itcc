@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:hef/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:hef/src/data/globals.dart';
+import 'package:itcc/src/data/globals.dart';
 
 Future<String> createUser({Map<String, dynamic>? data}) async {
   SnackbarService snackbarService = SnackbarService();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/levels_api/levels_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
+import 'package:itcc/src/data/api_routes/levels_api/levels_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
 
 import '../../../../../data/services/navgitor_service.dart';
 
@@ -13,10 +13,7 @@ class DistrictsPage extends StatelessWidget {
 
   final String zoneName;
   const DistrictsPage(
-      {super.key,
-      required this.zoneId,
-
-      required this.zoneName});
+      {super.key, required this.zoneId, required this.zoneName});
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +99,6 @@ class DistrictsPage extends StatelessWidget {
                                         builder: (context) => ChaptersPage(
                                               districtName:
                                                   districts[index].name,
-                                     
-                                        
                                               districtId: districts[index].id,
                                             )));
                               },
@@ -129,8 +124,10 @@ class DistrictsPage extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          CreateNotificationPage(level: 'zone',levelId: zoneId,)));
+                      builder: (context) => CreateNotificationPage(
+                            level: 'zone',
+                            levelId: zoneId,
+                          )));
             },
             backgroundColor: Colors.orange,
             child: Icon(Icons.notifications, color: Colors.white),

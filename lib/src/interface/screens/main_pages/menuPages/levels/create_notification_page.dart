@@ -6,14 +6,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/api_routes/levels_api/levels_api.dart';
-import 'package:hef/src/data/api_routes/notification_api/notification_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/level_models/level_model.dart';
-import 'package:hef/src/data/services/image_upload.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/custom_widgets/custom_textFormField.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/levels_api/levels_api.dart';
+import 'package:itcc/src/data/api_routes/notification_api/notification_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/level_models/level_model.dart';
+import 'package:itcc/src/data/services/image_upload.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:path/path.dart' as Path;
 
@@ -328,9 +328,8 @@ class _CreateNotificationPageState
                 label: 'Send Notification',
                 onPressed: () async {
                   if (notificationImage != null) {
-                    notificationImageUrl = await imageUpload(
-
-                        notificationImage!.path);
+                    notificationImageUrl =
+                        await imageUpload(notificationImage!.path);
                   }
                   createLevelNotification(
                       level: widget.level,

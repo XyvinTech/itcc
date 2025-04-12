@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 
-import 'package:hef/src/data/services/snackbar_service.dart';
-import 'package:http/http.dart'as http;
+import 'package:itcc/src/data/services/snackbar_service.dart';
+import 'package:http/http.dart' as http;
 
-
-Future<void> createUser(
-    {required UserModel user}) async {
+Future<void> createUser({required UserModel user}) async {
   final url = Uri.parse('$baseUrl/feeds');
 
   final headers = {
@@ -18,29 +16,29 @@ Future<void> createUser(
   };
 
   final body = jsonEncode({
-{
-  "name": user.name,
-  "uid": user.name,
-  "memberId": user.name,
-  "bloodgroup": user.name,
-  "role":user.name,
-  "chapter": user.name,
-  "image": user.name,
-  "email": user.name,
-  "phone":user.name,
-  "bio": user.name,
-  "status": user.name,
-  "address": user.name,
-  "businessCatogary":user.name,
-  "businessSubCatogary": user.name,
-  "company": {
-    "name": user.company?[0].name,
-    "designation":user.company?[0].designation,
-    "email": user.company?[0].email,
-    "websites": user.company?[0].websites,
-    "phone": user.company?[0].phone,
-  }
-}
+    {
+      "name": user.name,
+      "uid": user.name,
+      "memberId": user.name,
+      "bloodgroup": user.name,
+      "role": user.name,
+      "chapter": user.name,
+      "image": user.name,
+      "email": user.name,
+      "phone": user.name,
+      "bio": user.name,
+      "status": user.name,
+      "address": user.name,
+      "businessCatogary": user.name,
+      "businessSubCatogary": user.name,
+      "company": {
+        "name": user.company?[0].name,
+        "designation": user.company?[0].designation,
+        "email": user.company?[0].email,
+        "websites": user.company?[0].websites,
+        "phone": user.company?[0].phone,
+      }
+    }
   });
 
   try {
@@ -61,7 +59,7 @@ Future<void> createUser(
   }
 }
 
-Future<void> deletePost( String postId, context) async {
+Future<void> deletePost(String postId, context) async {
   SnackbarService snackbarService = SnackbarService();
   final url = Uri.parse('$baseUrl/feeds/single/$postId');
   print('requesting url:$url');
@@ -74,7 +72,7 @@ Future<void> deletePost( String postId, context) async {
   );
 
   if (response.statusCode == 200) {
-        snackbarService.showSnackBar('Post Deleted Successfully');
+    snackbarService.showSnackBar('Post Deleted Successfully');
     // ScaffoldMessenger.of(context)
     //     .showSnackBar(SnackBar(content: Text('Post Deleted Successfully')));
   } else {

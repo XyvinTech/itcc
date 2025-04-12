@@ -2,18 +2,18 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
 
 import 'dart:async';
 
-import 'package:hef/src/data/notifiers/products_notifier.dart';
-import 'package:hef/src/interface/components/Cards/product_card.dart';
-import 'package:hef/src/interface/components/ModalSheets/product_details.dart';
-import 'package:hef/src/interface/components/shimmers/product_card_shimmer.dart';
+import 'package:itcc/src/data/notifiers/products_notifier.dart';
+import 'package:itcc/src/interface/components/Cards/product_card.dart';
+import 'package:itcc/src/interface/components/ModalSheets/product_details.dart';
+import 'package:itcc/src/interface/components/shimmers/product_card_shimmer.dart';
 
 class ProductView extends ConsumerStatefulWidget {
   const ProductView({super.key});
@@ -163,7 +163,8 @@ class _ProductViewState extends ConsumerState<ProductView> {
                                   sender: Participant(id: id),
                                   context: context,
                                   product: products[index]),
-                              child: ProductCard(onEdit: null,
+                              child: ProductCard(
+                                onEdit: null,
                                 isOthersProduct: true,
                                 product: products[index],
                                 onRemove: null,
@@ -171,7 +172,6 @@ class _ProductViewState extends ConsumerState<ProductView> {
                             );
                           },
                           error: (error, stackTrace) {
-                      
                             return const SizedBox();
                           },
                           loading: () {

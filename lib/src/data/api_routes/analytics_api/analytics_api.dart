@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/analytics_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/analytics_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:http/http.dart' as http;
 
 part 'analytics_api.g.dart';
-
 
 class AnalyticsApiService {
   static final _baseUrl = Uri.parse('$baseUrl/analytic');
@@ -33,7 +32,8 @@ class AnalyticsApiService {
     if (type?.isNotEmpty ?? false) queryParams['filter'] = type!;
     if (startDate?.isNotEmpty ?? false) queryParams['startDate'] = startDate!;
     if (endDate?.isNotEmpty ?? false) queryParams['endDate'] = endDate!;
-    if (requestType?.isNotEmpty ?? false) queryParams['requestType'] = requestType!;
+    if (requestType?.isNotEmpty ?? false)
+      queryParams['requestType'] = requestType!;
     if (pageNo != null) queryParams['pageNo'] = pageNo.toString();
     if (limit != null) queryParams['limit'] = limit.toString();
 
@@ -53,9 +53,10 @@ class AnalyticsApiService {
   }
 
   /// Post Analytics
-   Future<String?> postAnalytic({required Map<String, dynamic> data}) async {
+  Future<String?> postAnalytic({required Map<String, dynamic> data}) async {
     try {
-      final response = await http.post(_baseUrl, headers: _headers(), body: jsonEncode(data));
+      final response = await http.post(_baseUrl,
+          headers: _headers(), body: jsonEncode(data));
       final decoded = json.decode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -71,7 +72,7 @@ class AnalyticsApiService {
   }
 
   /// Update Analytics Status
-   Future<void> updateAnalyticStatus({
+  Future<void> updateAnalyticStatus({
     required String analyticId,
     required String? action,
   }) async {
@@ -97,7 +98,7 @@ class AnalyticsApiService {
   }
 
   /// Delete Analytic
-   Future<void> deleteAnalytic({required String analyticId}) async {
+  Future<void> deleteAnalytic({required String analyticId}) async {
     final url = Uri.parse('$_baseUrl/$analyticId');
 
     try {
@@ -114,7 +115,6 @@ class AnalyticsApiService {
     }
   }
 }
-
 
 @riverpod
 Future<List<AnalyticsModel>> fetchAnalytics(

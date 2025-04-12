@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/activity_api/activity_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/notifiers/loading_notifier.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/activity_api/activity_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/notifiers/loading_notifier.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
 
 class ActivityPage extends StatelessWidget {
@@ -16,8 +16,7 @@ class ActivityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        ActivityApiService activityApiService =
-                                ActivityApiService();
+    ActivityApiService activityApiService = ActivityApiService();
     return Consumer(
       builder: (context, ref, child) {
         final asyncActivities =
@@ -46,9 +45,8 @@ class ActivityPage extends StatelessWidget {
                             },
                           );
                           try {
-                      
-                            await activityApiService.downloadAndSaveExcel(
-                                chapterId);
+                            await activityApiService
+                                .downloadAndSaveExcel(chapterId);
                           } finally {
                             Navigator.of(context).pop();
                           }

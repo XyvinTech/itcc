@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hef/src/data/globals.dart';
+import 'package:itcc/src/data/globals.dart';
 
 class SecureStorage {
   static final FlutterSecureStorage _storage = FlutterSecureStorage();
@@ -20,8 +20,6 @@ class SecureStorage {
     await _storage.deleteAll();
   }
 }
-
-
 
 Future<void> loadSecureData() async {
   token = await SecureStorage.read('token') ?? '';

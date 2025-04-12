@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:hef/src/data/globals.dart';
+import 'package:itcc/src/data/globals.dart';
 import 'package:image/image.dart' as img;
 
 import 'package:http/http.dart' as http;

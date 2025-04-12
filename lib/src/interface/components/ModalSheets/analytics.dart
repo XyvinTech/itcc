@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/analytics_api/analytics_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/analytics_model.dart';
-import 'package:hef/src/data/services/launch_url.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/api_routes/analytics_api/analytics_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/analytics_model.dart';
+import 'package:itcc/src/data/services/launch_url.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:intl/intl.dart';
 
 class AnalyticsModalSheet extends ConsumerWidget {
@@ -139,7 +139,8 @@ class AnalyticsModalSheet extends ConsumerWidget {
                 buttonColor: kRedDark,
                 label: 'Cancel Request',
                 onPressed: () async {
-                  await analyticsApiService. deleteAnalytic(analyticId: analytic.id ?? '');
+                  await analyticsApiService.deleteAnalytic(
+                      analyticId: analytic.id ?? '');
                   ref.invalidate(fetchAnalyticsProvider);
                   navigationService.pop();
                 },

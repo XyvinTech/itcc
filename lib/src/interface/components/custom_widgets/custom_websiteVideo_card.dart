@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/interface/components/DropDown/dropdown_menu.dart';
-import 'package:hef/src/interface/components/DropDown/remove_edit_dropdown.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/interface/components/DropDown/dropdown_menu.dart';
+import 'package:itcc/src/interface/components/DropDown/remove_edit_dropdown.dart';
 
 Padding customWebsiteVideoCard({Link? websiteVideo, VoidCallback? onRemove}) {
   return Padding(

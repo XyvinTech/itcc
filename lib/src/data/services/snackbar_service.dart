@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import 'package:hef/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
 
 class SnackbarService {
   static GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
@@ -34,7 +34,7 @@ class SnackbarService {
         },
       ),
     );
-   
+
     log(scaffoldMessengerKey.currentState!.mounted.toString());
     return scaffoldMessengerKey.currentState!.showSnackBar(snackBar);
   }

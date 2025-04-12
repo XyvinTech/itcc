@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
 
 class MemberCreationTextfield extends StatelessWidget {
   final String label;
@@ -68,4 +68,3 @@ class MemberCreationTextfield extends StatelessWidget {
     );
   }
 }
-

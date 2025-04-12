@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/group_chat_api/group_api.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/models/group_chat_model.dart';
-import 'package:hef/src/data/models/msg_model.dart';
+import 'package:itcc/src/data/api_routes/group_chat_api/group_api.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/models/group_chat_model.dart';
+import 'package:itcc/src/data/models/msg_model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 part 'chat_api.g.dart';
+
 final socketIoClientProvider = Provider<SocketIoClient>((ref) {
   return SocketIoClient();
 });
@@ -25,14 +26,15 @@ final messageStreamProvider = StreamProvider.autoDispose<MessageModel>((ref) {
 });
 
 // Group Message Stream Provider
-final groupMessageStreamProvider = StreamProvider.autoDispose<GroupChatModel>((ref) {
+final groupMessageStreamProvider =
+    StreamProvider.autoDispose<GroupChatModel>((ref) {
   final socketIoClient = ref.read(socketIoClientProvider);
   return socketIoClient.groupMessageStream;
 });
 
 class SocketIoClient {
   late IO.Socket _socket;
-  
+
   // Separate controllers for individual & group chat messages
   final _messageController = StreamController<MessageModel>.broadcast();
   final _groupMessageController = StreamController<GroupChatModel>.broadcast();
@@ -40,10 +42,11 @@ class SocketIoClient {
   SocketIoClient();
 
   Stream<MessageModel> get messageStream => _messageController.stream;
-  Stream<GroupChatModel> get groupMessageStream => _groupMessageController.stream;
+  Stream<GroupChatModel> get groupMessageStream =>
+      _groupMessageController.stream;
 
   void connect(String senderId, WidgetRef ref) {
-    final uri = 'wss://api.hefconnect.in/api/v1/chat?userId=$senderId';
+    final uri = 'wss://api.itccconnect.in/api/v1/chat?userId=$senderId';
 
     _socket = IO.io(
       uri,
@@ -62,7 +65,7 @@ class SocketIoClient {
     // Listen for messages (for both individual and group chat)
     _socket.on('message', (data) {
       log('Received message: $data');
-      
+
       if (data['isGroup'] == true) {
         final groupMessageModel = GroupChatModel.fromJson(data);
         ref.invalidate(getGroupListProvider); // Invalidate group list provider
@@ -71,7 +74,8 @@ class SocketIoClient {
         }
       } else {
         final messageModel = MessageModel.fromJson(data);
-        ref.invalidate(fetchChatThreadProvider); // Invalidate individual chat provider
+        ref.invalidate(
+            fetchChatThreadProvider); // Invalidate individual chat provider
         if (!_messageController.isClosed) {
           _messageController.add(messageModel);
         }
@@ -81,7 +85,8 @@ class SocketIoClient {
     _socket.on('connect_error', (error) {
       log('Connection Error: $error');
       if (!_messageController.isClosed) _messageController.addError(error);
-      if (!_groupMessageController.isClosed) _groupMessageController.addError(error);
+      if (!_groupMessageController.isClosed)
+        _groupMessageController.addError(error);
     });
 
     _socket.onDisconnect((_) {
@@ -104,8 +109,7 @@ Future<String> sendChatMessage(
     {required String Id,
     String? content,
     String? productId,
-
-    bool? isGroup=false,
+    bool? isGroup = false,
     String? businessId}) async {
   final url = Uri.parse('$baseUrl/chat/send-message/$Id');
   final headers = {
@@ -117,7 +121,7 @@ Future<String> sendChatMessage(
     if (content != null) 'content': content,
     if (productId != null) 'product': productId,
     if (businessId != null) 'feed': businessId,
-    "isGroup":isGroup
+    "isGroup": isGroup
   });
   log('sending body $body');
   try {

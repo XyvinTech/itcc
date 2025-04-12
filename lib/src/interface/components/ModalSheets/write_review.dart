@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/review_api/review_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/edit_user.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/notifiers/people_notifier.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/edit_user.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/notifiers/people_notifier.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 
 class ShowWriteReviewSheet extends StatefulWidget {
   final String userId;

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/data/services/save_qr.dart';
-import 'package:hef/src/data/services/share_qr.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/services/save_qr.dart';
+import 'package:itcc/src/data/services/share_qr.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
@@ -252,7 +252,7 @@ class ProfileCard extends StatelessWidget {
                               child: QrImageView(
                                 size: 285,
                                 data:
-                                    'https://admin.hefconnect.in/user/${user.uid}',
+                                    'https://admin.itccconnect.in/user/${user.uid}',
                               ),
                             ),
                             const SizedBox(height: 20),

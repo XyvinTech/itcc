@@ -2,14 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/group_chat_api/group_api.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/group_chat_model.dart';
+import 'package:itcc/src/data/api_routes/group_chat_api/group_api.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/group_chat_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-
 
 Future<List<GroupChatModel>> getGroupChatMessages(
     {required String groupId}) async {

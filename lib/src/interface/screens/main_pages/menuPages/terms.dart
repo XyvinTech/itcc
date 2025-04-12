@@ -36,7 +36,7 @@ class TermsAndConditionsPage extends StatelessWidget {
               ),
               TextSpan(
                 text:
-                    'By accessing and using the HEF app, you acknowledge that you have read, understood, and agree to be bound by these Terms, as well as our Privacy Policy. These Terms apply to all users of the App.\n\n',
+                    'By accessing and using the ITCC app, you acknowledge that you have read, understood, and agree to be bound by these Terms, as well as our Privacy Policy. These Terms apply to all users of the App.\n\n',
               ),
               TextSpan(
                 text: '2. Changes to Terms\n',
@@ -81,7 +81,7 @@ class TermsAndConditionsPage extends StatelessWidget {
               ),
               TextSpan(
                 text:
-                    '''All content, trademarks, logos, and intellectual property related to the App are owned by or licensed to HEF. You may not reproduce, distribute, or otherwise exploit the content for commercial purposes without written consent from HEF.
+                    '''All content, trademarks, logos, and intellectual property related to the App are owned by or licensed to ITCC. You may not reproduce, distribute, or otherwise exploit the content for commercial purposes without written consent from ITCC.
 ''',
               ),
               TextSpan(
@@ -112,7 +112,7 @@ class TermsAndConditionsPage extends StatelessWidget {
               ),
               TextSpan(
                 text:
-                    '''HEF is not liable for any direct, indirect, incidental, or consequential damages arising from your use or inability to use the App. The App is provided on an "as-is" and "as available" basis without warranties of any kind.\n\n''',
+                    '''ITCC is not liable for any direct, indirect, incidental, or consequential damages arising from your use or inability to use the App. The App is provided on an "as-is" and "as available" basis without warranties of any kind.\n\n''',
               ),
               TextSpan(
                 text: '9. Governing Law\n',

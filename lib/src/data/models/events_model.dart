@@ -4,10 +4,7 @@ class Event {
   final String? description;
   final String? type;
   final String? image;
-  final DateTime? startDate;
-  final DateTime? startTime;
-  final DateTime? endDate;
-  final DateTime? endTime;
+
   final DateTime? eventDate;
   final String? platform;
   final String? link;
@@ -27,10 +24,7 @@ class Event {
     this.description,
     this.type,
     this.image,
-    this.startDate,
-    this.startTime,
-    this.endDate,
-    this.endTime,
+
     this.platform,
     this.link,
     this.venue,
@@ -51,19 +45,11 @@ class Event {
       description: json['description'] as String?,
       type: json['type'] as String?,
       image: json['image'] as String?,
-      startDate: json['startDate'] != null
-          ? DateTime.tryParse(json['startDate'])
-          : null,
+   
       eventDate: json['eventDate'] != null
           ? DateTime.tryParse(json['eventDate'])
           : null,
-      startTime: json['startTime'] != null
-          ? DateTime.tryParse(json['startTime'])
-          : null,
-      endDate:
-          json['endDate'] != null ? DateTime.tryParse(json['endDate']) : null,
-      endTime:
-          json['endTime'] != null ? DateTime.tryParse(json['endTime']) : null,
+  
       platform: json['platform'] as String?,
       link: json['link'] as String?,
       venue: json['venue'] as String?,
@@ -94,11 +80,7 @@ class Event {
       'description': description,
       'type': type,
       'image': image,
-      'startDate': startDate?.toIso8601String(),
       'eventDate': eventDate?.toIso8601String(),
-      'startTime': startTime?.toIso8601String(),
-      'endDate': endDate?.toIso8601String(),
-      'endTime': endTime?.toIso8601String(),
       'platform': platform,
       'link': link,
       'venue': venue,

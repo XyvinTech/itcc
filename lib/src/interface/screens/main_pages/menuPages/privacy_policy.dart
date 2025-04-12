@@ -65,7 +65,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                   'where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled '
                   'to vote for election of directors or other managing authority.'),
               _bulletPoint(
-                  'Application refers to HEF, the software program provided by the Company.'),
+                  'Application refers to ITCC, the software program provided by the Company.'),
               _bulletPoint(
                   'Company refers to Skybertech IT Innovations Pvt Ltd, Infopark Technology Business Centre Sector D, E & F Hall, '
                   'JNI Stadium Complex, Kaloor Kochi, Kerala 682 017, IN.'),

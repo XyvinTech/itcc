@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RequestNFCPage extends StatelessWidget {

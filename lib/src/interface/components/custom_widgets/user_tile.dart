@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/models/business_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/models/business_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 import 'package:intl/intl.dart';
 
 Widget buildUserInfo(UserModel user, Business feed, context) {
@@ -28,7 +28,7 @@ Widget buildUserInfo(UserModel user, Business feed, context) {
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return SvgPicture.asset(
-                                  'assets/svg/icons/dummy_person_small.svg');
+                          'assets/svg/icons/dummy_person_small.svg');
                     },
                   ),
                 ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/chat_dash.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/groupchat.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/members.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_dash.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/groupchat.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/members.dart';
 
 class PeoplePage extends StatelessWidget {
   const PeoplePage({super.key});

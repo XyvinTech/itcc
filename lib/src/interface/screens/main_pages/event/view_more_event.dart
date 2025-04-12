@@ -1,13 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/events_api/events_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/events_model.dart';
-import 'package:hef/src/data/services/launch_url.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/interface/screens/main_pages/event/qr_scanner_page.dart';
+import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/data/services/launch_url.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/screens/main_pages/event/qr_scanner_page.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -82,8 +82,8 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage> {
   Widget build(BuildContext context) {
     NavigationService navigationService = NavigationService();
     DateTime dateTime =
-        DateTime.parse(widget.event.startTime.toString()).toLocal();
-    String formattedTime = DateFormat('hh:mm a').format(dateTime);
+        DateTime.parse(widget.event.eventDate.toString()).toLocal();
+
     String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
 
     log('rsvp : ${widget.event.rsvp}');
@@ -212,22 +212,6 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage> {
                           const SizedBox(width: 8),
                           Text(
                             formattedDate,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 16),
-                      Row(
-                        children: [
-                          const Icon(Icons.access_time,
-                              size: 15, color: kPrimaryColor),
-                          const SizedBox(width: 8),
-                          Text(
-                            formattedTime,
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,

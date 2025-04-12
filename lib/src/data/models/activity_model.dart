@@ -1,4 +1,4 @@
-import 'package:hef/src/data/models/analytics_model.dart';
+import 'package:itcc/src/data/models/analytics_model.dart';
 
 class ActivityModel {
   final String? id;

@@ -2,23 +2,23 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hef/src/data/api_routes/review_api/review_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/data/services/extract_level_details.dart';
-import 'package:hef/src/data/services/launch_url.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/data/services/save_contact.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/Cards/award_card.dart';
-import 'package:hef/src/interface/components/Cards/certificate_card.dart';
-import 'package:hef/src/interface/components/ModalSheets/write_review.dart';
-import 'package:hef/src/interface/components/common/review_barchart.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/chat_screen.dart';
+import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/services/extract_level_details.dart';
+import 'package:itcc/src/data/services/launch_url.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/services/save_contact.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/Cards/award_card.dart';
+import 'package:itcc/src/interface/components/Cards/certificate_card.dart';
+import 'package:itcc/src/interface/components/ModalSheets/write_review.dart';
+import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -134,7 +134,7 @@ class ProfilePreview extends ConsumerWidget {
                                 ),
                               )
                             : SvgPicture.asset(
-                                                    'assets/svg/icons/dummy_person_large.svg'),
+                                'assets/svg/icons/dummy_person_large.svg'),
                         const SizedBox(height: 10),
                         Text('${user.name ?? ''}', style: kHeadTitleSB),
                         const SizedBox(height: 5),
@@ -246,7 +246,7 @@ class ProfilePreview extends ConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Image.asset(
-                                scale: 5, 'assets/pngs/splash_logo.png'),
+                                scale: 5, 'assets/svg/icons/itcc_logo.svg'),
                           ),
                           Text(
                             'Member ID: ${user.memberId}',

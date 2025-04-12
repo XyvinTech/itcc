@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/events_model.dart';
-import 'package:hef/src/interface/screens/main_pages/event/member_list/attended.dart';
-import 'package:hef/src/interface/screens/main_pages/event/member_list/registered.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/interface/screens/main_pages/event/member_list/attended.dart';
+import 'package:itcc/src/interface/screens/main_pages/event/member_list/registered.dart';
 
 class EventMemberList extends StatelessWidget {
   final Event event;

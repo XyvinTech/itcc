@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.skybertech" "\0"
-            VALUE "FileDescription", "hef" "\0"
+            VALUE "FileDescription", "itcc" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "hef" "\0"
+            VALUE "InternalName", "itcc" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.skybertech. All rights reserved." "\0"
-            VALUE "OriginalFilename", "hef.exe" "\0"
-            VALUE "ProductName", "hef" "\0"
+            VALUE "OriginalFilename", "itcc.exe" "\0"
+            VALUE "ProductName", "itcc" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

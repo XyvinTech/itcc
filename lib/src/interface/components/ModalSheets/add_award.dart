@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/interface/components/custom_widgets/custom_textFormField.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 
 import '../Buttons/primary_button.dart';
 
@@ -37,7 +37,6 @@ class _ShowEnterAwardSheetState extends State<ShowEnterAwardSheet> {
 
   @override
   Widget build(BuildContext context) {
-
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         widget.textController1.text = '';
@@ -200,7 +199,7 @@ class _ShowEnterAwardSheetState extends State<ShowEnterAwardSheet> {
                         // Add mode - always needs image
                         await widget.addAwardCard!();
                       }
-                      
+
                       widget.textController1.clear();
                       widget.textController2.clear();
 

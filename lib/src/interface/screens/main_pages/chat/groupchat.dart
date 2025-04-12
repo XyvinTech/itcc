@@ -1,13 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/group_chat_api/group_api.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:hef/src/interface/screens/main_pages/chat/groupchatscreen.dart';
-
+import 'package:itcc/src/data/api_routes/group_chat_api/group_api.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/groupchatscreen.dart';
 
 class GroupChatPage extends ConsumerStatefulWidget {
   GroupChatPage({super.key});
@@ -32,8 +29,7 @@ class _ChatPageState extends ConsumerState<GroupChatPage> {
                   itemCount: groups.length,
                   itemBuilder: (context, index) {
                     var receiver = Participant(
-                        id: groups[index].id,
-                        name: groups[index].groupName);
+                        id: groups[index].id, name: groups[index].groupName);
 
                     var sender = Participant(id: id);
                     return ListTile(
@@ -54,8 +50,7 @@ class _ChatPageState extends ConsumerState<GroupChatPage> {
                           ),
                         ),
                       ),
-                      title: Text(
-                          '${receiver.name ?? ''}'),
+                      title: Text('${receiver.name ?? ''}'),
                       subtitle: Text(
                         groups[index].lastMessage != null
                             ? (groups[index].lastMessage!.length > 10
@@ -109,7 +104,8 @@ class _ChatPageState extends ConsumerState<GroupChatPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Center(child: Image.asset('assets/pngs/nochat.png')),
+                      child:
+                          Center(child: Image.asset('assets/pngs/nochat.png')),
                     ),
                     Text('No group chat yet!')
                   ],

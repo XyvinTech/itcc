@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/edit_user.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/user_model.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
-import 'package:hef/src/data/utils/secure_storage.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/district.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/levels/zones.dart';
-import 'package:hef/src/interface/screens/web_view_screen.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/edit_user.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/utils/secure_storage.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/district.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/zones.dart';
+import 'package:itcc/src/interface/screens/web_view_screen.dart';
 
 Widget customDrawer({required UserModel user, required BuildContext context}) {
   NavigationService navigationService = NavigationService();
@@ -21,7 +21,7 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
           // Drawer Header
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset(scale: 5, 'assets/pngs/splash_logo.png'),
+            child: Image.asset(scale: 5, 'assets/svg/icons/itcc_logo.svg'),
           ),
           SizedBox(
             height: 20,

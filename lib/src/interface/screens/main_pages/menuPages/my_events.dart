@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/events_api/events_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/events_model.dart';
-import 'package:hef/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,10 +60,9 @@ class MyEventsPage extends StatelessWidget {
   }
 
   Widget eventCard({required BuildContext context, required Event event}) {
-    String startTime = DateFormat('hh:mm a').format(event.startTime!);
-    String startDate = DateFormat('yyyy-MM-dd').format(event.startDate!);
-    String endDate = DateFormat('hh:mm a').format(event.endDate!);
-    String endTime = DateFormat('yyyy-MM-dd').format(event.endTime!);
+    DateTime dateTime = DateTime.parse(event.eventDate.toString()).toLocal();
+
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.all(10),
@@ -141,7 +140,7 @@ class MyEventsPage extends StatelessWidget {
                               size: 20, color: Color(0xFF700F0F)),
                           const SizedBox(width: 5),
                           Text(
-                            startDate,
+                            formattedDate,
                             style: TextStyle(
                               fontSize: 14,
                               color: Color(0xFF700F0F),
@@ -151,27 +150,6 @@ class MyEventsPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFAED0E9),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      padding: const EdgeInsets.all(4),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.access_time,
-                              size: 20, color: Color(0xFF0E1877)),
-                          const SizedBox(width: 5),
-                          Text(
-                            startTime,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF0E1877),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ],
@@ -204,7 +182,7 @@ class MyEventsPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                if (event.link != null && event.link!='')
+                if (event.link != null && event.link != '')
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: ElevatedButton(

@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/models/msg_model.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_businesses.dart';
-import 'package:hef/src/interface/screens/main_pages/menuPages/my_products.dart';
-
+import 'package:itcc/src/data/models/msg_model.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_businesses.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_products.dart';
 
 class ReplyCard extends StatelessWidget {
   const ReplyCard({

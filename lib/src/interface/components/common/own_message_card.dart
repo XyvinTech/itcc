@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/models/msg_model.dart';
+import 'package:itcc/src/data/models/msg_model.dart';
 
 class OwnMessageCard extends StatelessWidget {
   const OwnMessageCard(

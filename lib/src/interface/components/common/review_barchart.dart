@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/api_routes/review_api/review_api.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/models/review_model.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/models/review_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 
 Map<int, int> getRatingDistribution(List<ReviewModel> reviews) {
   Map<int, int> distribution = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};

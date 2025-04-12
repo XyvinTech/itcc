@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/constants/style_constants.dart';
-import 'package:hef/src/data/globals.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
 
 class BlinkingFloatingArrow extends StatefulWidget {
   const BlinkingFloatingArrow({super.key});
@@ -61,9 +61,8 @@ class _BlinkingFloatingArrowState extends State<BlinkingFloatingArrow>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-          
-                  Text('Swipe down',
-                      style: kBodyTitleB.copyWith(color: kPrimaryColor)),
+                Text('Swipe down',
+                    style: kBodyTitleB.copyWith(color: kPrimaryColor)),
                 Icon(Icons.arrow_downward, size: 48, color: kPrimaryColor),
               ],
             ),

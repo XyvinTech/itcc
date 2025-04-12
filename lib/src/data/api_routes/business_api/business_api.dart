@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/business_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/business_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'business_api.g.dart';
 

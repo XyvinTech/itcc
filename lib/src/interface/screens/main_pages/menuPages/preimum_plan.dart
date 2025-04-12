@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/services/save_qr.dart';
-import 'package:hef/src/data/services/snackbar_service.dart';
-import 'package:hef/src/interface/components/Buttons/primary_button.dart';
-import 'package:hef/src/interface/components/ModalSheets/payment_model_sheet.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/services/save_qr.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/ModalSheets/payment_model_sheet.dart';
 import 'package:screenshot/screenshot.dart';
 
 class PremiumPlanPage extends StatefulWidget {
@@ -284,7 +284,6 @@ class _PremiumPlanPageState extends State<PremiumPlanPage> {
                           fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 16.0),
-      
                     const SizedBox(height: 8.0),
                     Container(
                       decoration: BoxDecoration(

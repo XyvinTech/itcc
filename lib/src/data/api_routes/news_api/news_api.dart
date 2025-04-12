@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/news_model.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/news_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'news_api.g.dart';

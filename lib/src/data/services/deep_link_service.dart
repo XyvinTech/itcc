@@ -1,11 +1,11 @@
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hef/src/data/api_routes/events_api/events_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/globals.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/services/navgitor_service.dart';
 
 class DeepLinkService {
   static final DeepLinkService _instance = DeepLinkService._internal();
@@ -70,8 +70,7 @@ class DeepLinkService {
           if (pathSegments.length > 1) {
             final userId = pathSegments[1];
             try {
-       
-              final user = await UserService. fetchUserDetails(userId);
+              final user = await UserService.fetchUserDetails(userId);
               NavigationService.navigatorKey.currentState
                   ?.pushNamed('IndividualPage', arguments: {
                 'sender': Participant(id: id),
@@ -156,17 +155,17 @@ class DeepLinkService {
   String? getDeepLinkPath(String screen, {String? id}) {
     switch (screen) {
       case 'chat':
-        return id != null ? 'hef://app/chat/$id' : 'hef://app/chat';
+        return id != null ? 'itcc://app/chat/$id' : 'itcc://app/chat';
       case 'event':
-        return id != null ? 'hef://app/event/$id' : 'hef://app/event';
+        return id != null ? 'itcc://app/event/$id' : 'itcc://app/event';
       case 'my_subscription':
-        return 'hef://app/my_subscription';
+        return 'itcc://app/my_subscription';
       case 'my_products':
-        return 'hef://app/my_products';
+        return 'itcc://app/my_products';
       case 'my_feeds':
-        return 'hef://app/my_feeds';
+        return 'itcc://app/my_feeds';
       case 'mainpage':
-        return 'hef://app/mainpage';
+        return 'itcc://app/mainpage';
 
       default:
         return null;

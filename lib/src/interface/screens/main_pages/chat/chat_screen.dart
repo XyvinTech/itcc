@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hef/src/data/api_routes/chat_api/chat_api.dart';
-import 'package:hef/src/data/api_routes/user_api/user_data/user_data.dart';
-import 'package:hef/src/data/constants/color_constants.dart';
-import 'package:hef/src/data/models/chat_model.dart';
-import 'package:hef/src/data/models/msg_model.dart';
-import 'package:hef/src/data/notifiers/user_notifier.dart';
-import 'package:hef/src/interface/components/Dialogs/blockPersonDialog.dart';
-import 'package:hef/src/interface/components/Dialogs/report_dialog.dart';
-import 'package:hef/src/interface/components/common/own_message_card.dart';
-import 'package:hef/src/interface/components/common/reply_card.dart';
-import 'package:hef/src/interface/screens/main_pages/profile/profile_preview.dart';
+import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/models/msg_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/interface/components/Dialogs/blockPersonDialog.dart';
+import 'package:itcc/src/interface/components/Dialogs/report_dialog.dart';
+import 'package:itcc/src/interface/components/common/own_message_card.dart';
+import 'package:itcc/src/interface/components/common/reply_card.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:intl/intl.dart';
 
 class IndividualPage extends ConsumerStatefulWidget {

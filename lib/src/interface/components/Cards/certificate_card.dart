@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:hef/src/data/models/user_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
 
-import 'package:hef/src/interface/components/DropDown/remove_edit_dropdown.dart';
+import 'package:itcc/src/interface/components/DropDown/remove_edit_dropdown.dart';
 
 class CertificateCard extends StatelessWidget {
   final VoidCallback? onRemove;
