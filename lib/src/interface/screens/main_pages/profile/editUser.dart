@@ -623,8 +623,7 @@ class _EditUserState extends ConsumerState<EditUser> {
                                       width: 100,
                                       height: 100,
                                       child: Image.asset(
-                                          scale: 5,
-                                          'assets/svg/icons/itcc_logo.svg'),
+                                          'assets/pngs/itcc_logo.png'),
                                     ),
                                   ),
                                   actions: [

@@ -156,7 +156,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           Align(
             alignment: Alignment.center,
             child: Image.asset(
-              'assets/svg/icons/itcc_logo.svg',
+              scale: 8,
+              'assets/pngs/itcc_logo_group.png',
             ),
           ),
           if (hasVersionCheckError)

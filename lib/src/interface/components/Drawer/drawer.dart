@@ -21,10 +21,13 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
           // Drawer Header
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset(scale: 5, 'assets/svg/icons/itcc_logo.svg'),
+            child: Image.asset(
+              'assets/pngs/itcc_logo_group.png',
+              scale: 20,
+            ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Container(
             decoration: const BoxDecoration(color: Color(0xFFF7F7FC)),

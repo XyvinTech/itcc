@@ -230,15 +230,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   const WebViewScreen(
                                                 color: kPrimaryColor,
                                                 url:
-                                                    'https://www.itccconnect.com/',
+                                                    'https://www.indotransworld.org/',
                                                 title: 'ITCC Connect',
                                               ),
                                             ),
                                           );
                                         },
                                         child: Image.asset(
-                                            scale: 5,
-                                            'assets/svg/icons/itcc_logo.svg'),
+                                            'assets/pngs/itcc_logo.png'),
                                       ),
                                       SizedBox(
                                         width: 20,

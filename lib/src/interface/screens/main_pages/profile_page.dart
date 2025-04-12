@@ -347,8 +347,9 @@ class ProfilePage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                      scale: 5,
-                                      'assets/svg/icons/itcc_logo.svg'),
+                                    'assets/pngs/itcc_logo.png',
+                                    scale: 20,
+                                  ),
                                   Spacer(),
                                   RichText(
                                     text: TextSpan(

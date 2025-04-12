@@ -309,9 +309,8 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10),
-                                      child: Image.asset(
-                                          scale: 5,
-                                          'assets/svg/icons/itcc_logo.svg'),
+                                      child: Image.asset(       scale: 20,
+                                          'assets/pngs/itcc_logo.png'),
                                     ),
                                     Text(
                                       'Member ID: ${user.memberId}',

@@ -46,7 +46,7 @@ class SocketIoClient {
       _groupMessageController.stream;
 
   void connect(String senderId, WidgetRef ref) {
-    final uri = 'wss://api.itccconnect.in/api/v1/chat?userId=$senderId';
+    final uri = 'wss://api.itccconnect.com/api/v1/chat?userId=$senderId';
 
     _socket = IO.io(
       uri,

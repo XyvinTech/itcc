@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter_svg/svg.dart';
 import 'package:itcc/src/data/api_routes/products_api/products_api.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
@@ -152,8 +153,7 @@ class _EnterProductsPageState extends ConsumerState<EnterProductsPage> {
                 child: SizedBox(
                   width: 100,
                   height: 100,
-                  child:
-                      Image.asset(scale: 5, 'assets/svg/icons/itcc_logo.svg'),
+                  child: Image.asset('assets/pngs/itcc_logo.png'),
                 ),
               ),
               bottom: PreferredSize(

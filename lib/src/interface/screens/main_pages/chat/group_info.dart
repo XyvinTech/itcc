@@ -45,7 +45,7 @@ class GroupInfoPage extends StatelessWidget {
                       width: 100,
                       height: 100,
                       child: Image.asset(
-                        'assets/svg/icons/itcc_logo.svg',
+                        'assets/pngs/itcc_logo.png',
                         fit: BoxFit.contain,
                       ),
                     ),
