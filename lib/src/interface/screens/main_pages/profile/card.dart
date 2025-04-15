@@ -252,7 +252,7 @@ class ProfileCard extends StatelessWidget {
                               child: QrImageView(
                                 size: 285,
                                 data:
-                                    'https://admin.itccconnect.in/user/${user.uid}',
+                                    'https://admin.itccconnect.com/user/${user.uid}',
                               ),
                             ),
                             const SizedBox(height: 20),
