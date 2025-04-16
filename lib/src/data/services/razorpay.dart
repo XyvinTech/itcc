@@ -1,86 +1,144 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/services/snackbar_service.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class PaymentPage extends StatefulWidget {
+class RazorpayScreen extends StatefulWidget {
+  final double amount;
+  final String category;
+
+  const RazorpayScreen({
+    super.key,
+    required this.amount,
+    required this.category,
+  });
+
   @override
-  _PaymentPageState createState() => _PaymentPageState();
+  State<RazorpayScreen> createState() => _RazorpayScreenState();
 }
 
-class _PaymentPageState extends State<PaymentPage> {
+class _RazorpayScreenState extends State<RazorpayScreen> {
   late Razorpay _razorpay;
-
+  SnackbarService snackbarService = SnackbarService();
   @override
   void initState() {
     super.initState();
     _razorpay = Razorpay();
-
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    initiatePayment();
+  }
+
+  String? payment_id;
+  void initiatePayment() async {
+    final url = Uri.parse('$baseUrl/payment/make-payment');
+    log('requesting url:$url');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'amount': widget.amount,
+        'category': widget.category,
+      }),
+    );
+
+    final responseData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final payment = responseData['data'];
+      payment_id = payment['_id'];
+      var options = {
+        'key': 'rzp_test_99fYYSq2KTEScN',
+        'amount': widget.amount,
+        'currency': 'INR',
+        'name': 'ITCC CONNECT',
+        'description': 'Payment for ${widget.category}',
+        'order_id': payment['gatewayId'],
+
+        // 'prefill': {
+        //   'contact': '1234567890',
+        //   'email': 'test@example.com',
+        // }
+      };
+
+      try {
+        _razorpay.open(options);
+      } catch (e) {
+        debugPrint('Error: $e');
+      }
+    } else {
+      log(response.body);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${responseData['message']}')),
+      );
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    log("SUCCESS RESPONSE:${response.data}");
+    final callbackUrl =
+        Uri.parse('$baseUrl/payment/razorpay-callback?paymentId=$payment_id');
+    final callbackResponse = await http.post(
+      callbackUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'razorpayPaymentId': response.paymentId,
+        'razorpayOrderId': response.orderId,
+        'razorpaySignature': response.signature,
+      }),
+    );
+
+    final responseData = jsonDecode(callbackResponse.body);
+
+    if (callbackResponse.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Payment success: ${responseData['message']}')),
+      );
+      Navigator.pop(context, true); // success flag
+    } else {
+      log(responseData.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                'Payment verification failed: ${responseData['message']}')),
+      );
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    snackbarService.showSnackBar('Payment Failed');
+    log("PAYMENT ERROR:${response.message}");
+    Navigator.pop(context, false);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('External Wallet: ${response.walletName}')),
+    );
   }
 
   @override
   void dispose() {
-    _razorpay.clear(); 
+    _razorpay.clear();
     super.dispose();
-  }
-
-  void openCheckout() {
-    var options = {
-      'key': 'rzp_test_YourKeyHere',
-      'amount': 50000, // Amount in paise (50000 = ₹500)
-      'name': 'Your App Name',
-      'description': 'Payment for order #12345',
-      'prefill': {
-        'contact': '9123456789',
-        'email': 'test@example.com',
-      },
-      'external': {
-        'wallets': ['paytm']
-      }
-    };
-
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint('Error: $e');
-    }
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
-    debugPrint("Payment Success: ${response.paymentId}");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Payment Successful! ID: ${response.paymentId}")),
-    );
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-    debugPrint("Payment Error: ${response.code} | ${response.message}");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Payment Failed: ${response.message}")),
-    );
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-    debugPrint("External Wallet: ${response.walletName}");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Wallet Selected: ${response.walletName}")),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Razorpay Payment')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: openCheckout,
-          child: Text('Pay ₹500'),
-        ),
-      ),
+    return const Scaffold(
+      backgroundColor: kPrimaryLightColor,
+      body: Center(child: LoadingAnimation()),
     );
   }
 }

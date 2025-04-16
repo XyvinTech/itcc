@@ -12,6 +12,7 @@ import 'package:itcc/src/data/models/activity_model.dart';
 import 'package:itcc/src/data/models/analytics_model.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:intl/intl.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:http/http.dart' as http;
@@ -397,9 +398,7 @@ class ActivityApiService {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
-                ),
+                LoadingAnimation(),
                 SizedBox(height: 16),
                 Text(
                   'Downloading report...',
