@@ -13,7 +13,7 @@ import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
-import 'package:itcc/src/interface/screens/main_pages/profile/profile_p.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:shimmer/shimmer.dart';
 

@@ -12,7 +12,7 @@ import 'package:itcc/src/interface/components/Dialogs/blockPersonDialog.dart';
 import 'package:itcc/src/interface/components/Dialogs/report_dialog.dart';
 import 'package:itcc/src/interface/components/common/own_message_card.dart';
 import 'package:itcc/src/interface/components/common/reply_card.dart';
-import 'package:itcc/src/interface/screens/main_pages/profile/profile_p.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:intl/intl.dart';
 
