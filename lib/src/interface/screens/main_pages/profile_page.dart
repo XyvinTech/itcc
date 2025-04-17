@@ -383,7 +383,7 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          captureAndShareWidgetScreenshot(context);
+                      captureAndShareOrDownloadWidgetScreenshot(context);
                         },
                         child: SvgPicture.asset(
                             color: kPrimaryColor,

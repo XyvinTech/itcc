@@ -17,6 +17,7 @@ import 'package:itcc/src/interface/components/Cards/award_card.dart';
 import 'package:itcc/src/interface/components/Cards/certificate_card.dart';
 import 'package:itcc/src/interface/components/animations/glowing_profile.dart';
 import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/custom_widgets/custom_icon_container.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/components/shimmers/preview_shimmer.dart';
 import 'package:intl/intl.dart';
@@ -94,18 +95,18 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                 style: kSubHeadingL,
               ),
             ),
-            backgroundColor: kPrimaryLightColor,
+            backgroundColor: kWhite,
             body: asyncUser.when(
               data: (user) {
                 final designations = user.company!
                     .map((i) => i.designation)
-                    .where((d) => d != null && d!.isNotEmpty)
+                    .where((d) => d != null && d.isNotEmpty)
                     .map((d) => d!)
                     .toList();
 
                 final companyNames = user.company!
                     .map((i) => i.name)
-                    .where((n) => n != null && n!.isNotEmpty)
+                    .where((n) => n != null && n.isNotEmpty)
                     .map((n) => n!)
                     .toList();
                 String joinedDate =
@@ -283,6 +284,61 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                                       ),
                                                       SizedBox(
                                                         height: 20,
+                                                      ),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 6),
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            border: Border.all(
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    255,
+                                                                    234,
+                                                                    226,
+                                                                    226))),
+                                                        // Use IntrinsicWidth to make the container only as wide as needed
+                                                        child: IntrinsicWidth(
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min, // This makes the Row take minimum space
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            10),
+                                                                child: Image.asset(
+                                                                    scale: 20,
+                                                                    'assets/pngs/itcc_logo.png'),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width:
+                                                                      10), // Add spacing between elements
+                                                              Text(
+                                                                  'Member ID: ${user.memberId}',
+                                                                  style: kSmallerTitleB
+                                                                      .copyWith(
+                                                                          color:
+                                                                              kPrimaryColor)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
                                                       )
                                                     ],
                                                   ),
@@ -296,252 +352,162 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 60,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 6),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 234, 226, 226))),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Image.asset(
-                                          scale: 20,
-                                          'assets/pngs/itcc_logo.png'),
-                                    ),
-                                    Text(
-                                      'Member ID: ${user.memberId}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Container(
-                              //   padding: const EdgeInsets.only(left: 10, right: 10),
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.white,
-                              //       borderRadius: BorderRadius.circular(10),
-                              //       border: Border.all(
-                              //           color: const Color.fromARGB(255, 234, 226, 226))),
-                              //   child: Padding(
-                              //     padding: const EdgeInsets.all(8.0),
-                              //     child: Row(
-                              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Flexible(
-                              //             child: Text(
-                              //                 'College: ${user.college?.collegeName ?? ''}'))
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
+
                               const SizedBox(
                                 height: 20,
                               ),
-                              // const Row(
-                              //   children: [
-                              //     Padding(
-                              //       padding: EdgeInsets.only(left: 10),
-                              //       child: Text(
-                              //         'Personal',
-                              //         style: TextStyle(
-                              //             fontSize: 17, fontWeight: FontWeight.w600),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const Icon(Icons.phone,
-                                            color: kPrimaryColor),
-                                        const SizedBox(width: 10),
-                                        Text(user.phone.toString()),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  if (user.email != null)
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.email,
-                                              color: kPrimaryColor),
-                                          const SizedBox(width: 10),
-                                          Text(user.email ?? ''),
-                                        ],
-                                      ),
-                                    ),
-                                  const SizedBox(height: 10),
-                                  if (user.address != null)
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.location_on,
-                                              color: kPrimaryColor),
-                                          const SizedBox(width: 10),
-                                          if (user.address != null)
-                                            Expanded(
-                                              child: Text(
-                                                user.address!,
-                                              ),
-                                            )
-                                        ],
-                                      ),
-                                    ),
-                                  const SizedBox(height: 10),
-                                  if (user.secondaryPhone?.whatsapp != null &&
-                                      user.secondaryPhone!.whatsapp!.isNotEmpty)
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Row(
-                                        children: [
-                                          const Icon(FontAwesomeIcons.whatsapp,
-                                              color: kPrimaryColor),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Text(
-                                                user.secondaryPhone!.whatsapp!),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  if (user.secondaryPhone?.business != null &&
-                                      user.secondaryPhone!.business!.isNotEmpty)
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            color: kPrimaryColor,
-                                            'assets/svg/icons/whatsapp-business.svg',
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Text(
-                                                user.secondaryPhone?.business ??
-                                                    ''),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              const SizedBox(height: 60),
-                              if (user.bio != null &&
-                                  user.bio != '' &&
-                                  user.bio != 'null')
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Image.asset(
-                                        'assets/pngs/qoutes.png',
-                                        color: kPrimaryColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               if (user.bio != null &&
                                   user.bio != '' &&
                                   user.bio != 'null')
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Flexible(child: Text('''${user.bio}''')),
-                                    ],
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: kTertiary,
+                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'About',
+                                            style: kBodyTitleB.copyWith(
+                                                color: kBlack),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Row(
+                                            children: [
+                                              Flexible(
+                                                  child: Text(
+                                                '''${user.bio}''',
+                                                style: kSmallTitleR,
+                                              )),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-
                               const SizedBox(
-                                height: 50,
+                                height: 10,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Consumer(
-                                  builder: (context, ref, child) {
-                                    final asyncReviews = ref.watch(
-                                        fetchReviewsProvider(
-                                            userId: user.uid ?? ''));
-                                    return asyncReviews.when(
-                                      data: (reviews) {
-                                        return Column(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: kTertiary,
+                                      )),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Contact Info',
+                                          style: kBodyTitleB.copyWith(
+                                              color: kBlack),
+                                        ),
+                                        const SizedBox(height: 15),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
-                                            ReviewBarChart(
-                                              reviews: reviews ?? [],
-                                            ),
-                                            if (reviews.isNotEmpty)
-                                              ListView.builder(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                itemCount: reviewsToShow,
-                                                itemBuilder: (context, index) {
-                                                  final ratingDistribution =
-                                                      getRatingDistribution(
-                                                          reviews);
-                                                  final averageRating =
-                                                      getAverageRating(reviews);
-                                                  final totalReviews =
-                                                      reviews.length;
-                                                  return ReviewsCard(
-                                                    review: reviews[index],
-                                                    ratingDistribution:
-                                                        ratingDistribution,
-                                                    averageRating:
-                                                        averageRating,
-                                                    totalReviews: totalReviews,
-                                                  );
-                                                },
-                                              ),
-                                            if (reviewsToShow < reviews.length)
-                                              TextButton(
-                                                onPressed: () {
-                                                  ref
-                                                      .read(reviewsProvider
-                                                          .notifier)
-                                                      .showMoreReviews(
-                                                          reviews.length);
-                                                },
-                                                child: Text('View More'),
-                                              ),
+                                            CustomIconContainer(
+                                                icon: Icons.phone),
+                                            const SizedBox(width: 10),
+                                            Text(user.phone.toString()),
                                           ],
-                                        );
-                                      },
-                                      loading: () => const Center(
-                                          child: LoadingAnimation()),
-                                      error: (error, stackTrace) =>
-                                          const SizedBox(),
-                                    );
-                                  },
+                                        ),
+                                        const SizedBox(height: 15),
+                                        if (user.email != null)
+                                          Row(
+                                            children: [
+                                              CustomIconContainer(
+                                                  icon: Icons.email),
+                                              const SizedBox(width: 10),
+                                              Text(user.email ?? ''),
+                                            ],
+                                          ),
+                                        const SizedBox(height: 15),
+                                        if (user.address != null)
+                                          Row(
+                                            children: [
+                                              CustomIconContainer(
+                                                  icon: Icons.location_on),
+                                              const SizedBox(width: 10),
+                                              if (user.address != null)
+                                                Expanded(
+                                                  child: Text(
+                                                    user.address!,
+                                                  ),
+                                                )
+                                            ],
+                                          ),
+                                        const SizedBox(height: 15),
+                                        if (user.secondaryPhone?.whatsapp !=
+                                                null &&
+                                            user.secondaryPhone!.whatsapp!
+                                                .isNotEmpty)
+                                          Row(
+                                            children: [
+                                              CustomIconContainer(
+                                                icon: FontAwesomeIcons.whatsapp,
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                child: Text(user
+                                                    .secondaryPhone!.whatsapp!),
+                                              ),
+                                            ],
+                                          ),
+                                        const SizedBox(height: 15),
+                                        if (user.secondaryPhone?.business !=
+                                                null &&
+                                            user.secondaryPhone!.business!
+                                                .isNotEmpty)
+                                          Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: kGreyLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2.0),
+                                                  child: SvgPicture.asset(
+                                                    color: kPrimaryColor,
+                                                    'assets/svg/icons/whatsapp-business.svg',
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Expanded(
+                                                child: Text(user.secondaryPhone
+                                                        ?.business ??
+                                                    ''),
+                                              )
+                                            ],
+                                          ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
+
+                              const SizedBox(
+                                height: 20,
+                              ),
+
                               // if (user.id != id)
                               //   Row(
                               //     children: [
@@ -626,45 +592,71 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                               //   ],
                               // ),
                               if (user.social?.isNotEmpty == true)
-                                const Row(
-                                  children: [
-                                    Text(
-                                      'Social Media',
-                                      style: TextStyle(
-                                        color: Color(0xFF2C2829),
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: kTertiary,
+                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text('Social Media',
+                                                  style: kBodyTitleB.copyWith(
+                                                      color: kBlack)),
+                                            ],
+                                          ),
+                                          if (user.social?.isNotEmpty == true)
+                                            for (int index = 0;
+                                                index < user.social!.length;
+                                                index++)
+                                              customSocialPreview(index,
+                                                  social: user.social![index]),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              if (user.social?.isNotEmpty == true)
-                                for (int index = 0;
-                                    index < user.social!.length;
-                                    index++)
-                                  customSocialPreview(index,
-                                      social: user.social![index]),
-                              if (user.websites?.isNotEmpty == true)
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 50),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Websites & Links',
-                                        style: TextStyle(
-                                            color: Color(0xFF2C2829),
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
                                   ),
                                 ),
+                              SizedBox(height: 10),
                               if (user.websites?.isNotEmpty == true)
-                                for (int index = 0;
-                                    index < user.websites!.length;
-                                    index++)
-                                  customWebsitePreview(index,
-                                      website: user.websites![index]),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: kTertiary,
+                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text('Websites & Links',
+                                                  style: kBodyTitleB.copyWith(
+                                                      color: kBlack)),
+                                            ],
+                                          ),
+                                          if (user.websites?.isNotEmpty == true)
+                                            for (int index = 0;
+                                                index < user.websites!.length;
+                                                index++)
+                                              customSocialPreview(index,
+                                                  isWebsite: true,
+                                                  social:
+                                                      user.websites![index]),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
                               const SizedBox(
                                 height: 30,
                               ),
@@ -702,73 +694,159 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                     ),
                                   ],
                                 ),
-                              const SizedBox(
-                                height: 40,
+                              if (user.videos?.isNotEmpty == true)
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text('Reviews',
+                                      style:
+                                          kBodyTitleB.copyWith(color: kBlack)),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Consumer(
+                                  builder: (context, ref, child) {
+                                    final asyncReviews = ref.watch(
+                                        fetchReviewsProvider(
+                                            userId: user.uid ?? ''));
+                                    return asyncReviews.when(
+                                      data: (reviews) {
+                                        return Column(
+                                          children: [
+                                            ReviewBarChart(
+                                              reviews: reviews ?? [],
+                                            ),
+                                            if (reviews.isNotEmpty)
+                                              ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                itemCount: reviewsToShow,
+                                                itemBuilder: (context, index) {
+                                                  final ratingDistribution =
+                                                      getRatingDistribution(
+                                                          reviews);
+                                                  final averageRating =
+                                                      getAverageRating(reviews);
+                                                  final totalReviews =
+                                                      reviews.length;
+                                                  return ReviewsCard(
+                                                    review: reviews[index],
+                                                    ratingDistribution:
+                                                        ratingDistribution,
+                                                    averageRating:
+                                                        averageRating,
+                                                    totalReviews: totalReviews,
+                                                  );
+                                                },
+                                              ),
+                                            if (reviewsToShow < reviews.length)
+                                              TextButton(
+                                                onPressed: () {
+                                                  ref
+                                                      .read(reviewsProvider
+                                                          .notifier)
+                                                      .showMoreReviews(
+                                                          reviews.length);
+                                                },
+                                                child: Text('View More'),
+                                              ),
+                                          ],
+                                        );
+                                      },
+                                      loading: () => const Center(
+                                          child: LoadingAnimation()),
+                                      error: (error, stackTrace) =>
+                                          const SizedBox(),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
                               ),
                               if (user.certificates?.isNotEmpty == true)
-                                const Row(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'Certificates',
-                                      style: TextStyle(
-                                          color: Color(0xFF2C2829),
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, bottom: 8),
+                                      child: Text('Certificates',
+                                          style: kBodyTitleB.copyWith(
+                                              color: kBlack)),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets
+                                          .zero, // Remove default ListView padding
+                                      itemCount: user.certificates!.length,
+                                      itemBuilder: (context, index) {
+                                        return CertificateCard(
+                                          onEdit: null,
+                                          certificate:
+                                              user.certificates![index],
+                                          onRemove: null,
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
-                              if (user.certificates?.isNotEmpty == true)
-                                ListView.builder(
-                                  shrinkWrap:
-                                      true, // Let ListView take up only as much space as it needs
-                                  physics:
-                                      const NeverScrollableScrollPhysics(), // Disable ListView's internal scrolling
-                                  itemCount: user.certificates!.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 4.0), // Space between items
-                                      child: CertificateCard(
-                                        onEdit: null,
-                                        certificate: user.certificates![index],
-                                        onRemove: null,
+                              SizedBox(
+                                height: 10,
+                              ),
+                              if (user.awards?.isNotEmpty == true)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(bottom: 8, left: 10),
+                                      child: Text(
+                                        'Awards',
+                                        style:
+                                            kBodyTitleB.copyWith(color: kBlack),
                                       ),
-                                    );
-                                  },
-                                ),
-                              if (user.awards?.isNotEmpty == true)
-                                const Row(
-                                  children: [
-                                    Text(
-                                      'Awards',
-                                      style: TextStyle(
-                                          color: Color(0xFF2C2829),
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    GridView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets
+                                          .zero, // Remove default padding
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 8.0,
+                                        mainAxisSpacing:
+                                            16.0, // Reduced slightly from 20.0
+                                        childAspectRatio:
+                                            0.9, // Optional: adjust for better card proportions
+                                      ),
+                                      itemCount: user.awards!.length,
+                                      itemBuilder: (context, index) {
+                                        return AwardCard(
+                                          onEdit: null,
+                                          award: user.awards![index],
+                                          onRemove: null,
+                                        );
+                                      },
                                     ),
                                   ],
-                                ),
-                              if (user.awards?.isNotEmpty == true)
-                                GridView.builder(
-                                  shrinkWrap:
-                                      true, // Let GridView take up only as much space as it needs
-                                  physics:
-                                      const NeverScrollableScrollPhysics(), // Disable GridView's internal scrolling
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2, // Number of columns
-                                    crossAxisSpacing:
-                                        8.0, // Space between columns
-                                    mainAxisSpacing: 20.0, // Space between rows
-                                  ),
-                                  itemCount: user.awards!.length,
-                                  itemBuilder: (context, index) {
-                                    return AwardCard(
-                                      onEdit: null,
-                                      award: user.awards![index],
-                                      onRemove: null,
-                                    );
-                                  },
                                 ),
                             ]),
                           ),
@@ -859,7 +937,7 @@ class ProfilePreviewUsingId extends ConsumerWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(right: 16),
+      padding: const EdgeInsets.only(right: 16, left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -899,7 +977,8 @@ class ProfilePreviewUsingId extends ConsumerWidget {
     );
   }
 
-  Padding customSocialPreview(int index, {Link? social}) {
+  Padding customSocialPreview(int index,
+      {Link? social, bool isWebsite = false}) {
     log('Icons: ${svgIcons[index]}');
     return Padding(
       padding: const EdgeInsets.only(top: 15),
@@ -912,78 +991,44 @@ class ProfilePreviewUsingId extends ConsumerWidget {
         child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: const Color(0xFFF2F2F2),
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 5, bottom: 5),
-                  child: Align(
-                      alignment: Alignment.topCenter,
-                      widthFactor: 1.0,
-                      child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.white,
-                          ),
-                          width: 42,
-                          height: 42,
-                          child: SvgPicture.asset(svgIcons[index],
-                              color: kPrimaryColor))),
+              color: kWhite,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 4,
+                  offset: Offset(1, 1),
                 ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Text('${social?.name}')),
               ],
-            )),
-      ),
-    );
-  }
-
-  Padding customWebsitePreview(int index, {Link? website}) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: GestureDetector(
-        onTap: () {
-          if (website != null) {
-            _launchURL(website.link ?? '');
-          }
-        },
-        child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
+              border: Border.all(color: kTertiary),
               borderRadius: BorderRadius.circular(10),
-              color: const Color(0xFFF2F2F2),
             ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 5, bottom: 5),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    widthFactor: 1.0,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white,
-                        ),
-                        width: 42,
-                        height: 42,
-                        child: const Icon(
-                          Icons.language,
-                          color: kPrimaryColor,
-                        )),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 5, bottom: 5),
+                    child: Align(
+                        alignment: Alignment.topCenter,
+                        widthFactor: 1.0,
+                        child: isWebsite
+                            ? Icon(Icons.language, color: kPrimaryColor)
+                            : SvgPicture.asset(svgIcons[index],
+                                color: kPrimaryColor)),
                   ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Text('${website!.name}')),
-              ],
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 15),
+                      child: Text('${social?.name}')),
+                  Spacer(),
+                  SvgPicture.asset('assets/svg/icons/arrow_up_square.svg'),
+                  SizedBox(
+                    width: 10,
+                  )
+                ],
+              ),
             )),
       ),
     );

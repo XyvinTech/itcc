@@ -164,7 +164,7 @@ class _EditUserState extends ConsumerState<EditUser> {
   ImageSource? _certificateSource;
   NavigationService navigationService = NavigationService();
   final _formKey = GlobalKey<FormState>();
-
+SnackbarService snackbarService = SnackbarService();
   String productUrl = '';
 
   // Add new controller for tags
@@ -2266,6 +2266,7 @@ class _EditUserState extends ConsumerState<EditUser> {
   }
 
   Future<void> _editAward({required Award oldAward}) async {
+    
     if (_awardImageFIle != null) {
       // If a new image is selected, upload it
       try {

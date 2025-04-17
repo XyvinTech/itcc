@@ -75,8 +75,7 @@ class ReviewBarChart extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(width: 16), // Space between left and right side
-
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,6 +160,18 @@ class ReviewsCard extends StatelessWidget {
                         style: kSmallerTitleR.copyWith(
                           color: kBlack54,
                         )),
+                    const SizedBox(width: 8),
+                    Row(
+                      children: List.generate(5, (index) {
+                        return Icon(
+                          index < (review.rating ?? 0)
+                              ? Icons.star
+                              : Icons.star_border,
+                          color: Colors.amber,
+                          size: 12,
+                        );
+                      }),
+                    ),
                     // Spacer(),
                     // Text(review.createdAt)
                   ],

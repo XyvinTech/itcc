@@ -32,7 +32,7 @@ class CertificateCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 150.0,
+              height: 160.0,
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
