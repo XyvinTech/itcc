@@ -50,7 +50,7 @@ class _SendAnalyticRequestPageState
   String? selectedDistrict;
   String? selectedChapter;
   String? selectedMember;
-
+  bool _buttonPressed = false;
   String? selectedMeetingType;
   Future<String?> createAnalytic(String countryCode) async {
     final Map<String, dynamic> analytictData = {
@@ -719,18 +719,24 @@ class _SendAnalyticRequestPageState
               const SizedBox(height: 20.0),
               customButton(
                 label: 'Send Request',
+                isLoading: _buttonPressed,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    setState(() => _buttonPressed = true);
+
                     String? response =
                         await createAnalytic(countryCode ?? '91');
+
+                    setState(() => _buttonPressed = false);
+
                     if (response != null && response.contains('success')) {
                       Navigator.pop(context);
                       ref.invalidate(fetchAnalyticsProvider);
                     } else {
                       SnackbarService service = SnackbarService();
-
                       service.showSnackBar(response ?? 'Error');
                     }
+
                     print('Form Submitted');
                   }
                 },

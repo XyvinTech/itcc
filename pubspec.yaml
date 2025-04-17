@@ -75,6 +75,7 @@ dependencies:
   excel: ^4.0.6
   flutter_secure_storage: ^9.2.4
   razorpay_flutter: ^1.4.0
+  flutter_mosaic: ^0.0.4
 
 
 dev_dependencies:
