@@ -161,6 +161,7 @@ class UserModel {
   final String? subscription;
   final String? fcm;
   final DateTime? createdAt;
+  final DateTime? freeTrialEndDate;
   final String? level;
   final String? levelId;
   final String? levelName;
@@ -197,6 +198,7 @@ class UserModel {
     this.subscription,
     this.fcm,
     this.createdAt,
+    this.freeTrialEndDate,
     this.level,
     this.levelName,
     this.adminType,
@@ -264,6 +266,9 @@ class UserModel {
       createdAt: json['createdAt'] != null
           ? DateTime.tryParse(json['createdAt'] as String)
           : null,
+      freeTrialEndDate: json['freeTrialEndDate'] != null
+          ? DateTime.tryParse(json['freeTrialEndDate'] as String)
+          : null,
       level: json['level'] as String? ?? '',
       levelName: json['levelName'] as String? ?? '',
       levelId: json['levelId'] as String? ?? '',
@@ -306,6 +311,7 @@ class UserModel {
       'subscription': subscription,
       'fcm': fcm,
       'createdAt': createdAt?.toIso8601String(),
+      'freeTrialEndDate': freeTrialEndDate?.toIso8601String(),
       'level': level,
       'levelName': levelName,
       'adminType': adminType,
@@ -343,6 +349,7 @@ class UserModel {
     String? subscription,
     String? fcm,
     DateTime? createdAt,
+    DateTime? freeTrialEndDate,
     String? level,
     String? levelName,
     String? levelId,
@@ -377,6 +384,7 @@ class UserModel {
       subscription: subscription ?? this.subscription,
       fcm: fcm ?? this.fcm,
       createdAt: createdAt ?? this.createdAt,
+      freeTrialEndDate: freeTrialEndDate ?? this.freeTrialEndDate,
       level: level ?? this.level,
       levelName: levelName ?? this.levelName,
       levelId: levelId ?? this.levelId,

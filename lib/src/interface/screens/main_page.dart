@@ -18,6 +18,8 @@ import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/components/shimmers/promotion_shimmers.dart';
 import 'package:itcc/src/interface/screens/main_pages/admin/allocate_member.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_subscription.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/approval_waiting_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/business_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat_page.dart';
@@ -190,87 +192,23 @@ class _MainPageState extends ConsumerState<MainPage> {
         );
 
       case 'inactive':
+        return UserInactivePage();
+      case 'awaiting_payment':
+               WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MySubscriptionPage(),
+            ),
+          );
+        });
+     
         return Scaffold(
           body: Center(
-            child: Container(
-              padding: EdgeInsets.all(20.0),
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.orange[50],
-                borderRadius: BorderRadius.circular(15.0),
-                border: Border.all(
-                  color: Colors.orange,
-                  width: 1.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.warning_amber_rounded,
-                    color: Colors.orange,
-                    size: 48,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Your account is currently Inactive",
-                    style: TextStyle(
-                      color: Colors.orange[800],
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "Please complete your profile setup",
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  customButton(
-                    label: "Upload payment",
-                    onPressed: () {
-                      NavigationService navigationService = NavigationService();
-                      navigationService.pushNamed('MySubscriptionPage');
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () async {
-                      await SecureStorage.delete('token');
-                      await SecureStorage.delete('id');
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PhoneNumberScreen(),
-                        ),
-                      );
-                      await editUser(
-                          {"fcm": "", "name": user.name, "phone": user.phone});
-                    },
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(color: Colors.orange[800]),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            child: LoadingAnimation(),
           ),
         );
+    
 
       case 'suspended':
         return Scaffold(

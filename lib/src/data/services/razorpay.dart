@@ -2,14 +2,16 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class RazorpayScreen extends StatefulWidget {
+class RazorpayScreen extends ConsumerStatefulWidget {
   final double amount;
   final String category;
 
@@ -20,10 +22,10 @@ class RazorpayScreen extends StatefulWidget {
   });
 
   @override
-  State<RazorpayScreen> createState() => _RazorpayScreenState();
+  ConsumerState<RazorpayScreen> createState() => _RazorpayScreenState();
 }
 
-class _RazorpayScreenState extends State<RazorpayScreen> {
+class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
   late Razorpay _razorpay;
   SnackbarService snackbarService = SnackbarService();
   @override
@@ -57,7 +59,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
       final payment = responseData['data'];
       payment_id = payment['_id'];
       var options = {
-        'key':  dotenv.env['RZP_KEY'] ?? '',
+        'key': dotenv.env['RZP_KEY'] ?? '',
         'amount': widget.amount,
         'currency': 'INR',
         'name': 'ITCC CONNECT',
@@ -105,7 +107,8 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
     if (callbackResponse.statusCode == 200) {
       snackbarService
           .showSnackBar('Payment success: ${responseData['message']}');
-      Navigator.pop(context, true); // success flag
+      Navigator.pop(context, true);
+      ref.invalidate(getUserSubscriptionProvider);
     } else {
       log(responseData.toString());
       snackbarService.showSnackBar(
