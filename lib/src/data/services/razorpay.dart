@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
@@ -56,13 +57,15 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
       final payment = responseData['data'];
       payment_id = payment['_id'];
       var options = {
-        'key': 'rzp_test_99fYYSq2KTEScN',
+        'key':  dotenv.env['RZP_KEY'] ?? '',
         'amount': widget.amount,
         'currency': 'INR',
         'name': 'ITCC CONNECT',
         'description': 'Payment for ${widget.category}',
         'order_id': payment['gatewayId'],
-
+        // 'external': {
+        //   'wallets': ['paytm', 'phonepe', 'amazonpay']
+        // }
         // 'prefill': {
         //   'contact': '1234567890',
         //   'email': 'test@example.com',
@@ -76,9 +79,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
       }
     } else {
       log(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${responseData['message']}')),
-      );
+      snackbarService.showSnackBar('Error: ${responseData['message']}');
     }
   }
 
@@ -102,17 +103,13 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
     final responseData = jsonDecode(callbackResponse.body);
 
     if (callbackResponse.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Payment success: ${responseData['message']}')),
-      );
+      snackbarService
+          .showSnackBar('Payment success: ${responseData['message']}');
       Navigator.pop(context, true); // success flag
     } else {
       log(responseData.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-                'Payment verification failed: ${responseData['message']}')),
-      );
+      snackbarService.showSnackBar(
+          'Payment verification failed: ${responseData['message']}');
     }
   }
 

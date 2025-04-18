@@ -384,7 +384,7 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         RazorpayScreen(
-                                                            amount: 1,
+                                                            amount: 1000,
                                                             category:
                                                                 'membership')));
 
