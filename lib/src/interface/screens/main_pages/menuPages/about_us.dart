@@ -23,7 +23,10 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/pngs/aboutus1.png'),
+            Image.asset(
+              scale: 8,
+              'assets/pngs/itcc_logo_group.png',
+            ),
             SizedBox(height: 16),
             SizedBox(height: 8),
             Text(
