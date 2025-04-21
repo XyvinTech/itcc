@@ -375,8 +375,9 @@ class ProfilePreview extends ConsumerWidget {
                                     Text(user.phone.toString()),
                                   ],
                                 ),
-                                const SizedBox(height: 15),
-                                if (user.email != null)
+                                if (user.email != null && user.email != '')
+                                  const SizedBox(height: 15),
+                                if (user.email != null && user.email != '')
                                   Row(
                                     children: [
                                       CustomIconContainer(icon: Icons.email),
@@ -384,8 +385,9 @@ class ProfilePreview extends ConsumerWidget {
                                       Text(user.email ?? ''),
                                     ],
                                   ),
-                                const SizedBox(height: 15),
-                                if (user.address != null)
+                                if (user.address != null && user.address != '')
+                                  const SizedBox(height: 15),
+                                if (user.address != null && user.address != '')
                                   Row(
                                     children: [
                                       CustomIconContainer(

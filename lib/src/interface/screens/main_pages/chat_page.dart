@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/chat_dash.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/groupchat.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/members.dart';
 
-class PeoplePage extends StatelessWidget {
+class PeoplePage extends ConsumerWidget {
   const PeoplePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userAsync = ref.watch(userProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userAsync.whenOrNull(data: (user) {
+      
+        if (user.status == 'trial') {
+          showDialog(
+            context: context,
+            builder: (_) => const PremiumDialog(),
+          );
+        }
+      });
+    });
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
             backgroundColor: kWhite,
             body: SafeArea(

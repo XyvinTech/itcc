@@ -426,8 +426,11 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                             Text(user.phone.toString()),
                                           ],
                                         ),
-                                        const SizedBox(height: 15),
-                                        if (user.email != null)
+                                        if (user.address != null &&
+                                            user.address != '')
+                                          const SizedBox(height: 15),
+                                        if (user.email != null &&
+                                            user.email != '')
                                           Row(
                                             children: [
                                               CustomIconContainer(
@@ -436,26 +439,30 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                               Text(user.email ?? ''),
                                             ],
                                           ),
-                                        const SizedBox(height: 15),
-                                        if (user.address != null)
+                                        if (user.address != null &&
+                                            user.address != '')
+                                          const SizedBox(height: 15),
+                                        if (user.address != null &&
+                                            user.address != '')
                                           Row(
                                             children: [
                                               CustomIconContainer(
                                                   icon: Icons.location_on),
                                               const SizedBox(width: 10),
-                                              if (user.address != null)
-                                                Expanded(
-                                                  child: Text(
-                                                    user.address!,
-                                                  ),
-                                                )
+                                              Expanded(
+                                                child: Text(
+                                                  user.address!,
+                                                ),
+                                              )
                                             ],
                                           ),
-                                        const SizedBox(height: 15),
                                         if (user.secondaryPhone?.whatsapp !=
                                                 null &&
-                                            user.secondaryPhone!.whatsapp!
-                                                .isNotEmpty)
+                                            user.secondaryPhone?.whatsapp != '')
+                                          const SizedBox(height: 15),
+                                        if (user.secondaryPhone?.whatsapp !=
+                                                null &&
+                                            user.secondaryPhone?.whatsapp != '')
                                           Row(
                                             children: [
                                               CustomIconContainer(

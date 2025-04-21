@@ -5,8 +5,10 @@ import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/events_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/screens/main_pages/event/qr_scanner_page.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -429,29 +431,43 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage> {
                         isLoading: isRegistering,
                         onPressed: canRegister
                             ? () async {
-                                if (!registered &&
-                                    widget.event.status != 'cancelled') {
-                                  setState(() {
-                                    isRegistering = true;
+                                final userAsync = ref.watch(userProvider);
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  userAsync.whenOrNull(data: (user) async {
+                                    if (user.status == 'trial') {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => const PremiumDialog(),
+                                      );
+                                    } else {
+                                      if (!registered &&
+                                          widget.event.status != 'cancelled') {
+                                        setState(() {
+                                          isRegistering = true;
+                                        });
+
+                                        try {
+                                          await markEventAsRSVP(
+                                              widget.event.id!);
+
+                                          setState(() {
+                                            widget.event.rsvp?.add(id);
+                                            registered = widget.event.rsvp
+                                                    ?.contains(id) ??
+                                                false;
+                                          });
+
+                                          ref.invalidate(fetchEventsProvider);
+                                        } finally {
+                                          setState(() {
+                                            isRegistering = false;
+                                          });
+                                        }
+                                      }
+                                    }
                                   });
-
-                                  try {
-                                    await markEventAsRSVP(widget.event.id!);
-
-                                    setState(() {
-                                      widget.event.rsvp?.add(id);
-                                      registered =
-                                          widget.event.rsvp?.contains(id) ??
-                                              false;
-                                    });
-
-                                    ref.invalidate(fetchEventsProvider);
-                                  } finally {
-                                    setState(() {
-                                      isRegistering = false;
-                                    });
-                                  }
-                                }
+                                });
                               }
                             : null,
                         fontSize: 16,

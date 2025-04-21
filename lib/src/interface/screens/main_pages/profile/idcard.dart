@@ -62,7 +62,8 @@ class IDCardScreen extends ConsumerWidget {
                 style: kSmallTitleR,
               ),
             ),
-      body: Screenshot(controller: screenshotController,
+      body: Screenshot(
+        controller: screenshotController,
         child: Container(
           width: double.infinity,
           height: double.infinity,
@@ -131,12 +132,13 @@ class IDCardScreen extends ConsumerWidget {
                                     ),
                                     const SizedBox(height: 12),
                                     Text(user.name ?? '',
-                                        style:
-                                            kLargeTitleB.copyWith(color: kWhite),
+                                        style: kLargeTitleB.copyWith(
+                                            color: kWhite),
                                         textAlign: TextAlign.center),
                                     // Use AnimatedSize to create smooth transition for content
                                     AnimatedSize(
-                                      duration: const Duration(milliseconds: 400),
+                                      duration:
+                                          const Duration(milliseconds: 400),
                                       curve: Curves.easeInOut,
                                       child: Container(
                                         width: double.infinity,
@@ -156,11 +158,12 @@ class IDCardScreen extends ConsumerWidget {
                                                                 .join(' | '),
                                                             style:
                                                                 const TextStyle(
-                                                                    fontSize: 12,
+                                                                    fontSize:
+                                                                        12,
                                                                     color: Colors
                                                                         .white),
-                                                            textAlign:
-                                                                TextAlign.center,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                           ),
                                                         if (companyNames
                                                             .isNotEmpty)
@@ -169,11 +172,12 @@ class IDCardScreen extends ConsumerWidget {
                                                                 .join(' | '),
                                                             style:
                                                                 const TextStyle(
-                                                                    fontSize: 12,
+                                                                    fontSize:
+                                                                        12,
                                                                     color: Colors
                                                                         .white),
-                                                            textAlign:
-                                                                TextAlign.center,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                           ),
                                                       ],
                                                     ),
@@ -184,24 +188,32 @@ class IDCardScreen extends ConsumerWidget {
                                                     children: [
                                                       Text(
                                                           '${levelData['stateName']} / ',
-                                                          style: const TextStyle(
-                                                              color: kWhite,
-                                                              fontSize: 12)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: kWhite,
+                                                                  fontSize:
+                                                                      12)),
                                                       Text(
                                                           '${levelData['zoneName']} / ',
-                                                          style: const TextStyle(
-                                                              color: kWhite,
-                                                              fontSize: 12)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: kWhite,
+                                                                  fontSize:
+                                                                      12)),
                                                       Text(
                                                           '${levelData['districtName']} / ',
-                                                          style: const TextStyle(
-                                                              color: kWhite,
-                                                              fontSize: 12)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: kWhite,
+                                                                  fontSize:
+                                                                      12)),
                                                       Text(
                                                           '${levelData['chapterName']}',
-                                                          style: const TextStyle(
-                                                              color: kWhite,
-                                                              fontSize: 12)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: kWhite,
+                                                                  fontSize:
+                                                                      12)),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 5),
@@ -222,8 +234,8 @@ class IDCardScreen extends ConsumerWidget {
                                                       decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                10),
+                                                            BorderRadius
+                                                                .circular(10),
                                                       ),
                                                       child: IntrinsicWidth(
                                                         child: Row(
@@ -300,7 +312,7 @@ class IDCardScreen extends ConsumerWidget {
                                   ),
                                   Container(
                                     margin: const EdgeInsets.symmetric(
-                                        horizontal: 30),
+                                        horizontal: 20),
                                     padding: const EdgeInsets.all(20),
                                     decoration: BoxDecoration(
                                       color: Colors.white.withOpacity(0.3),
@@ -312,13 +324,17 @@ class IDCardScreen extends ConsumerWidget {
                                             icon: Icons.phone,
                                             text: user.phone ?? ''),
                                         const SizedBox(height: 10),
-                                        ContactRow(
-                                            icon: Icons.email,
-                                            text: user.email ?? ''),
+                                        if (user.email != '' &&
+                                            user.email != null)
+                                          ContactRow(
+                                              icon: Icons.email,
+                                              text: user.email ?? ''),
                                         const SizedBox(height: 10),
-                                        ContactRow(
-                                            icon: Icons.location_on,
-                                            text: user.address ?? ''),
+                                        if (user.address != '' &&
+                                            user.address != null)
+                                          ContactRow(
+                                              icon: Icons.location_on,
+                                              text: user.address ?? ''),
                                       ],
                                     ),
                                   ),
@@ -332,8 +348,6 @@ class IDCardScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-        
-                // Fullscreen toggle button - positioned similarly in both modes
                 Positioned(
                   top: isFullScreen ? 10 : 20,
                   right: 16,
@@ -371,8 +385,8 @@ class IDCardScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-        
-                // Download button at bottom (only visible in normal mode)
+
+    
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -408,7 +422,8 @@ class IDCardScreen extends ConsumerWidget {
                                       fontSize: 16,
                                       label: 'Share',
                                       onPressed: () async {
-                                        captureAndShareOrDownloadWidgetScreenshot(context);
+                                        captureAndShareOrDownloadWidgetScreenshot(
+                                            context);
                                       }),
                                 ),
                                 const SizedBox(
@@ -423,7 +438,9 @@ class IDCardScreen extends ConsumerWidget {
                                       fontSize: 15,
                                       label: 'Download QR',
                                       onPressed: () async {
-                                             captureAndShareOrDownloadWidgetScreenshot(context,download: true);
+                                        captureAndShareOrDownloadWidgetScreenshot(
+                                            context,
+                                            download: true);
                                       }),
                                 ),
                               ],

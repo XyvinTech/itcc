@@ -7,6 +7,7 @@ import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/product_model.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
@@ -427,7 +428,7 @@ class _EnterProductsPageState extends ConsumerState<EnterProductsPage> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (widget.isEditing) {
-                            // Show confirmation dialog before updating the product
+            
                             final bool confirmUpdate = await showDialog(
                               context: context,
                               builder: (context) => AlertDialog(

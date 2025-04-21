@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -109,6 +110,7 @@ class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
           .showSnackBar('Payment success: ${responseData['message']}');
       Navigator.pop(context, true);
       ref.invalidate(getUserSubscriptionProvider);
+      ref.read(userProvider.notifier).refreshUser();
     } else {
       log(responseData.toString());
       snackbarService.showSnackBar(

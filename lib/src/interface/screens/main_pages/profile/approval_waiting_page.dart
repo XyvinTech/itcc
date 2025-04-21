@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/data/utils/secure_storage.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/my_subscription.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/premium_subscription_flow.dart';
@@ -20,18 +22,32 @@ class UserInactivePage extends ConsumerWidget {
           final asyncUser = ref.watch(userProvider);
           return asyncUser.when(
             data: (user) {
-       
+        
               if (user.status?.toLowerCase() == 'trial') {
-          
-                return PremiumSubscriptionFlow();
+            return premium_flow_shown != 'true'
+    ? PremiumSubscriptionFlow(
+        onComplete: () async {
+          await SecureStorage.write('premium_flow_shown_${user.uid}', 'true');
+          premium_flow_shown = 'true';
+          Navigator.of(context).pushReplacementNamed('MainPage');
+          Navigator.of(context).pushNamed('MySubscriptionPage');
+        },
+      )
+    : Builder(
+        builder: (context) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed('MainPage');
+          });
+          return const SizedBox.shrink();
+        },
+      );
               } else if (user.status?.toLowerCase() == 'active') {
-            
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.of(context).pushReplacementNamed('MainPage');
                 });
                 return const SizedBox.shrink();
               }
-              // Default: show waiting page
+          
               return RefreshIndicator(
                 backgroundColor: Colors.white,
                 color: kPrimaryColor,

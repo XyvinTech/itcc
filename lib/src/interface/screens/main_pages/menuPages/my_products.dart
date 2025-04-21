@@ -13,6 +13,7 @@ import 'package:itcc/src/data/models/product_model.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/image_upload.dart';
 import 'package:itcc/src/interface/components/Cards/product_card.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/add_product.dart';
 import 'package:path/path.dart';
@@ -180,7 +181,19 @@ class _MyProductPageState extends ConsumerState<MyProductPage> {
                   right: 16,
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      _openModalSheet(sheet: 'product');
+                      final userAsync = ref.watch(userProvider);
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        userAsync.whenOrNull(data: (user) {
+                          if (user.status == 'trial') {
+                            showDialog(
+                              context: context,
+                              builder: (_) => const PremiumDialog(),
+                            );
+                          } else {
+                            _openModalSheet(sheet: 'product');
+                          }
+                        });
+                      });
                     },
                     label: Padding(
                       padding: const EdgeInsets.all(8.0),

@@ -146,7 +146,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             if (user.status?.toLowerCase() == 'trial' && !premiumFlowShown) {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (_) => PremiumSubscriptionFlow(
-                  onComplete: () async {
+                  onComplete: () async {      premium_flow_shown = 'true';
                     await SecureStorage.write(premiumFlagKey, 'true');
                     navigationService.pushNamedReplacement('MainPage');
                   },

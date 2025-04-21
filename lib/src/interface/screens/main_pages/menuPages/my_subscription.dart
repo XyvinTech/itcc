@@ -284,8 +284,8 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
                                                           kPrimaryColor,
                                                       decoration: TextDecoration
                                                           .underline,
-                                                      fontStyle: FontStyle
-                                                          .italic,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w600,
@@ -312,13 +312,10 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
                                         _buildBasicCard(
                                             'Self-manage products and services'),
                                         _buildBasicCard(
-                                            'Post requirements (admin approval needed)'),
+                                            'Product and Business enquiries'),
                                         _buildBasicCard(
-                                            'Search and send enquiries to suppliers'),
-                                        _buildBasicCard(
-                                            'Receive product and service enquiries'),
-                                        _buildBasicCard(
-                                            'Premium profile features'),
+                                            'Direct Messaging Access'),
+
                                         // _buildPremiumCard(
                                         //     'Provide feedback to ITCC office'),
                                         // _buildPremiumCard('Chat with everyone'),

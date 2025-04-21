@@ -8,6 +8,7 @@ import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/models/analytics_model.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/components/ModalSheets/analytics.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
@@ -326,9 +327,9 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage>
               indicatorWeight: 3,
               dividerColor: kWhite,
               indicatorSize: TabBarIndicatorSize.tab,
-              labelColor: Colors.orange,
+              labelColor: kPrimaryColor,
               unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.orange,
+              indicatorColor: kPrimaryColor,
               tabs: const [
                 Tab(text: "Received"),
                 Tab(text: "Sent"),
@@ -351,8 +352,20 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          NavigationService navigationService = NavigationService();
-          navigationService.pushNamed('SendAnalyticRequest');
+          final userAsync = ref.watch(userProvider);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            userAsync.whenOrNull(data: (user) {
+              if (user.status == 'trial') {
+                showDialog(
+                  context: context,
+                  builder: (_) => const PremiumDialog(),
+                );
+              } else {
+                NavigationService navigationService = NavigationService();
+                navigationService.pushNamed('SendAnalyticRequest');
+              }
+            });
+          });
         },
         backgroundColor: kPrimaryColor,
         child: const Icon(

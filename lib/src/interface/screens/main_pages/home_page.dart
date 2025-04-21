@@ -171,8 +171,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                               valueListenable:
                                                   _advancedDrawerController,
                                               builder: (_, value, __) {
-                                                return AnimatedSwitcher(
-                                                    duration: const Duration(
+                                                return const AnimatedSwitcher(
+                                                    duration: Duration(
                                                         milliseconds: 250),
                                                     child: Icon(Icons.menu));
                                               },
@@ -239,7 +239,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         child: Image.asset(
                                             'assets/pngs/itcc_logo.png'),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 20,
                                       )
                                     ],
@@ -274,12 +274,139 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     ],
                                   ),
                                 ),
+                                Center(
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xFF274198),
+                                          Color(0xFF0D1532)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.12),
+                                          blurRadius: 16,
+                                          offset: const Offset(0, 8),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Image.asset(
+                                            'assets/pngs/trial_round.png',
+                                            width: 150,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(20),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.lightbulb,
+                                                      color: Colors.amber[400],
+                                                      size: 24),
+                                                  const SizedBox(width: 10),
+                                                  const Expanded(
+                                                    child: Text(
+                                                      'Your 30-day free trial is active!',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              const Text(
+                                                'Enjoy premium features and grow your business with Dubai Connect.',
+                                                style: TextStyle(
+                                                  color: Color(0xFFC9D2F2),
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                '${widget.user.freeTrialEndDate?.difference(DateTime.now()).inDays.clamp(0, double.infinity).toInt()} days left — upgrade anytime!',
+                                                style: const TextStyle(
+                                                  color: Color(0xFFB0B9D9),
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 14),
+                                              SizedBox(
+                                                width: 130,
+                                                height: 36,
+                                                child: ElevatedButton(
+                                                  style: const ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStatePropertyAll(
+                                                            Color(0xFFE7ECFF)),
+                                                    foregroundColor:
+                                                        MaterialStatePropertyAll(
+                                                            Color(0xFF232C5B)),
+                                                    shape:
+                                                        MaterialStatePropertyAll(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    8)),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    navigationService.pushNamed(
+                                                        'MySubscription');
+                                                  },
+                                                  child: const Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text('Subscribe',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      Icon(
+                                                          Icons
+                                                              .arrow_outward_outlined,
+                                                          size: 16),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 15, top: 10, bottom: 10),
                                   child: Row(
                                     children: [
-                                      Text('DASHBOARD', style: kSmallTitleR),
+                                      const Text('DASHBOARD',
+                                          style: kSmallTitleR),
                                       const Spacer(),
                                       IconButton(
                                         icon: const Icon(Icons.filter_list),
@@ -322,7 +449,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   '${userDashboard.businessGiven}',
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                   width:
                                                       8), // Optional spacing between cards
                                               Expanded(
@@ -341,7 +468,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   '${userDashboard.referralGiven}',
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                   width:
                                                       8), // Optional spacing between cards
                                               Expanded(
@@ -654,7 +781,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   error: (error, stackTrace) =>
                                       const SizedBox(),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 // Videos Carousel
@@ -686,7 +813,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                             Colors.black),
                                     ],
                                   ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                               ],

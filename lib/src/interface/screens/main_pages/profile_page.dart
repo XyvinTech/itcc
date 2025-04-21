@@ -1,20 +1,35 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/services/share_qr.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   final UserModel user;
   const ProfilePage({super.key, required this.user});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     NavigationService navigationService = NavigationService();
-
+    final userAsync = ref.watch(userProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userAsync.whenOrNull(data: (user) {
+        log(user.status ?? '');
+        if (user.status == 'trial') {
+          showDialog(
+            context: context,
+            builder: (_) => const PremiumDialog(),
+          );
+        }
+      });
+    });
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -295,16 +310,19 @@ class ProfilePage extends StatelessWidget {
                                       Text(user.phone!),
                                     ],
                                   ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.email,
-                                          color: kPrimaryColor),
-                                      const SizedBox(width: 10),
-                                      Text(user.email!),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
+                                  if (user.email != '' && user.email != null)
+                                    const SizedBox(height: 10),
+                                  if (user.email != '' && user.email != null)
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.email,
+                                            color: kPrimaryColor),
+                                        const SizedBox(width: 10),
+                                        Text(user.email!),
+                                      ],
+                                    ),
+                                  if (user.email != '' && user.email != null)
+                                    const SizedBox(height: 10),
                                   if (user.address != null &&
                                       user.address != '')
                                     Row(
@@ -383,7 +401,7 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                      captureAndShareOrDownloadWidgetScreenshot(context);
+                          captureAndShareOrDownloadWidgetScreenshot(context);
                         },
                         child: SvgPicture.asset(
                             color: kPrimaryColor,

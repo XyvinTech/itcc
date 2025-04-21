@@ -817,8 +817,16 @@ class ReusableFeedPostSkeleton extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 15),
+                _buildShimmerContainer(height: 12, width: 100),
+                const SizedBox(height: 15),
+              ],
+            ),
             // Image Skeleton
-            _buildShimmerContainer(height: 200.0, width: double.infinity),
+            _buildShimmerContainer(height: 400.0, width: double.infinity),
             const SizedBox(height: 16),
             // Content Text Skeleton
             _buildShimmerContainer(height: 14, width: double.infinity),
