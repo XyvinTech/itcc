@@ -5,6 +5,7 @@ import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/utils/secure_storage.dart';
+import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/chapters.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/district.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
@@ -64,7 +65,14 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
                   ),
                   IconButton(
                       onPressed: () {
-                        navigationService.pushNamed('EditUser');
+                        if (user.status != 'trial') {
+                          navigationService.pushNamed('EditUser');
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (_) => const PremiumDialog(),
+                          );
+                        }
                       },
                       icon: SvgPicture.asset('assets/svg/icons/edit_icon.svg')),
                 ],
