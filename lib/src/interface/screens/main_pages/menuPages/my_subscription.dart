@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/subscription_model.dart';
@@ -58,23 +59,23 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
     return null;
   }
 
-  String? getRenewalYear(String? period) {
-    if (period != null) {
-      final parts = period.split('-');
-      return parts.isNotEmpty ? parts[0] : null;
-    } else {
-      return '';
-    }
-  }
+  // String? getRenewalYear(String? period) {
+  //   if (period != null) {
+  //     final parts = period.split('-');
+  //     return parts.isNotEmpty ? parts[0] : null;
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
-  String? getExpiryYear(String? period) {
-    if (period != null) {
-      final parts = period.split('-');
-      return parts.length > 1 ? parts[1] : null;
-    } else {
-      return '';
-    }
-  }
+  // String? getExpiryYear(String? period) {
+  //   if (period != null) {
+  //     final parts = period.split('-');
+  //     return parts.length > 1 ? parts[1] : null;
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
   Subscription? membershipSubscription;
   Subscription? appSubscription;
@@ -215,8 +216,9 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
                                                       BorderRadius.circular(16),
                                                 ),
                                                 child: Text(
-                                                  appSubscription?.status ==
-                                                          'active'
+                                                  membershipSubscription
+                                                              ?.status ==
+                                                          'paid'
                                                       ? 'Active'
                                                       : 'Inactive',
                                                   style: const TextStyle(
@@ -228,80 +230,40 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
                                               ),
                                             ],
                                           ),
-                                          if (getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  null &&
-                                              getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  '')
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                          if (getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  null &&
-                                              getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  '')
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Last renewed on:',
-                                                  style:
-                                                      TextStyle(fontSize: 13),
-                                                ),
-                                                const Spacer(),
-                                                Text(
-                                                  getRenewalYear(
-                                                          membershipSubscription
-                                                              ?.parentSub
-                                                              ?.academicYear) ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                    decorationColor:
-                                                        kPrimaryColor,
-                                                    decoration: TextDecoration
-                                                        .underline, // Adds underline
-                                                    fontStyle: FontStyle
-                                                        .italic, // Makes text italic
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kPrimaryColor,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          if (getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  null &&
-                                              getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  '')
+
+                                          // Row(
+                                          //   children: [
+                                          //     const Text(
+                                          //       'Last renewed on:',
+                                          //       style:
+                                          //           TextStyle(fontSize: 13),
+                                          //     ),
+                                          //     const Spacer(),
+                                          //     Text(
+                                          //       getRenewalYear(
+                                          //               membershipSubscription
+                                          //                   ?.parentSub
+                                          //                   ?.academicYear) ??
+                                          //           '',
+                                          //       style: const TextStyle(
+                                          //         decorationColor:
+                                          //             kPrimaryColor,
+                                          //         decoration: TextDecoration
+                                          //             .underline, // Adds underline
+                                          //         fontStyle: FontStyle
+                                          //             .italic, // Makes text italic
+                                          //         fontSize: 12,
+                                          //         fontWeight: FontWeight.w600,
+                                          //         color: kPrimaryColor,
+                                          //       ),
+                                          //     ),
+                                          //   ],
+                                          // ),
+                                          if (membershipSubscription != null)
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                          if (getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  null &&
-                                              getRenewalYear(
-                                                      membershipSubscription
-                                                          ?.parentSub
-                                                          ?.academicYear) !=
-                                                  '')
+                                          if (membershipSubscription != null)
                                             Row(
                                               children: [
                                                 const Text(
@@ -310,24 +272,26 @@ class _MySubscriptionPageState extends State<MySubscriptionPage> {
                                                       TextStyle(fontSize: 13),
                                                 ),
                                                 const Spacer(),
-                                                Text(
-                                                  getExpiryYear(
-                                                          membershipSubscription
-                                                              ?.parentSub
-                                                              ?.academicYear) ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                    decorationColor:
-                                                        kPrimaryColor,
-                                                    decoration: TextDecoration
-                                                        .underline, // Adds underline
-                                                    fontStyle: FontStyle
-                                                        .italic, // Makes text italic
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kPrimaryColor,
+                                                if (membershipSubscription !=
+                                                    null)
+                                                  Text(
+                                                    DateFormat('dd/MM/yyyy')
+                                                        .format(
+                                                            membershipSubscription!
+                                                                .expiryDate!),
+                                                    style: const TextStyle(
+                                                      decorationColor:
+                                                          kPrimaryColor,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      fontStyle: FontStyle
+                                                          .italic,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: kPrimaryColor,
+                                                    ),
                                                   ),
-                                                ),
                                               ],
                                             )
                                         ],

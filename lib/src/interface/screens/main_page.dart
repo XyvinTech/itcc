@@ -134,7 +134,7 @@ class _MainPageState extends ConsumerState<MainPage> {
   Widget _buildStatusPage(String status, UserModel user) {
     final selectedIndex = ref.watch(selectedIndexProvider);
     switch (status.toLowerCase()) {
-      case 'active':
+      case 'active'||'trial':
         return Scaffold(
           body: Center(
             child: _widgetOptions.elementAt(selectedIndex),
@@ -409,6 +409,11 @@ class _MainPageState extends ConsumerState<MainPage> {
           return PhoneNumberScreen();
         },
         data: (user) {
+          // Force name completion before anything else
+          if (user.name == null || user.name!.trim().isEmpty) {
+            // Show the non-skippable profile completion screen
+            return const ProfileCompletionScreen();
+          }
           subscriptionType = user.subscription ?? 'free';
           _initialize(user: user);
           return PopScope(

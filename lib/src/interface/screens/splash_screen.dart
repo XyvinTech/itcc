@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/app_version_model.dart';
+import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/deep_link_service.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/utils/secure_storage.dart';
@@ -21,6 +23,7 @@ import 'package:itcc/src/data/services/navgitor_service.dart';
 
 import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
 import 'package:flutter_upgrade_version/models/package_info.dart';
+import 'package:itcc/src/interface/screens/main_pages/profile/premium_subscription_flow.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   @override
@@ -113,10 +116,46 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Future<void> initialize() async {
     NavigationService navigationService = NavigationService();
     await checktoken();
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 2), () async {
       if (!isAppUpdateRequired) {
         print('Logged in : $LoggedIn');
         if (LoggedIn) {
+          // Fetch user data
+          final container = ProviderContainer();
+          final asyncUser = container.read(userProvider);
+          UserModel? user;
+          if (asyncUser is AsyncData<UserModel>) {
+            user = asyncUser.value;
+          } else {
+            // fallback: try to refresh and get user
+            await container.read(userProvider.notifier).refreshUser();
+            final refreshed = container.read(userProvider);
+            if (refreshed is AsyncData<UserModel>) {
+              user = refreshed.value;
+            }
+          }
+          if (user != null) {
+            // 1. Awaiting payment: go to MySubscriptionPage
+            if (user.status?.toLowerCase() == 'awaiting_payment') {
+              navigationService.pushNamedReplacement('MySubscriptionPage');
+              return;
+            }
+            // 2. Trial: show premium flow only if not already shown
+            final premiumFlagKey = 'premium_flow_shown_${user.uid}';
+            final premiumFlowShown = (await SecureStorage.read(premiumFlagKey)) == 'true';
+            if (user.status?.toLowerCase() == 'trial' && !premiumFlowShown) {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (_) => PremiumSubscriptionFlow(
+                  onComplete: () async {
+                    await SecureStorage.write(premiumFlagKey, 'true');
+                    navigationService.pushNamedReplacement('MainPage');
+                  },
+                ),
+              ));
+              return;
+            }
+          }
+          // 3. Normal navigation
           final pendingDeepLink = _deepLinkService.pendingDeepLink;
           if (pendingDeepLink != null) {
             navigationService.pushNamedReplacement('MainPage').then((_) {

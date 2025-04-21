@@ -101,31 +101,43 @@ Future<Map<String, dynamic>> verifyOTP(
     return {};
   }
 }
-
 Future<Map<String, dynamic>> verifyUserDB(
     String idToken, String fcmToken, BuildContext context) async {
   SnackbarService snackbarService = SnackbarService();
-  final response = await http.post(
-    Uri.parse('$baseUrl/user/login'),
-    headers: {"Content-Type": "application/json"},
-    body: jsonEncode({"clientToken": idToken, "fcm": fcmToken}),
-  );
 
-  if (response.statusCode == 200) {
-    final Map<String, dynamic> responseBody = jsonDecode(response.body);
-    log(responseBody.toString(), name: 'LOGIN SUCCESS');
-    snackbarService.showSnackBar(responseBody['message']);
-    return responseBody['data'];
-  } else if (response.statusCode == 400) {
-    final Map<String, dynamic> responseBody = jsonDecode(response.body);
-    log(responseBody.toString(), name: ' LOGIN FAILED STATUS CODE 400');
-    snackbarService.showSnackBar(responseBody['message']);
-    return {};
-  } else {
-    final Map<String, dynamic> responseBody = jsonDecode(response.body);
+  final Uri url = Uri.parse('$baseUrl/user/login');
+  final Map<String, String> headers = {"Content-Type": "application/json"};
+  final Map<String, dynamic> body = {"clientToken": idToken, "fcm": fcmToken};
 
-    log(responseBody.toString(), name: 'LOGIN FAILED');
-    snackbarService.showSnackBar(responseBody['message']);
+  try {
+    log('Sending POST request to $url', name: 'VERIFY_USER_DB');
+    log('Request headers: $headers', name: 'VERIFY_USER_DB');
+    log('Request body: ${jsonEncode(body)}', name: 'VERIFY_USER_DB');
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    log('Received response: ${response.statusCode}', name: 'VERIFY_USER_DB');
+
+    final Map<String, dynamic> responseBody = jsonDecode(response.body);
+    log('Response body: $responseBody', name: 'VERIFY_USER_DB');
+
+    if (response.statusCode == 200) {
+      snackbarService.showSnackBar(responseBody['message'] ?? 'Login successful');
+      return responseBody['data'] ?? {};
+    } else if (response.statusCode == 400) {
+      snackbarService.showSnackBar(responseBody['message'] ?? 'Invalid request');
+      return {};
+    } else {
+      snackbarService.showSnackBar(responseBody['message'] ?? 'Something went wrong');
+      return {};
+    }
+  } catch (e, stackTrace) {
+    log('Exception during verifyUserDB: $e', name: 'VERIFY_USER_DB', error: e, stackTrace: stackTrace);
+    snackbarService.showSnackBar('Unexpected error occurred. Please try again.');
     return {};
   }
 }

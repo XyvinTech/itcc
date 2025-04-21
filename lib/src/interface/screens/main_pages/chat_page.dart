@@ -38,7 +38,7 @@ class PeoplePage extends StatelessWidget {
                           tabs: [
                             Tab(text: "MEMBERS"),
                             Tab(text: "CHAT LIST"),
-                            Tab(text: "GROUP CHAT"),
+                            // Tab(text: "GROUP CHAT"),
                           ],
                         ),
                       ),
@@ -49,7 +49,7 @@ class PeoplePage extends StatelessWidget {
                       children: [
                         const MembersPage(),
                         ChatDash(),
-                        GroupChatPage()
+                        // GroupChatPage()
                       ],
                     ),
                   ),

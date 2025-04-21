@@ -12,16 +12,7 @@ class EulaAgreementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     NavigationService navigationService = NavigationService();
     return Scaffold(
-      backgroundColor: kPrimaryLightColor,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: kPrimaryLightColor,
-        elevation: 0,
-        title: const Text(
-          'Terms & Conditions',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-        ),
-      ),
+      backgroundColor: kWhite,
       body: Column(
         children: [
           Expanded(
@@ -34,11 +25,10 @@ class EulaAgreementScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      // Save that user has agreed to terms
                       await SecureStorage.write('eula_agreed', 'true');
 
-                      navigationService.pushNamedReplacement('ProfileCompletion');
-                    
+                      navigationService
+                          .pushNamedReplacement('ProfileCompletion');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kPrimaryColor,

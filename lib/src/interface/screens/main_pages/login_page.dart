@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itcc/src/data/api_routes/user_api/admin/admin_activities_api.dart';
 import 'package:itcc/src/data/api_routes/user_api/login/user_login_api.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/edit_user.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
@@ -415,9 +416,90 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
         id = savedId;
         log('savedToken: $savedToken');
         log('savedId: $savedId');
-        ref.read(userProvider.notifier).refreshUser();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const EulaAgreementScreen()));
+        await ref.read(userProvider.notifier).refreshUser();
+        final asyncUser = ref.read(userProvider);
+        await asyncUser.when(
+          data: (user) async {
+            if (user == null || user.name == null || user.name!.trim().isEmpty) {
+              String? enteredName = await showDialog<String>(
+                context: context,
+                barrierDismissible: false,
+            builder: (context) {
+              final TextEditingController nameController = TextEditingController();
+              return Dialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                backgroundColor: kWhite,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Complete Your Profile',
+                        style: kDisplayTitleSB.copyWith(fontSize: 22, color: kPrimaryColor),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Please enter your full name to continue.',
+                        style: TextStyle(fontSize: 16, color: kGreyDark),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      TextField(
+                        controller: nameController,
+                        decoration: InputDecoration(
+                          hintText: 'Full Name',
+                          filled: true,
+                          fillColor: kPrimaryLightColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: kPrimaryColor, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: kPrimaryColor, width: 2),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        ),
+                        style: kDisplayTitleM.copyWith(fontSize: 16, color: kBlack),
+                      ),
+                    ])
+                 ) );
+                },
+              );
+              if (enteredName != null && enteredName.isNotEmpty) {
+                await asyncUser.when(
+                  data: (user) async {
+                    if (user != null) {
+                      // Call API to update name
+                      await editUser({'name': enteredName, "phone": widget.phone});
+                      ref.read(userProvider.notifier).updateName(name: enteredName);
+                      // Optionally, refresh user info again
+                      await ref.read(userProvider.notifier).refreshUser();
+                    }
+                  },
+                  error: (error, _) {
+                    // Handle error
+                  },
+                  loading: () {
+                    // Handle loading
+                  },
+                );
+              }
+            } else {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const EulaAgreementScreen()));
+            }
+          },
+          error: (error, _) {
+            // Handle error
+          },
+          loading: () {
+            // Handle loading
+          },
+        );
       } else {
         // CustomSnackbar.showSnackbar(context, 'Wrong OTP');
       }
@@ -430,11 +512,13 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
   }
 }
 
-class ProfileCompletionScreen extends StatelessWidget {
+class ProfileCompletionScreen extends ConsumerWidget {
   const ProfileCompletionScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider).value;
+    final bool nameMissing = user == null || user.name == null || user.name!.trim().isEmpty;
     return Scaffold(
       backgroundColor: kPrimaryLightColor,
       body: Center(
@@ -458,42 +542,38 @@ class ProfileCompletionScreen extends StatelessWidget {
               child: SizedBox(
                   height: 50,
                   width: double.infinity,
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return customButton(
-                          label: 'Next',
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    settings: const RouteSettings(
-                                        name: 'ProfileCompletion'),
-                                    builder: (context) => const EditUser()));
-                          },
-                          fontSize: 16);
-                    },
-                  )),
+                  child: customButton(
+                      label: 'Next',
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                settings: const RouteSettings(
+                                    name: 'ProfileCompletion'),
+                                builder: (context) => const EditUser()));
+                      },
+                      fontSize: 16)),
             ),
-            TextButton(
-              onPressed: () async {
-                // Check if user has agreed to EULA
-                final eulaAgreed = await SecureStorage.read('eula_agreed');
-                if (eulaAgreed != 'true') {
-                  // Show EULA agreement screen if not agreed
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (context) => const EulaAgreementScreen()),
-                  );
-                  return;
-                }
-
-                NavigationService navigationService = NavigationService();
-                navigationService.pushNamedReplacement('MainPage');
-              },
-              child: Text(
-                'Skip',
-                style: kSmallTitleB.copyWith(color: kPrimaryColor),
-              ),
-            )
+            if (!nameMissing)
+              TextButton(
+                onPressed: () async {
+                  // Check if user has agreed to EULA
+                  final eulaAgreed = await SecureStorage.read('eula_agreed');
+                  if (eulaAgreed != 'true') {
+                    // Show EULA agreement screen if not agreed
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => const EulaAgreementScreen()),
+                    );
+                    return;
+                  }
+                  NavigationService navigationService = NavigationService();
+                  navigationService.pushNamedReplacement('MainPage');
+                },
+                child: Text(
+                  'Skip',
+                  style: kSmallTitleB.copyWith(color: kPrimaryColor),
+                ),
+              )
           ],
         ),
       ),
