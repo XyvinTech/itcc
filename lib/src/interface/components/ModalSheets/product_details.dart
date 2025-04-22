@@ -211,18 +211,19 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    '${user.name ?? ''}'),
-                                Text('${user.company?[0].name ?? ''}'),
-                              ],
+                          if (user.company != null)
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      '${user.name ?? ''}'),
+                                  Text('${user.company?[0].name ?? ''}'),
+                                ],
+                              ),
                             ),
-                          ),
                           Consumer(
                             builder: (context, ref, child) {
                               return asyncReviews.when(

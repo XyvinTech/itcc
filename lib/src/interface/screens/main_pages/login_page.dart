@@ -502,9 +502,8 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
                       ref
                           .read(userProvider.notifier)
                           .updateName(name: enteredName);
-                      // Optionally, refresh user info again
+                    
                       await ref.read(userProvider.notifier).refreshUser();
-                      // Navigate to EULA agreement after name entry
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const EulaAgreementScreen(),
                       ));
