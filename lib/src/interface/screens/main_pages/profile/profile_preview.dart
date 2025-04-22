@@ -8,6 +8,7 @@ import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/globals.dart';
+import 'package:itcc/src/data/models/chat_model.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/services/extract_level_details.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
@@ -22,6 +23,7 @@ import 'package:itcc/src/interface/components/custom_widgets/custom_icon_contain
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/components/shimmers/preview_shimmer.dart';
 import 'package:intl/intl.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -799,17 +801,17 @@ class ProfilePreview extends ConsumerWidget {
                                 fontSize: 16,
                                 label: 'SAY HI',
                                 onPressed: () {
-                                  // final Participant receiver = Participant(
-                                  //   id: user.uid,
-                                  //   image: user.image ?? '',
-                                  //   name: user.name,
-                                  // );
-                                  // final Participant sender = Participant(id: id);
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => IndividualPage(
-                                  //           receiver: receiver,
-                                  //           sender: sender,
-                                  //         )));
+                                  final Participant receiver = Participant(
+                                    id: user.uid,
+                                    image: user.image ?? '',
+                                    name: user.name,
+                                  );
+                                  final Participant sender = Participant(id: id);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => IndividualPage(
+                                            receiver: receiver,
+                                            sender: sender,
+                                          )));
                                 }),
                           ),
                           const SizedBox(
