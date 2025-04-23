@@ -20,7 +20,7 @@ Future<void> main() async {
   );
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.playIntegrity,
-    appleProvider: AppleProvider.debug,
+    appleProvider: AppleProvider.appAttest,
   );
   await loadSecureData();
   await dotenv.load(fileName: ".env");
@@ -30,8 +30,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

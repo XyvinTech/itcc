@@ -83,13 +83,11 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                   width: double.infinity,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(
-                          20), // Set the desired radius for the top left corner
-                      topRight: Radius.circular(
-                          20), // Set the desired radius for the top right corner
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
                     child: Image.network(
-                      widget.product.image!, // Replace with your image URL
+                      widget.product.image ?? '',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Shimmer.fromColors(
@@ -111,7 +109,9 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                   child: Row(
                     children: [
                       Text(
-                        widget.product.name!,
+                        widget.product.name ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -212,18 +212,19 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                           ),
                           const SizedBox(width: 8),
                           if (user.company != null)
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      '${user.name ?? ''}'),
-                                  Text('${user.company?[0].name ?? ''}'),
-                                ],
+                            if (user.company!.isNotEmpty)
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        '${user.name ?? ''}'),
+                                    Text('${user.company?[0].name ?? ''}'),
+                                  ],
+                                ),
                               ),
-                            ),
                           Consumer(
                             builder: (context, ref, child) {
                               return asyncReviews.when(

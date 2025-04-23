@@ -83,6 +83,9 @@ class AnalyticsModalSheet extends ConsumerWidget {
               _buildDetailRow('Time', ' ${analytic.time}'),
             if (analytic.amount != null)
               _buildDetailRow('Amount', analytic.amount.toString() ?? ''),
+
+            _buildDetailRow(
+                'Venue', analytic.meetingLink == null ? 'Offline' : 'Online'),
             if (analytic.status == 'meeting_scheduled' &&
                 analytic.meetingLink != null)
               InkWell(
@@ -91,6 +94,7 @@ class AnalyticsModalSheet extends ConsumerWidget {
                   },
                   child: _buildDetailRow(
                       'Meeting Link', analytic.meetingLink ?? '')),
+
             _buildDetailRow('Status', analytic.status ?? '',
                 statusColor: _getStatusColor(analytic.status ?? '')),
             const SizedBox(height: 8),
