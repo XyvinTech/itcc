@@ -229,9 +229,11 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                                                 ),
                                                               ),
                                                           ],
-                                                        ),
+                                                        ),    if (levelData['chapterName'] !=
+                                                    'undefined')
                                                       const SizedBox(
-                                                          height: 10),
+                                                          height: 10),    if (levelData['chapterName'] !=
+                                                    'undefined')
                                                       Wrap(
                                                         alignment: WrapAlignment
                                                             .center,

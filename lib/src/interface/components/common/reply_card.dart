@@ -8,13 +8,13 @@ import 'package:itcc/src/interface/screens/main_pages/menuPages/my_products.dart
 
 class ReplyCard extends StatelessWidget {
   const ReplyCard({
-    Key? key,
+    super.key,
     required this.message,
     required this.time,
     this.status,
     this.product,
     this.business,
-  }) : super(key: key);
+  });
 
   final String message;
   final String time;

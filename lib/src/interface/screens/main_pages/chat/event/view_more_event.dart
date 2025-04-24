@@ -9,11 +9,11 @@ import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
-import 'package:itcc/src/interface/screens/main_pages/event/qr_scanner_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/chat/event/qr_scanner_page.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../components/Buttons/primary_button.dart';
+import '../../../../components/Buttons/primary_button.dart';
 
 class ViewMoreEventPage extends ConsumerStatefulWidget {
   final Event event;

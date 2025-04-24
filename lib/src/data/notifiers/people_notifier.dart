@@ -12,8 +12,9 @@ class PeopleNotifier extends _$PeopleNotifier {
   final int limit = 20;
   bool hasMore = true;
   String? searchQuery;
-  String? district; // Added district filter
-  List<String>? tags; // Added tags filter
+  String? district;
+  bool isFirstLoad = true;
+  List<String>? tags;
 
   @override
   List<UserModel> build() {
@@ -42,6 +43,7 @@ class PeopleNotifier extends _$PeopleNotifier {
 
       users = [...users, ...newUsers];
       pageNo++;
+      isFirstLoad = false;
       hasMore = newUsers.length == limit;
 
       Future(() {

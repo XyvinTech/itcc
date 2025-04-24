@@ -209,36 +209,41 @@ class ProfilePreview extends ConsumerWidget {
                                                       ),
                                                   ],
                                                 ),
-                                              const SizedBox(height: 10),
-                                              Wrap(
-                                                alignment: WrapAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    '${levelData['stateName']} / ',
-                                                    style: const TextStyle(
-                                                        color: kWhite,
-                                                        fontSize: 12),
-                                                  ),
-                                                  Text(
-                                                    '${levelData['zoneName']} / ',
-                                                    style: const TextStyle(
-                                                        color: kWhite,
-                                                        fontSize: 12),
-                                                  ),
-                                                  Text(
-                                                    '${levelData['districtName']} / ',
-                                                    style: const TextStyle(
-                                                        color: kWhite,
-                                                        fontSize: 12),
-                                                  ),
-                                                  Text(
-                                                    '${levelData['chapterName']} ',
-                                                    style: const TextStyle(
-                                                        color: kWhite,
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
-                                              ),
+                                              if (levelData['chapterName'] !=
+                                                  'undefined')
+                                                const SizedBox(height: 10),
+                                              if (levelData['chapterName'] !=
+                                                  'undefined')
+                                                Wrap(
+                                                  alignment:
+                                                      WrapAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      '${levelData['stateName']} / ',
+                                                      style: const TextStyle(
+                                                          color: kWhite,
+                                                          fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      '${levelData['zoneName']} / ',
+                                                      style: const TextStyle(
+                                                          color: kWhite,
+                                                          fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      '${levelData['districtName']} / ',
+                                                      style: const TextStyle(
+                                                          color: kWhite,
+                                                          fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      '${levelData['chapterName']} ',
+                                                      style: const TextStyle(
+                                                          color: kWhite,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
                                               const SizedBox(height: 5),
                                               Text(
                                                 'Joined Date: $joinedDate',
@@ -806,7 +811,8 @@ class ProfilePreview extends ConsumerWidget {
                                     image: user.image ?? '',
                                     name: user.name,
                                   );
-                                  final Participant sender = Participant(id: id);
+                                  final Participant sender =
+                                      Participant(id: id);
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => IndividualPage(
                                             receiver: receiver,

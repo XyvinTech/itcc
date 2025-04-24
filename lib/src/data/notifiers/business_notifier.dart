@@ -8,6 +8,7 @@ part 'business_notifier.g.dart';
 class BusinessNotifier extends _$BusinessNotifier {
   List<Business> businesses = [];
   bool isLoading = false;
+    bool isFirstLoad = true;
   int pageNo = 1;
   final int limit = 5;
   bool hasMore = true;
@@ -28,7 +29,7 @@ class BusinessNotifier extends _$BusinessNotifier {
       businesses = [...businesses, ...newBusinesses];
       pageNo++;
       hasMore = newBusinesses.length == limit;
-      state = businesses;
+      state = businesses;      isFirstLoad = false;
     } catch (e, stackTrace) {
       log(e.toString());
       log(stackTrace.toString());

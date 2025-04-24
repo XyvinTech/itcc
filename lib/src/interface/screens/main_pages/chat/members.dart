@@ -512,6 +512,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
     final users = ref.watch(peopleNotifierProvider);
     final isLoading = ref.read(peopleNotifierProvider.notifier).isLoading;
     final asyncChats = ref.watch(fetchChatThreadProvider);
+    final isFirstLoad = ref.read(peopleNotifierProvider.notifier).isFirstLoad;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -610,9 +611,9 @@ class _MembersPageState extends ConsumerState<MembersPage> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Display User List or No Data Message
-            if (users.isNotEmpty)
+            if (isFirstLoad)
+              const Center(child: LoadingAnimation())
+            else if (users.isNotEmpty)
               ListView.builder(
                 shrinkWrap: true, // Prevents infinite height
                 physics:
