@@ -521,7 +521,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Search Bar with Filter
+
             Container(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
               child: Column(
