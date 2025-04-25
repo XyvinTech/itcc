@@ -1023,44 +1023,59 @@ Widget customPoster({
   required BuildContext context,
   required Promotion poster,
 }) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(10), // Apply the border radius here
-      child: AspectRatio(
-        aspectRatio: 19 / 20,
-        child: Image.network(
-          poster.media ?? '',
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[100]!,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
+  return GestureDetector(onTap: () {
+    if(poster.link!=null){
+        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>  WebViewScreen(
+                            color: Colors.blue,
+                            url: poster.link??"",
+                            title: poster.title??'',
+                          ),
+                        ),
+                      );
+    }
+  },
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10), // Apply the border radius here
+        child: AspectRatio(
+          aspectRatio: 19 / 20,
+          child: Image.network(
+            poster.media ?? '',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            );
-          },
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) {
-              return child; // Image loaded successfully
-            }
-            // While the image is loading, show shimmer effect
-            return Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[100]!,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
+              );
+            },
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child; // Image loaded successfully
+              }
+              // While the image is loading, show shimmer effect
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     ),
