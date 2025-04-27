@@ -30,9 +30,7 @@ class AboutPage extends StatelessWidget {
             SizedBox(height: 16),
             SizedBox(height: 8),
             Text(
-              '''The Hindu Economic Forum is a non-profit, non-political Hindu organisation. The Hindu Economic Forum has been created to share and protect the Hindu business class.
-
-The forum will be serving as a collaborative platform, it unites entrepreneurs, industrialists, professionals, technocrats, investors, bankers, traders, and more to share tangible wealth, knowledge, expertise, and vital information.''',
+              '''The ITCC is a non-profit organisation that strives to be the indispensable resource for the business community. It is a voluntary organisation of business owners who are investing their money and time in the true development of the country and its people - working together TO GIVE AND GROW TOGETHER GLOBALLY. Our main motto is to build business relationships and educate people to enable the business communities and members to prosper.''',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),

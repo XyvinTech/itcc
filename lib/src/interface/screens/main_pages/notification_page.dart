@@ -12,16 +12,17 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: true,
-      // onWillPop: () async {
-      //   return true;
-      // },
-      child: Consumer(
-        builder: (context, ref, child) {
-          final asyncNotification = ref.watch(fetchNotificationsProvider);
+    return Consumer(
+      builder: (context, ref, child) {
+        final asyncNotification = ref.watch(fetchNotificationsProvider);
 
-          return Scaffold(
+        return PopScope(
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) {
+              ref.invalidate(fetchNotificationsProvider);
+            }
+          },
+          child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               title: Text(
@@ -73,9 +74,9 @@ class NotificationPage extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
