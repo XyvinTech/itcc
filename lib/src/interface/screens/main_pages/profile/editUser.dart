@@ -207,21 +207,25 @@ SnackbarService snackbarService = SnackbarService();
           try {
             String companyUrl = await imageUpload(_companyImageFile!.path);
             _companyImageSource = ImageSource.gallery;
+final companyList = ref.read(userProvider).value?.company ?? [];
 
-            final existingCompany =
-                ref.read(userProvider).value?.company?[companyIndex];
-            final updatedCompany = Company(
-              logo: companyUrl,
-              name: existingCompany?.name,
-              designation: existingCompany?.designation,
-              email: existingCompany?.email,
-              phone: existingCompany?.phone,
-              websites: existingCompany?.websites,
-            );
+final existingCompany = (companyIndex != null &&
+        companyIndex >= 0 &&
+        companyIndex < companyList.length)
+    ? companyList[companyIndex]
+    : null;
+     final updatedCompany = Company(
+  logo: companyUrl,
+  name: existingCompany?.name,
+  designation: existingCompany?.designation,
+  email: existingCompany?.email,
+  phone: existingCompany?.phone,
+  websites: existingCompany?.websites,
+);
 
-            ref
-                .read(userProvider.notifier)
-                .updateCompany(updatedCompany, companyIndex);
+// If it's a new entry, pass the correct index (append)
+final insertIndex = (existingCompany == null) ? companyList.length : companyIndex!;
+ref.read(userProvider.notifier).updateCompany(updatedCompany, insertIndex);
             return _companyImageFile;
           } catch (e) {
             print('Error uploading company logo: $e');
