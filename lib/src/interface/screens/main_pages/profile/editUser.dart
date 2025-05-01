@@ -164,7 +164,7 @@ class _EditUserState extends ConsumerState<EditUser> {
   ImageSource? _certificateSource;
   NavigationService navigationService = NavigationService();
   final _formKey = GlobalKey<FormState>();
-SnackbarService snackbarService = SnackbarService();
+  SnackbarService snackbarService = SnackbarService();
   String productUrl = '';
 
   // Add new controller for tags
@@ -207,25 +207,28 @@ SnackbarService snackbarService = SnackbarService();
           try {
             String companyUrl = await imageUpload(_companyImageFile!.path);
             _companyImageSource = ImageSource.gallery;
-final companyList = ref.read(userProvider).value?.company ?? [];
+            final companyList = ref.read(userProvider).value?.company ?? [];
 
-final existingCompany = (companyIndex != null &&
-        companyIndex >= 0 &&
-        companyIndex < companyList.length)
-    ? companyList[companyIndex]
-    : null;
-     final updatedCompany = Company(
-  logo: companyUrl,
-  name: existingCompany?.name,
-  designation: existingCompany?.designation,
-  email: existingCompany?.email,
-  phone: existingCompany?.phone,
-  websites: existingCompany?.websites,
-);
+            final existingCompany = (companyIndex != null &&
+                    companyIndex >= 0 &&
+                    companyIndex < companyList.length)
+                ? companyList[companyIndex]
+                : null;
+            final updatedCompany = Company(
+              logo: companyUrl,
+              name: existingCompany?.name,
+              designation: existingCompany?.designation,
+              email: existingCompany?.email,
+              phone: existingCompany?.phone,
+              websites: existingCompany?.websites,
+            );
 
 // If it's a new entry, pass the correct index (append)
-final insertIndex = (existingCompany == null) ? companyList.length : companyIndex!;
-ref.read(userProvider.notifier).updateCompany(updatedCompany, insertIndex);
+            final insertIndex =
+                (existingCompany == null) ? companyList.length : companyIndex!;
+            ref
+                .read(userProvider.notifier)
+                .updateCompany(updatedCompany, insertIndex);
             return _companyImageFile;
           } catch (e) {
             print('Error uploading company logo: $e');
@@ -955,15 +958,31 @@ ref.read(userProvider.notifier).updateCompany(updatedCompany, insertIndex);
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 25, left: 20, bottom: 15),
-                                child: Row(
+                                    top: 25, left: 20, right: 20, bottom: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Business Tags',
-                                        style: kSubHeadingB.copyWith(
-                                            color: const Color(0xFF2C2829))),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Business Tags',
+                                          style: kSubHeadingB.copyWith(
+                                              color: const Color(0xFF2C2829)),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      'If adding multiple words like IT Services, please write it as one word (itservices).',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
+
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),
@@ -2270,7 +2289,6 @@ ref.read(userProvider.notifier).updateCompany(updatedCompany, insertIndex);
   }
 
   Future<void> _editAward({required Award oldAward}) async {
-    
     if (_awardImageFIle != null) {
       // If a new image is selected, upload it
       try {
