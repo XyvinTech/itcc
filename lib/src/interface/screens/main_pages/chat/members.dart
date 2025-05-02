@@ -724,7 +724,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                       );
                     },
                     loading: () => const SizedBox.shrink(),
-                    error: (error, stackTrace) => Text('Error loading chats'),
+                    error: (error, stackTrace) {},
                   );
 
                   return GestureDetector(

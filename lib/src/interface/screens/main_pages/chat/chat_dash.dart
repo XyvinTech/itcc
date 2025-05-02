@@ -152,9 +152,7 @@ class _ChatDashState extends ConsumerState<ChatDash> {
             },
             loading: () => const Center(child: LoadingAnimation()),
             error: (error, stackTrace) {
-              return Center(
-                child: Text('$error'),
-              );
+              
             },
           ));
     });

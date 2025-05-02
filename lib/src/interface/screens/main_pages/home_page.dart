@@ -266,7 +266,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       ),
                                       if (widget.user.adminType != null &&
                                           widget.user.adminType != "")
-                                        Text(
+                                        Text( 
                                           ' - (${widget.user.adminType?.toUpperCase() ?? ''})',
                                           style: kBodyTitleR.copyWith(
                                               color: kPrimaryColor),
