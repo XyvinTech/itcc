@@ -13,6 +13,7 @@ import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/services/share_qr.dart';
 import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/components/animations/glowing_profile.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/idcard.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -152,11 +153,13 @@ class ProfilePage extends ConsumerWidget {
                                               borderColor: Colors.white,
                                               borderWidth: 3.0,
                                             ),
-                                            Text(
-                                              user.name ?? '',
-                                              style: kHeadTitleSB.copyWith(
-                                                  color: Colors.white),
-                                            ),
+                                    VerifiedName(
+  label: user.name ?? '',
+  textStyle: kHeadTitleSB,
+  labelColor: Colors.white,
+  iconSize: 18,
+  showBlueTick: true,
+),
                                             const SizedBox(height: 5),
                                             Column(
                                               children: [

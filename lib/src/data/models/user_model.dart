@@ -137,6 +137,7 @@ class UserModel {
   final String? memberId;
   final String? bloodgroup;
   final bool? isAdmin;
+  final bool? blueTick;
   final UserChapterModel? chapter;
   final String? image;
   final String? email;
@@ -174,6 +175,7 @@ class UserModel {
     this.memberId,
     this.bloodgroup,
     this.isAdmin,
+    this.blueTick,
     this.chapter,
     this.image,
     this.email,
@@ -213,6 +215,7 @@ class UserModel {
       memberId: json['memberId'] as String? ?? '',
       bloodgroup: json['bloodgroup'] as String? ?? '',
       isAdmin: json['isAdmin'] as bool? ?? false,
+      blueTick: json['blueTick'] as bool? ?? false,
       chapter: json['chapter'] != null
           ? UserChapterModel.fromJson(json['chapter'])
           : null,

@@ -19,6 +19,7 @@ import 'package:itcc/src/interface/components/Cards/certificate_card.dart';
 import 'package:itcc/src/interface/components/ModalSheets/write_review.dart';
 import 'package:itcc/src/interface/components/animations/glowing_profile.dart';
 import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_icon_container.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/components/shimmers/preview_shimmer.dart';
@@ -168,10 +169,12 @@ class ProfilePreview extends ConsumerWidget {
                                           borderColor: Colors.white,
                                           borderWidth: 3.0,
                                         ),
-                                        Text(
-                                          user.name ?? '',
-                                          style: kHeadTitleSB.copyWith(
-                                              color: Colors.white),
+                                        VerifiedName(
+                                          label: user.name ?? '',
+                                          textStyle: kHeadTitleSB,
+                                          labelColor: Colors.white,
+                                          iconSize: 18,
+                                          showBlueTick: true,
                                         ),
                                         const SizedBox(height: 5),
                                         Padding(

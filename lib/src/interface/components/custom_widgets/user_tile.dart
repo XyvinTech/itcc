@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/models/business_model.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 import 'package:intl/intl.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 
 Widget buildUserInfo(UserModel user, Business feed, context) {
   String formattedDateTime = DateFormat('h:mm a · MMM d, yyyy')
@@ -38,14 +40,11 @@ Widget buildUserInfo(UserModel user, Business feed, context) {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      user.name ?? 'Unknown User',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                    VerifiedName(
+                      label: user.name ?? '',
+                      textStyle: kSmallTitleR,
+                      iconSize: 18,
+                      showBlueTick: true,
                     ),
                     if (user.company != null &&
                         user.company!.isNotEmpty &&

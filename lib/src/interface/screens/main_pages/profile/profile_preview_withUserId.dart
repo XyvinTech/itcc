@@ -17,6 +17,7 @@ import 'package:itcc/src/interface/components/Cards/award_card.dart';
 import 'package:itcc/src/interface/components/Cards/certificate_card.dart';
 import 'package:itcc/src/interface/components/animations/glowing_profile.dart';
 import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_icon_container.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/components/shimmers/preview_shimmer.dart';
@@ -175,10 +176,12 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                                   borderColor: Colors.white,
                                                   borderWidth: 3.0,
                                                 ),
-                                                Text(
-                                                  user.name ?? '',
-                                                  style: kHeadTitleSB.copyWith(
-                                                      color: Colors.white),
+                                                VerifiedName(
+                                                  label: user.name ?? '',
+                                                  textStyle: kHeadTitleSB,
+                                                  labelColor: Colors.white,
+                                                  iconSize: 18,
+                                                  showBlueTick: true,
                                                 ),
                                                 const SizedBox(height: 5),
                                                 Padding(
@@ -229,53 +232,58 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                                                 ),
                                                               ),
                                                           ],
-                                                        ),    if (levelData['chapterName'] !=
-                                                    'undefined')
-                                                      const SizedBox(
-                                                          height: 10),    if (levelData['chapterName'] !=
-                                                    'undefined')
-                                                      Wrap(
-                                                        alignment: WrapAlignment
-                                                            .center,
-                                                        children: [
-                                                          Text(
-                                                            '${levelData['stateName']} / ',
-                                                            style:
-                                                                const TextStyle(
-                                                                    color:
-                                                                        kWhite,
-                                                                    fontSize:
-                                                                        12),
-                                                          ),
-                                                          Text(
-                                                            '${levelData['zoneName']} / ',
-                                                            style:
-                                                                const TextStyle(
-                                                                    color:
-                                                                        kWhite,
-                                                                    fontSize:
-                                                                        12),
-                                                          ),
-                                                          Text(
-                                                            '${levelData['districtName']} / ',
-                                                            style:
-                                                                const TextStyle(
-                                                                    color:
-                                                                        kWhite,
-                                                                    fontSize:
-                                                                        12),
-                                                          ),
-                                                          Text(
-                                                            '${levelData['chapterName']} ',
-                                                            style:
-                                                                const TextStyle(
-                                                                    color:
-                                                                        kWhite,
-                                                                    fontSize:
-                                                                        12),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                        ),
+                                                      if (levelData[
+                                                              'chapterName'] !=
+                                                          'undefined')
+                                                        const SizedBox(
+                                                            height: 10),
+                                                      if (levelData[
+                                                              'chapterName'] !=
+                                                          'undefined')
+                                                        Wrap(
+                                                          alignment:
+                                                              WrapAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              '${levelData['stateName']} / ',
+                                                              style:
+                                                                  const TextStyle(
+                                                                      color:
+                                                                          kWhite,
+                                                                      fontSize:
+                                                                          12),
+                                                            ),
+                                                            Text(
+                                                              '${levelData['zoneName']} / ',
+                                                              style:
+                                                                  const TextStyle(
+                                                                      color:
+                                                                          kWhite,
+                                                                      fontSize:
+                                                                          12),
+                                                            ),
+                                                            Text(
+                                                              '${levelData['districtName']} / ',
+                                                              style:
+                                                                  const TextStyle(
+                                                                      color:
+                                                                          kWhite,
+                                                                      fontSize:
+                                                                          12),
+                                                            ),
+                                                            Text(
+                                                              '${levelData['chapterName']} ',
+                                                              style:
+                                                                  const TextStyle(
+                                                                      color:
+                                                                          kWhite,
+                                                                      fontSize:
+                                                                          12),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       const SizedBox(height: 5),
                                                       Text(
                                                         'Joined Date: $joinedDate',

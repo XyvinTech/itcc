@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,12 +7,14 @@ import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
 import 'package:itcc/src/data/api_routes/review_api/review_api.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/chat_model.dart';
 import 'package:itcc/src/data/models/product_model.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/Dialogs/upgrade_dialog.dart';
 import 'package:itcc/src/interface/components/common/review_barchart.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
 import 'package:shimmer/shimmer.dart';
@@ -108,12 +112,16 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                   padding: const EdgeInsets.only(left: 10),
                   child: Row(
                     children: [
-                      Text(
-                        widget.product.name ?? '',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      Flexible(
+                        child: Text(
+                          widget.product.name ?? '',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -192,6 +200,7 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                 const SizedBox(height: 16),
                 asyncUser.when(
                   data: (user) {
+                    log('${user.name}', name: 'Product UserNAme');
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -211,20 +220,22 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          if (user.company != null)
-                            if (user.company!.isNotEmpty)
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        '${user.name ?? ''}'),
-                                    Text('${user.company?[0].name ?? ''}'),
-                                  ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                VerifiedName(
+                                  label: user.name ?? '',
+                                  textStyle: kSmallerTitleM,
+                                  iconSize: 18,
+                                  showBlueTick: true,
                                 ),
-                              ),
+                                if (user.company != null)
+                                  if (user.company!.isNotEmpty)
+                                    Text('${user.company?[0].name ?? ''}'),
+                              ],
+                            ),
+                          ),
                           Consumer(
                             builder: (context, ref, child) {
                               return asyncReviews.when(

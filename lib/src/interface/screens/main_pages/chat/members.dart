@@ -10,6 +10,7 @@ import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/chat_model.dart';
 import 'package:itcc/src/data/notifiers/people_notifier.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/chat/chat_screen.dart';
@@ -521,7 +522,6 @@ class _MembersPageState extends ConsumerState<MembersPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Container(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
               child: Column(
@@ -615,9 +615,8 @@ class _MembersPageState extends ConsumerState<MembersPage> {
               const Center(child: LoadingAnimation())
             else if (users.isNotEmpty)
               ListView.builder(
-                shrinkWrap: true, // Prevents infinite height
-                physics:
-                    const NeverScrollableScrollPhysics(), // Disable scrolling inside Column
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: users.length + (isLoading ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index == users.length) {
@@ -689,8 +688,9 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                                 ),
                               ),
                             ),
-                            title: Text(
-                              '${user.name ?? ''}',
+                            title: VerifiedName(
+                              label: user.name ?? '',
+                              showBlueTick: true,
                             ),
                             subtitle: Text('${user.chapter?.name ?? ''}',
                                 style:

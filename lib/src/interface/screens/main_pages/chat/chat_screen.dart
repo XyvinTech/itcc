@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/models/chat_model.dart';
 import 'package:itcc/src/data/models/msg_model.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
@@ -12,6 +13,7 @@ import 'package:itcc/src/interface/components/Dialogs/blockPersonDialog.dart';
 import 'package:itcc/src/interface/components/Dialogs/report_dialog.dart';
 import 'package:itcc/src/interface/components/common/own_message_card.dart';
 import 'package:itcc/src/interface/components/common/reply_card.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';
 import 'package:intl/intl.dart';
@@ -242,9 +244,10 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                                 ),
                               );
                             },
-                            child: Text(
-                              '${widget.receiver.name ?? ''}',
-                              style: const TextStyle(fontSize: 18),
+                            child: VerifiedName(
+                              label: user.name ?? '',
+                              iconSize: 18,
+                              showBlueTick: true,
                             ),
                           );
                         },
