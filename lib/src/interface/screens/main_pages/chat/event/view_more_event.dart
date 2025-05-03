@@ -82,6 +82,7 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.event.speakers.toString(), name: "SPEAKERS:");
     NavigationService navigationService = NavigationService();
     DateTime dateTime =
         DateTime.parse(widget.event.eventDate.toString()).toLocal();
@@ -270,17 +271,19 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage> {
                 //                                           fit: BoxFit.cover,
                 //                                         )
                 //                                       : const SizedBox())
-                const SizedBox(height: 24),
-                const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Speakers',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                if (widget.event.speakers!.isNotEmpty)
+                  const SizedBox(height: 24),
+                if (widget.event.speakers!.isNotEmpty)
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Speakers',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(height: 8),
                 ListView.builder(
                   shrinkWrap: true,
