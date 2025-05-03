@@ -44,7 +44,7 @@ Widget buildUserInfo(UserModel user, Business feed, context) {
                       label: user.name ?? '',
                       textStyle: kSmallTitleR,
                       iconSize: 18,
-                      showBlueTick: true,
+                      showBlueTick: user.blueTick??false,
                     ),
                     if (user.company != null &&
                         user.company!.isNotEmpty &&

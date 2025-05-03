@@ -247,7 +247,7 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                             child: VerifiedName(
                               label: user.name ?? '',
                               iconSize: 18,
-                              showBlueTick: true,
+                           showBlueTick: user.blueTick??false,
                             ),
                           );
                         },

@@ -690,7 +690,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                             ),
                             title: VerifiedName(
                               label: user.name ?? '',
-                              showBlueTick: true,
+                                showBlueTick: user.blueTick??false,
                             ),
                             subtitle: Text('${user.chapter?.name ?? ''}',
                                 style:

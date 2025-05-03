@@ -13,7 +13,7 @@ class VerifiedName extends StatelessWidget {
     this.textStyle,
     this.labelColor,
     this.iconSize = 16,
-    this.showBlueTick = true,
+    this.showBlueTick = false,
   }) : super(key: key);
 
   @override

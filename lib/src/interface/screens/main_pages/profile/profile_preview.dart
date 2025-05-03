@@ -174,7 +174,7 @@ class ProfilePreview extends ConsumerWidget {
                                           textStyle: kHeadTitleSB,
                                           labelColor: Colors.white,
                                           iconSize: 18,
-                                          showBlueTick: true,
+                                           showBlueTick: user.blueTick??false,
                                         ),
                                         const SizedBox(height: 5),
                                         Padding(

@@ -228,7 +228,7 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                                   label: user.name ?? '',
                                   textStyle: kSmallerTitleM,
                                   iconSize: 18,
-                                  showBlueTick: true,
+                                showBlueTick: user.blueTick??false,
                                 ),
                                 if (user.company != null)
                                   if (user.company!.isNotEmpty)
