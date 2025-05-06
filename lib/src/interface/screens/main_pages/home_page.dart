@@ -20,6 +20,7 @@ import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/Drawer/drawer.dart';
 import 'package:itcc/src/interface/components/common/custom_video.dart';
+import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_news.dart';
 import 'package:itcc/src/interface/components/custom_widgets/event_Card.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
@@ -259,14 +260,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       left: 15, top: 10, bottom: 10),
                                   child: Row(
                                     children: [
-                                      Text(
-                                        '${widget.user.name ?? ''}',
-                                        style: kBodyTitleR.copyWith(
+                                      VerifiedName(
+                                        label: widget.user.name ?? '',
+                                        textStyle: kBodyTitleR.copyWith(
                                             color: kPrimaryColor),
+                                        iconSize: 18,
+                                        showBlueTick:
+                                            widget.user.blueTick ?? false,
                                       ),
                                       if (widget.user.adminType != null &&
                                           widget.user.adminType != "")
-                                        Text( 
+                                        Text(
                                           ' - (${widget.user.adminType?.toUpperCase() ?? ''})',
                                           style: kBodyTitleR.copyWith(
                                               color: kPrimaryColor),
@@ -274,139 +278,139 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     ],
                                   ),
                                 ),
-                                if (widget.user.freeTrialEndDate != null)
-                                  Center(
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 20),
-                                      decoration: BoxDecoration(
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            Color(0xFF274198),
-                                            Color(0xFF0D1532)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(16),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.12),
-                                            blurRadius: 16,
-                                            offset: const Offset(0, 8),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            bottom: 0,
-                                            right: 0,
-                                            child: Image.asset(
-                                              'assets/pngs/trial_round.png',
-                                              width: 150,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(20),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Icon(Icons.lightbulb,
-                                                        color:
-                                                            Colors.amber[400],
-                                                        size: 24),
-                                                    const SizedBox(width: 10),
-                                                    const Expanded(
-                                                      child: Text(
-                                                        'Your 30-day free trial is active!',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 10),
-                                                const Text(
-                                                  'Enjoy premium features and grow your business with Dubai Connect.',
-                                                  style: TextStyle(
-                                                    color: Color(0xFFC9D2F2),
-                                                    fontSize: 13,
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 8),
-                                                Text(
-                                                  '${widget.user.freeTrialEndDate?.difference(DateTime.now()).inDays.clamp(0, double.infinity).toInt()} days left — upgrade anytime!',
-                                                  style: const TextStyle(
-                                                    color: Color(0xFFB0B9D9),
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 14),
-                                                SizedBox(
-                                                  width: 130,
-                                                  height: 36,
-                                                  child: ElevatedButton(
-                                                    style: const ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStatePropertyAll(
-                                                              Color(
-                                                                  0xFFE7ECFF)),
-                                                      foregroundColor:
-                                                          MaterialStatePropertyAll(
-                                                              Color(
-                                                                  0xFF232C5B)),
-                                                      shape:
-                                                          MaterialStatePropertyAll(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8)),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      navigationService
-                                                          .pushNamed(
-                                                              'MySubscription');
-                                                    },
-                                                    child: const Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text('Subscribe',
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        Icon(
-                                                            Icons
-                                                                .arrow_outward_outlined,
-                                                            size: 16),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                // if (widget.user.freeTrialEndDate != null)
+                                // Center(
+                                //   child: Container(
+                                //     margin: const EdgeInsets.symmetric(
+                                //         vertical: 10, horizontal: 20),
+                                //     decoration: BoxDecoration(
+                                //       gradient: const LinearGradient(
+                                //         colors: [
+                                //           Color(0xFF274198),
+                                //           Color(0xFF0D1532)
+                                //         ],
+                                //         begin: Alignment.topLeft,
+                                //         end: Alignment.bottomRight,
+                                //       ),
+                                //       borderRadius: BorderRadius.circular(16),
+                                //       boxShadow: [
+                                //         BoxShadow(
+                                //           color:
+                                //               Colors.black.withOpacity(0.12),
+                                //           blurRadius: 16,
+                                //           offset: const Offset(0, 8),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //     child: Stack(
+                                //       children: [
+                                //         Positioned(
+                                //           bottom: 0,
+                                //           right: 0,
+                                //           child: Image.asset(
+                                //             'assets/pngs/trial_round.png',
+                                //             width: 150,
+                                //             fit: BoxFit.cover,
+                                //           ),
+                                //         ),
+                                //         Padding(
+                                //           padding: const EdgeInsets.all(20),
+                                //           child: Column(
+                                //             mainAxisSize: MainAxisSize.min,
+                                //             crossAxisAlignment:
+                                //                 CrossAxisAlignment.start,
+                                //             children: [
+                                //               Row(
+                                //                 children: [
+                                //                   Icon(Icons.lightbulb,
+                                //                       color:
+                                //                           Colors.amber[400],
+                                //                       size: 24),
+                                //                   const SizedBox(width: 10),
+                                //                   const Expanded(
+                                //                     child: Text(
+                                //                       'Your 30-day free trial is active!',
+                                //                       style: TextStyle(
+                                //                         color: Colors.white,
+                                //                         fontWeight:
+                                //                             FontWeight.bold,
+                                //                         fontSize: 16,
+                                //                       ),
+                                //                     ),
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //               const SizedBox(height: 10),
+                                //               const Text(
+                                //                 'Enjoy premium features and grow your business with Dubai Connect.',
+                                //                 style: TextStyle(
+                                //                   color: Color(0xFFC9D2F2),
+                                //                   fontSize: 13,
+                                //                 ),
+                                //               ),
+                                //               const SizedBox(height: 8),
+                                //               Text(
+                                //                 '${widget.user.freeTrialEndDate?.difference(DateTime.now()).inDays.clamp(0, double.infinity).toInt()} days left — upgrade anytime!',
+                                //                 style: const TextStyle(
+                                //                   color: Color(0xFFB0B9D9),
+                                //                   fontSize: 12,
+                                //                 ),
+                                //               ),
+                                //               const SizedBox(height: 14),
+                                //               SizedBox(
+                                //                 width: 130,
+                                //                 height: 36,
+                                //                 child: ElevatedButton(
+                                //                   style: const ButtonStyle(
+                                //                     backgroundColor:
+                                //                         MaterialStatePropertyAll(
+                                //                             Color(
+                                //                                 0xFFE7ECFF)),
+                                //                     foregroundColor:
+                                //                         MaterialStatePropertyAll(
+                                //                             Color(
+                                //                                 0xFF232C5B)),
+                                //                     shape:
+                                //                         MaterialStatePropertyAll(
+                                //                       RoundedRectangleBorder(
+                                //                         borderRadius:
+                                //                             BorderRadius.all(
+                                //                                 Radius
+                                //                                     .circular(
+                                //                                         8)),
+                                //                       ),
+                                //                     ),
+                                //                   ),
+                                //                   onPressed: () {
+                                //                     navigationService
+                                //                         .pushNamed(
+                                //                             'MySubscription');
+                                //                   },
+                                //                   child: const Row(
+                                //                     mainAxisAlignment:
+                                //                         MainAxisAlignment
+                                //                             .center,
+                                //                     children: [
+                                //                       Text('Subscribe',
+                                //                           style: TextStyle(
+                                //                               fontWeight:
+                                //                                   FontWeight
+                                //                                       .bold)),
+                                //                       Icon(
+                                //                           Icons
+                                //                               .arrow_outward_outlined,
+                                //                           size: 16),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 15, top: 10, bottom: 10),
@@ -1023,20 +1027,21 @@ Widget customPoster({
   required BuildContext context,
   required Promotion poster,
 }) {
-  return GestureDetector(onTap: () {
-    if(poster.link!=null){
+  return GestureDetector(
+    onTap: () {
+      if (poster.link != null) {
         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  WebViewScreen(
-                            color: Colors.blue,
-                            url: poster.link??"",
-                            title: poster.title??'',
-                          ),
-                        ),
-                      );
-    }
-  },
+          context,
+          MaterialPageRoute(
+            builder: (context) => WebViewScreen(
+              color: Colors.blue,
+              url: poster.link ?? "",
+              title: poster.title ?? '',
+            ),
+          ),
+        );
+      }
+    },
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(

@@ -26,7 +26,7 @@ class PeoplePage extends ConsumerWidget {
       });
     });
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             backgroundColor: kWhite,
             body: SafeArea(
@@ -53,7 +53,7 @@ class PeoplePage extends ConsumerWidget {
                           tabs: [
                             Tab(text: "MEMBERS"),
                             Tab(text: "CHAT LIST"),
-                            // Tab(text: "GROUP CHAT"),
+                            Tab(text: "GROUP CHAT"),
                           ],
                         ),
                       ),
@@ -64,7 +64,7 @@ class PeoplePage extends ConsumerWidget {
                       children: [
                         const MembersPage(),
                         ChatDash(),
-                        // GroupChatPage()
+                        GroupChatPage()
                       ],
                     ),
                   ),
