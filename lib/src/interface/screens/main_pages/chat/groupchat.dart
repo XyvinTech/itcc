@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itcc/src/data/api_routes/group_chat_api/group_api.dart';
+import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/chat_model.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
@@ -37,7 +38,7 @@ class _ChatPageState extends ConsumerState<GroupChatPage> {
                         child: Container(
                           width: 40,
                           height: 40,
-                          color: Colors.red,
+                          color: kPrimaryColor,
                           child: Image.network(
                             '',
                             fit: BoxFit.cover,
