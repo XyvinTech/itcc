@@ -200,6 +200,7 @@ class CustomTextFormField extends StatelessWidget {
               maxLines: maxLines,
               validator: validator,
               decoration: InputDecoration(
+                errorMaxLines: 2,
                 hintStyle: TextStyle(color: kGreyLight),
                 hintText: labelText,
                 labelStyle: const TextStyle(color: Colors.grey),

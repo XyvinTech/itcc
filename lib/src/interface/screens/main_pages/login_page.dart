@@ -452,9 +452,24 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(height: 24),
-                                TextField(
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please Enter Your Name';
+                                    }
+
+                                    // Regex to allow only basic English letters and spaces (no emojis or fancy unicode)
+                                    final regex =
+                                        RegExp(r'^[a-zA-Z0-9\s.,-]*$');
+
+                                    if (!regex.hasMatch(value)) {
+                                      return 'Only standard letters, numbers, and basic punctuation allowed';
+                                    }
+
+                                    return null;
+                                  },
                                   controller: nameController,
-                                  decoration: InputDecoration(
+                                  decoration: InputDecoration(errorMaxLines: 3,
                                     hintText: 'Full Name',
                                     filled: true,
                                     fillColor: kPrimaryLightColor,
@@ -502,7 +517,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
                       ref
                           .read(userProvider.notifier)
                           .updateName(name: enteredName);
-                    
+
                       await ref.read(userProvider.notifier).refreshUser();
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const EulaAgreementScreen(),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/promotion_model.dart';
 import 'package:http/http.dart' as http;
@@ -6,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'promotion_api.g.dart';
 
 @riverpod
-Future<List<Promotion>> fetchPromotions(FetchPromotionsRef ref) async {
+Future<List<Promotion>> fetchPromotions(Ref ref) async {
   final url = Uri.parse('$baseUrl/promotion/user');
   print('Requesting URL: $url');
   final response = await http.get(

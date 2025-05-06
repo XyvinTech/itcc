@@ -617,6 +617,7 @@ class _EditUserState extends ConsumerState<EditUser> {
                         child: Form(
                           key: _formKey,
                           child: Column(
+                     
                             children: [
                               Container(
                                 child: AppBar(
@@ -758,6 +759,15 @@ class _EditUserState extends ConsumerState<EditUser> {
                                         if (value == null || value.isEmpty) {
                                           return 'Please Enter Your Name';
                                         }
+
+                                        // Regex to allow only basic English letters and spaces (no emojis or fancy unicode)
+                                        final regex =
+                                            RegExp(r'^[a-zA-Z0-9\s.,-]*$');
+
+                                        if (!regex.hasMatch(value)) {
+                                          return 'Only standard letters, numbers, and basic punctuation allowed';
+                                        }
+
                                         return null;
                                       },
                                       textController: nameController,

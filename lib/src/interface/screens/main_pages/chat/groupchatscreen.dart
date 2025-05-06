@@ -154,7 +154,7 @@ class _IndividualPageState extends ConsumerState<Groupchatscreen> {
                       child: Container(
                         width: 36,
                         height: 36,
-                        color: Colors.red,
+                        color: kPrimaryColor,
                         child: Image.network(
                           widget.group.image ?? '',
                           fit: BoxFit.cover,
