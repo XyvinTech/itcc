@@ -29,6 +29,8 @@ import 'package:itcc/src/interface/screens/crop_image_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:shimmer/shimmer.dart';
+import 'package:itcc/src/data/services/user_access_service.dart';
+import 'package:itcc/src/interface/components/Dialogs/permission_denied_dialog.dart';
 
 class BusinessView extends ConsumerStatefulWidget {
   BusinessView({super.key});
@@ -40,12 +42,21 @@ class BusinessView extends ConsumerStatefulWidget {
 class _BusinessViewState extends ConsumerState<BusinessView> {
   final TextEditingController feedContentController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  bool _canPostRequirement = false;
+
   @override
   void initState() {
     super.initState();
-
     _scrollController.addListener(_onScroll);
     _fetchInitialUsers();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    final hasPermission = await UserAccessService.canPostRequirement();
+    setState(() {
+      _canPostRequirement = hasPermission;
+    });
   }
 
   Future<void> _fetchInitialUsers() async {
@@ -108,6 +119,15 @@ class _BusinessViewState extends ConsumerState<BusinessView> {
   }
 
   void _openModalSheet({required String sheet}) {
+    if (!_canPostRequirement) {
+      PermissionDeniedDialog.show(
+        context,
+        message:
+            'You do not have permission to post requirements. Please contact your administrator for access.',
+      );
+      return;
+    }
+
     feedContentController.clear();
     _feedImage = null;
     showModalBottomSheet(
@@ -208,6 +228,15 @@ class _BusinessViewState extends ConsumerState<BusinessView> {
               bottom: 30,
               child: GestureDetector(
                 onTap: () {
+                  if (!_canPostRequirement) {
+                    PermissionDeniedDialog.show(
+                      context,
+                      message:
+                          'You do not have permission to post requirements. Please contact your administrator for access.',
+                    );
+                    return;
+                  }
+
                   if (subscriptionType != 'free') {
                     _openModalSheet(sheet: 'post');
                   } else {

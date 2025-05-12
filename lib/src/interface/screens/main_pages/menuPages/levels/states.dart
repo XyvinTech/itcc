@@ -3,11 +3,50 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itcc/src/data/api_routes/levels_api/levels_api.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/services/user_access_service.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/zones.dart';
+import 'package:itcc/src/interface/components/Dialogs/permission_denied_dialog.dart';
 
-class StatesPage extends StatelessWidget {
+class StatesPage extends ConsumerStatefulWidget {
+  @override
+  ConsumerState<StatesPage> createState() => _StatesPageState();
+}
+
+class _StatesPageState extends ConsumerState<StatesPage> {
+  bool _canSendNotification = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    final hasPermission = await UserAccessService.canSendNotification();
+    setState(() {
+      _canSendNotification = hasPermission;
+    });
+  }
+
+  void _showNotificationDialog() {
+    if (!_canSendNotification) {
+      PermissionDeniedDialog.show(
+        context,
+        message: 'You do not have permission to send notifications. Please contact your administrator for access.',
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateNotificationPage(level: 'state'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     NavigationService navigationService = NavigationService();
@@ -93,13 +132,7 @@ class StatesPage extends StatelessWidget {
             },
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CreateNotificationPage(level: 'state')));
-            },
+            onPressed: _showNotificationDialog,
             backgroundColor: kPrimaryColor,
             child: Icon(Icons.notifications, color: kWhite),
           ),

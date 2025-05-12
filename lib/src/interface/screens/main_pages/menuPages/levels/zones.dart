@@ -6,18 +6,60 @@ import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/district.dart';
+import 'package:itcc/src/data/services/user_access_service.dart';
+import 'package:itcc/src/interface/components/Dialogs/permission_denied_dialog.dart';
 
-class ZonesPage extends StatelessWidget {
+class ZonesPage extends ConsumerStatefulWidget {
   final String stateId;
   final String stateName;
   const ZonesPage({super.key, required this.stateId, required this.stateName});
+
+  @override
+  ConsumerState<ZonesPage> createState() => _ZonesPageState();
+}
+
+class _ZonesPageState extends ConsumerState<ZonesPage> {
+  bool _canSendNotification = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    final hasPermission = await UserAccessService.canSendNotification();
+    setState(() {
+      _canSendNotification = hasPermission;
+    });
+  }
+
+  void _showNotificationDialog() {
+    if (!_canSendNotification) {
+      PermissionDeniedDialog.show(
+        context,
+        message: 'You do not have permission to send notifications. Please contact your administrator for access.',
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateNotificationPage(
+          levelId: widget.stateId,
+          level: 'state',
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     NavigationService navigationService = NavigationService();
     return Consumer(
       builder: (context, ref, child) {
-        final asyncZones = ref.watch(fetchLevelDataProvider(stateId, 'state'));
+        final asyncZones = ref.watch(fetchLevelDataProvider(widget.stateId, 'state'));
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -46,7 +88,7 @@ class ZonesPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          '$stateName /',
+                          '${widget.stateName} /',
                           style:
                               TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
@@ -116,13 +158,7 @@ class ZonesPage extends StatelessWidget {
             },
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreateNotificationPage(
-                          levelId: stateId, level: 'state')));
-            },
+            onPressed: _showNotificationDialog,
             backgroundColor: kPrimaryColor,
             child: Icon(Icons.notifications, color: Colors.white),
           ),

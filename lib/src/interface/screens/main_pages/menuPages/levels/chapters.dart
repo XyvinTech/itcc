@@ -6,10 +6,11 @@ import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/create_notification_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/level_members.dart';
+import 'package:itcc/src/data/services/user_access_service.dart';
+import 'package:itcc/src/interface/components/Dialogs/permission_denied_dialog.dart';
 
-class ChaptersPage extends StatelessWidget {
+class ChaptersPage extends ConsumerStatefulWidget {
   final String districtId;
-
   final String districtName;
 
   const ChaptersPage({
@@ -19,12 +20,51 @@ class ChaptersPage extends StatelessWidget {
   });
 
   @override
+  ConsumerState<ChaptersPage> createState() => _ChaptersPageState();
+}
+
+class _ChaptersPageState extends ConsumerState<ChaptersPage> {
+  bool _canSendNotification = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    final hasPermission = await UserAccessService.canSendNotification();
+    setState(() {
+      _canSendNotification = hasPermission;
+    });
+  }
+
+  void _showNotificationDialog() {
+    if (!_canSendNotification) {
+      PermissionDeniedDialog.show(
+        context,
+        message: 'You do not have permission to send notifications. Please contact your administrator for access.',
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateNotificationPage(
+          level: 'district',
+          levelId: widget.districtId,
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     NavigationService navigationService = NavigationService();
     return Consumer(
       builder: (context, ref, child) {
-        final asyncChapters =
-            ref.watch(fetchLevelDataProvider(districtId, 'district'));
+        final asyncChapters = ref.watch(fetchLevelDataProvider(widget.districtId, 'district'));
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -54,7 +94,7 @@ class ChaptersPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            '$districtName /',
+                            '${widget.districtName} /',
                             style: TextStyle(
                                 fontSize: 14, color: Colors.grey[600]),
                           ),
@@ -169,18 +209,9 @@ class ChaptersPage extends StatelessWidget {
             },
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreateNotificationPage(
-                            level: 'district',
-                            levelId: districtId,
-                          )));
-            },
+            onPressed: _showNotificationDialog,
             backgroundColor: Colors.orange,
-            child:
-                Icon(Icons.notifications_active_outlined, color: Colors.white),
+            child: Icon(Icons.notifications_active_outlined, color: Colors.white),
           ),
           backgroundColor: Color(0xFFF8F8F8),
         );

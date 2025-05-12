@@ -8,21 +8,53 @@ import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/data/services/user_access_service.dart';
+import 'package:itcc/src/interface/components/Dialogs/permission_denied_dialog.dart';
 
-class LevelMembers extends StatelessWidget {
+class LevelMembers extends ConsumerStatefulWidget {
   final String chapterId;
-
   final String chapterName;
-  const LevelMembers(
-      {super.key, required this.chapterId, required this.chapterName});
+  const LevelMembers({super.key, required this.chapterId, required this.chapterName});
+
+  @override
+  ConsumerState<LevelMembers> createState() => _LevelMembersState();
+}
+
+class _LevelMembersState extends ConsumerState<LevelMembers> {
+  bool _canSendNotification = false;
+  late NavigationService navigationService;
+
+  @override
+  void initState() {
+    super.initState();
+    navigationService = NavigationService();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    final hasPermission = await UserAccessService.canSendNotification();
+    setState(() {
+      _canSendNotification = hasPermission;
+    });
+  }
+
+  void _showNotificationDialog() {
+    if (!_canSendNotification) {
+      PermissionDeniedDialog.show(
+        context,
+        message: 'You do not have permission to manage members. Please contact your administrator for access.',
+      );
+      return;
+    }
+
+    navigationService.pushNamed('MemberCreation');
+  }
 
   @override
   Widget build(BuildContext context) {
-    NavigationService navigationService = NavigationService();
     return Consumer(
       builder: (context, ref, child) {
-        final asyncMembers =
-            ref.watch(fetchChapterMemberDataProvider(chapterId, 'user'));
+        final asyncMembers = ref.watch(fetchChapterMemberDataProvider(widget.chapterId, 'user'));
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -54,7 +86,7 @@ class LevelMembers extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              '$chapterName /',
+                              '${widget.chapterName} /',
                               style: TextStyle(
                                   fontSize: 14, color: Colors.grey[600]),
                             ),
@@ -80,7 +112,7 @@ class LevelMembers extends StatelessWidget {
                                   label: 'Activity',
                                   onPressed: () {
                                     navigationService.pushNamed('ActivityPage',
-                                        arguments: chapterId);
+                                        arguments: widget.chapterId);
                                   },
                                   buttonColor: kWhite,
                                   sideColor: kPrimaryColor),
@@ -126,9 +158,7 @@ class LevelMembers extends StatelessWidget {
                 return Center(child: Text('NO MEMBERS'));
               }),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              navigationService.pushNamed('MemberCreation');
-            },
+            onPressed: _showNotificationDialog,
             backgroundColor: Colors.orange,
             child: Icon(Icons.person_add, color: Colors.white),
           ),

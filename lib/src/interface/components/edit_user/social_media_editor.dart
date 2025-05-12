@@ -4,6 +4,7 @@ import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
+import 'package:itcc/src/interface/components/permission_check_wrapper.dart';
 
 class SocialMediaEditor extends StatefulWidget {
   final List<Link> socialMedias;
@@ -101,7 +102,7 @@ class _SocialMediaEditorState extends State<SocialMediaEditor> {
   Widget build(BuildContext context) {
     final isValuePresent = currentValue != null && currentValue!.isNotEmpty;
 
-    return GestureDetector(
+    return PermissionWrappers.forAddSocialMedia(
       onTap: _showEditModal,
       child: Container(
         decoration: BoxDecoration(

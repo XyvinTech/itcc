@@ -26,6 +26,7 @@ import 'package:itcc/src/interface/components/custom_widgets/custom_websiteVideo
 import 'package:itcc/src/interface/components/edit_user/contact_editor.dart';
 import 'package:itcc/src/interface/components/edit_user/social_media_editor.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
+import 'package:itcc/src/interface/components/permission_check_wrapper.dart';
 import 'package:itcc/src/interface/components/shimmers/edit_user_shimmer.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/preimum_plan.dart';
 
@@ -617,7 +618,6 @@ class _EditUserState extends ConsumerState<EditUser> {
                         child: Form(
                           key: _formKey,
                           child: Column(
-                     
                             children: [
                               Container(
                                 child: AppBar(
@@ -1784,8 +1784,7 @@ class _EditUserState extends ConsumerState<EditUser> {
                                         onRemove: () => _removeAward(index),
                                       );
                                     } else {
-                                      // "Add award" button
-                                      return GestureDetector(
+                                      return PermissionWrappers.forAddReward(
                                         onTap: () {
                                           FocusManager.instance.primaryFocus
                                               ?.unfocus();
@@ -1877,7 +1876,7 @@ class _EditUserState extends ConsumerState<EditUser> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 25, right: 25, bottom: 60),
-                                child: GestureDetector(
+                                child: PermissionWrappers.forAddCertificate(
                                   onTap: () {
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();
