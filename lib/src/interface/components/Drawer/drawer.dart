@@ -19,7 +19,6 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Drawer Header
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
@@ -150,6 +149,13 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
             label: 'My Businesses',
             onTap: () {
               navigationService.pushNamed('MyBusinesses');
+            },
+          ),
+          _buildDrawerItem(
+            icon: 'assets/svg/icons/my_enquiries.svg',
+            label: 'My Enquiries',
+            onTap: () {
+              navigationService.pushNamed('MyEnquiries');
             },
           ),
           _buildDrawerItem(

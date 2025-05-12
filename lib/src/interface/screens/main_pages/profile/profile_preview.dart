@@ -790,6 +790,7 @@ class ProfilePreview extends ConsumerWidget {
                         ),
                     ]),
                   ),
+                  SizedBox(height: 100,)
                 ],
               ),
             ),

@@ -38,7 +38,7 @@ class _ChatDashState extends ConsumerState<ChatDash> {
                     var sender = chats[index].participants?.firstWhere(
                           (participant) => participant.id == id,
                           orElse: () => Participant(),
-                        );
+                        );                   
                     return Column(
                       children: [
                         ListTile(

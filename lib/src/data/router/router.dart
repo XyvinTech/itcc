@@ -23,6 +23,7 @@ import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/profile_a
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/states.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/zones.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/my_businesses.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/my_enquiries.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/my_events.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/my_products.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/my_reviews.dart';
@@ -151,6 +152,8 @@ Route<dynamic> generateRoute(RouteSettings? settings) {
           builder: (context) => ActivityPage(
                 chapterId: chapterId,
               ));
+    case 'MyEnquiries':
+      return MaterialPageRoute(builder: (context) => const MyEnquiriesPage());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

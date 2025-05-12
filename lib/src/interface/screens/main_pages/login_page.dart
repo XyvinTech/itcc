@@ -341,7 +341,6 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
               enableActiveFill: true,
               controller: _otpController,
               onChanged: (value) {
-                // Handle input change
               },
             ),
             Row(

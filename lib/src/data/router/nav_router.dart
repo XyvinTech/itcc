@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class SelectedIndexNotifier extends StateNotifier<int> {
   SelectedIndexNotifier() : super(0);
 
