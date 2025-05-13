@@ -323,13 +323,17 @@ Future<void> captureAndShareOrDownloadWidgetScreenshot(BuildContext context,
                                                     icon: Icons.phone,
                                                     text: user.phone ?? ''),
                                                 const SizedBox(height: 10),
-                                                ContactRow(
-                                                    icon: Icons.email,
-                                                    text: user.email ?? ''),
+                                                if (user.email != '' &&
+                                                    user.email != null)
+                                                  ContactRow(
+                                                      icon: Icons.email,
+                                                      text: user.email ?? ''),
                                                 const SizedBox(height: 10),
-                                                ContactRow(
-                                                    icon: Icons.location_on,
-                                                    text: user.address ?? ''),
+                                                if (user.address != '' &&
+                                                    user.address != null)
+                                                  ContactRow(
+                                                      icon: Icons.location_on,
+                                                      text: user.address ?? ''),
                                               ],
                                             ),
                                           ),
