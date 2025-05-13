@@ -3,12 +3,12 @@ import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfileShimmer extends StatelessWidget {
-  const ProfileShimmer({Key? key}) : super(key: key);
+  const ProfileShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryLightColor,
+      backgroundColor: kWhite,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

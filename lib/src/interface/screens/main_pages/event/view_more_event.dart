@@ -264,6 +264,47 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage>
                       if (widget.event.limit != null)
                         _buildInfoSection(
                             'Registration', _getRegistrationCountText()),
+                      if (widget.event.coordinator!.contains(id))
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: .1,
+                                  offset: Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: kWhite,
+                                child: Icon(Icons.map_outlined,
+                                    color: kPrimaryColor),
+                              ),
+                              title: Text(
+                                'Member List',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              trailing: Icon(Icons.arrow_forward_ios,
+                                  size: 16, color: Colors.grey),
+                              onTap: () {
+                                NavigationService navigationService =
+                                    NavigationService();
+                                navigationService.pushNamed('EventMemberList',
+                                    arguments: widget.event);
+                              },
+                            ),
+                          ),
+                        ),
                       const SizedBox(
                           height: 80), // Bottom padding for the register button
                     ]),
@@ -293,7 +334,8 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => FolderViewPage(eventId: widget.event.id??'',
+                                      builder: (context) => FolderViewPage(
+                                        eventId: widget.event.id ?? '',
                                         folderId: folder.id!,
                                         folderName: folder.name,
                                       ),
