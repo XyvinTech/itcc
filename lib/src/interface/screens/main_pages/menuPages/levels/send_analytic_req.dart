@@ -9,6 +9,7 @@ import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
+import 'package:itcc/src/interface/components/DropDown/searchableDropdown.dart';
 import 'package:itcc/src/interface/components/DropDown/selectionDropdown.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
@@ -295,7 +296,7 @@ class _SendAnalyticRequestPageState
                 data: (members) {
                   final filteredMembers =
                       members.where((member) => member.id != id).toList();
-                  return SelectionDropDown(
+                  return SearchableDropDown(
                     hintText: 'Choose Member',
                     value: selectedMember,
                     label: null,

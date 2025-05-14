@@ -77,6 +77,7 @@ dependencies:
   razorpay_flutter: ^1.4.0
   flutter_mosaic: ^0.0.4
   dio: ^5.4.0
+  dropdown_search: ^6.0.2
 
 dev_dependencies:
   flutter_test:
