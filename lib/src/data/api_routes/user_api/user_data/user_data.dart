@@ -77,6 +77,7 @@ class UserService {
   static Future<void> createReport({
     required String reportedItemId,
     required String reportType,
+    required String reason
   }) async {
     final url = Uri.parse('$baseUrl/report');
     final body = {

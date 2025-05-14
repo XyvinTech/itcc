@@ -118,7 +118,7 @@ class ReportPersonDialog extends StatelessWidget {
         const SizedBox(width: 12),
         ElevatedButton(
           onPressed: () async {
-            UserService.createReport(
+            UserService.createReport(reason:reasonController.text,
                 reportedItemId: reportedItemId, reportType: reportType);
             Navigator.pop(context);
           },

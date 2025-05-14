@@ -224,7 +224,7 @@ class _EditUserState extends ConsumerState<EditUser> {
               websites: existingCompany?.websites,
             );
 
-// If it's a new entry, pass the correct index (append)
+
             final insertIndex =
                 (existingCompany == null) ? companyList.length : companyIndex!;
             ref
