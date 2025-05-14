@@ -247,7 +247,7 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                             child: VerifiedName(
                               label: user.name ?? '',
                               iconSize: 18,
-                           showBlueTick: user.blueTick??false,
+                              showBlueTick: user.blueTick ?? false,
                             ),
                           );
                         },
@@ -270,8 +270,8 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
               decoration: const BoxDecoration(
                 gradient: RadialGradient(
                   colors: [
-                    Color(0xFFFBFAF8),
-                    Color(0xFFE8D5B5),
+                    Color.fromARGB(255, 253, 253, 254),
+                    Color.fromARGB(255, 162, 172, 250),
                   ],
                   center: Alignment.center,
                   radius: 0.8,
@@ -294,6 +294,7 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                                     index]; // Reverse the index to get the latest message first
                                 if (message.from == widget.sender.id) {
                                   return OwnMessageCard(
+                                    product: message.product,
                                     requirement: message.feed,
                                     status: message.status!,
                                     message: message.content ?? '',

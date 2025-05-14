@@ -115,20 +115,17 @@ class _SearchableDropDownState extends State<SearchableDropDown>
       _selectedValue = item.value;
     });
     widget.onChanged(item.value);
-    
-    // Force close the dropdown immediately and reset focus states
     _searchHasFocus = false;
     _closeDropdown();
     _focusNode.unfocus();
   }
 
-  // Find display text for selected value
   String? _getDisplayText() {
     if (_selectedValue == null) return null;
     
     final selectedItem = widget.items.firstWhere(
       (item) => item.value == _selectedValue,
-      orElse: () => DropdownMenuItem(child: Text(''), value: ''),
+      orElse: () => const DropdownMenuItem(value: '', child: Text('')),
     );
     
     return selectedItem.value == '' ? null : (selectedItem.child as Text).data;
@@ -358,8 +355,6 @@ OverlayEntry _createOverlayEntry() {
                   ),
                 ),
               ),
-              // Use a simplified approach - removing the hidden focus node
-              // to prevent focus conflicts
             ],
           ),
         ),
