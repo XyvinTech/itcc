@@ -27,6 +27,11 @@ class _MyEnquiriesPageState extends ConsumerState<MyEnquiriesPage> {
     return name[0].toUpperCase();
   }
 
+  Future<void> _downloadEnquiries() async {
+    final enquiriesService = EnquiriesApiService();
+    await enquiriesService.downloadAndSaveExcel(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final enquiriesAsync = ref.watch(getEnquiriesProvider);
@@ -46,6 +51,13 @@ class _MyEnquiriesPageState extends ConsumerState<MyEnquiriesPage> {
             Navigator.of(context).pop();
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.download, color: kPrimaryColor),
+            onPressed: _downloadEnquiries,
+            tooltip: 'Download Enquiries',
+          ),
+        ],
       ),
       body: enquiriesAsync.when(
         loading: () => const Center(child: LoadingAnimation()),

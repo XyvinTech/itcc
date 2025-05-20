@@ -230,7 +230,9 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
               await SecureStorage.delete('id');
 
               navigationService.pushNamedAndRemoveUntil('PhoneNumber');
-              await editUser({"fcm": "",});
+              await editUser({
+                "fcm": "",
+              });
             },
           ),
           _buildDrawerItem(

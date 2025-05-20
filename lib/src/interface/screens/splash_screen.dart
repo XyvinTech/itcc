@@ -135,12 +135,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             }
           }
           if (user != null) {
-            // 1. Awaiting payment: go to MySubscriptionPage
             if (user.status?.toLowerCase() == 'awaiting_payment') {
               navigationService.pushNamedReplacement('MySubscriptionPage');
               return;
             }
-            // 2. Trial: show premium flow only if not already shown
             final premiumFlagKey = 'premium_flow_shown_${user.uid}';
             final premiumFlowShown = (await SecureStorage.read(premiumFlagKey)) == 'true';
             if (user.status?.toLowerCase() == 'trial' && !premiumFlowShown) {

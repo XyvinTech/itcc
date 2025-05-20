@@ -33,7 +33,7 @@ import 'package:itcc/src/interface/screens/main_pages/menuPages/request_nfc.dart
 import 'package:itcc/src/interface/screens/main_pages/menuPages/terms.dart';
 import 'package:itcc/src/interface/screens/main_pages/news_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/notification_page.dart';
-import 'package:itcc/src/interface/screens/main_pages/profile/card.dart';
+
 import 'package:itcc/src/interface/screens/main_pages/profile/editUser.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/idcard.dart';
 import 'package:itcc/src/interface/screens/main_pages/profile/profile_preview.dart';

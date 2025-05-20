@@ -316,8 +316,34 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage>
             // Media Tab
             ref.watch(getFoldersProvider(eventId: widget.event.id!)).when(
                   loading: () => const Center(child: LoadingAnimation()),
-                  error: (error, stackTrace) =>
-                      Center(child: Text('No Folders yet')),
+                  error: (error, stackTrace) => Column(
+                    children: [
+                      const Expanded(
+                        child: Center(child: Text('No Folders yet')),
+                      ),
+                      if (widget.event.status == 'completed')
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: customButton(
+                            label: 'Add Media',
+                            onPressed: () async {
+                              final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MediaUploadPage(
+                                    eventId: widget.event.id!,
+                                  ),
+                                ),
+                              );
+                              if (result == true) {
+                                ref.invalidate(getFoldersProvider(
+                                    eventId: widget.event.id!));
+                              }
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
                   data: (folders) {
                     return Column(
                       children: [
@@ -386,24 +412,25 @@ class _ViewMoreEventPageState extends ConsumerState<ViewMoreEventPage>
                         ),
                         if (widget.event.status == 'completed')
                           Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: customButton(
-                                label: 'Add Media',
-                                onPressed: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MediaUploadPage(
-                                        eventId: widget.event.id!,
-                                      ),
+                            padding: const EdgeInsets.all(16),
+                            child: customButton(
+                              label: 'Add Media',
+                              onPressed: () async {
+                                final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MediaUploadPage(
+                                      eventId: widget.event.id!,
                                     ),
-                                  );
-                                  if (result == true) {
-                                    ref.invalidate(getFoldersProvider(
-                                        eventId: widget.event.id!));
-                                  }
-                                },
-                              )),
+                                  ),
+                                );
+                                if (result == true) {
+                                  ref.invalidate(getFoldersProvider(
+                                      eventId: widget.event.id!));
+                                }
+                              },
+                            ),
+                          ),
                       ],
                     );
                   },
