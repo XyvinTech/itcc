@@ -25,7 +25,6 @@ Future<void> loadSecureData() async {
   token = await SecureStorage.read('token') ?? '';
   LoggedIn = (await SecureStorage.read('LoggedIn')) == 'true';
   id = await SecureStorage.read('id') ?? '';
-  premium_flow_shown = await SecureStorage.read('premium_flow_shown_$id') ?? '';
   fcmToken = await SecureStorage.read('fcmToken') ?? '';
   subscriptionType = await SecureStorage.read('subscriptionType') ?? 'free';
 }

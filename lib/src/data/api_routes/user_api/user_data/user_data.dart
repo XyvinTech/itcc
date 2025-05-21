@@ -172,19 +172,19 @@ class UserService {
     }
   }
 
-  static Future<List<Subscription>> getSubscription(String id) async {
-    final url = Uri.parse('$baseUrl/payment/user/$id');
-    final response = await http.get(url, headers: _headers());
+  // static Future<List<Subscription>> getSubscription(String id) async {
+  //   final url = Uri.parse('$baseUrl/payment/user/$id');
+  //   final response = await http.get(url, headers: _headers());
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body)['data'];
-      return List<Subscription>.from(
-        data.map((item) => Subscription.fromJson(item)),
-      );
-    } else {
-      return [];
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body)['data'];
+  //     return List<Subscription>.from(
+  //       data.map((item) => Subscription.fromJson(item)),
+  //     );
+  //   } else {
+  //     return [];
+  //   }
+  // }
 
   static Future<List<String>> fetchBusinessTags({String? search}) async {
     Uri url = Uri.parse('$baseUrl/user/business-tags');
@@ -242,10 +242,10 @@ Future<List<PaymentYearModel>> getPaymentYears(Ref ref) {
   return UserService.getPaymentYears();
 }
 
-@riverpod
-Future<List<Subscription>> getUserSubscription(Ref ref) {
-  return UserService.getSubscription(id);
-}
+// @riverpod
+// Future<List<Subscription>> getUserSubscription(Ref ref) {
+//   return UserService.getSubscription(id);
+// }
 
 @riverpod
 Future<List<String>> searchBusinessTags(Ref ref, {String? search}) {

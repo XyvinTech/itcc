@@ -15,9 +15,9 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 class RazorpayScreen extends ConsumerStatefulWidget {
   final double amount;
   final String category;
-
+  final String parentSubId;
   const RazorpayScreen({
-    super.key,
+    super.key,required this.parentSubId,
     required this.amount,
     required this.category,
   });
@@ -52,6 +52,7 @@ class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
       body: jsonEncode({
         'amount': widget.amount,
         'category': widget.category,
+        'parentSubId':widget.parentSubId
       }),
     );
 
@@ -109,7 +110,6 @@ class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
       snackbarService
           .showSnackBar('Payment success: ${responseData['message']}');
       Navigator.pop(context, true);
-      ref.invalidate(getUserSubscriptionProvider);
       ref.read(userProvider.notifier).refreshUser();
     } else {
       log(responseData.toString());

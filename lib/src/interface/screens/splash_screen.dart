@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/app_version_model.dart';
 import 'package:itcc/src/data/models/user_model.dart';
@@ -10,20 +8,13 @@ import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/deep_link_service.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/utils/secure_storage.dart';
-import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:itcc/main.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/services/getFcmToken.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
-
 import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
-import 'package:flutter_upgrade_version/models/package_info.dart';
-import 'package:itcc/src/interface/screens/main_pages/profile/premium_subscription_flow.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   @override
@@ -139,19 +130,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               navigationService.pushNamedReplacement('MySubscriptionPage');
               return;
             }
-            final premiumFlagKey = 'premium_flow_shown_${user.uid}';
-            final premiumFlowShown = (await SecureStorage.read(premiumFlagKey)) == 'true';
-            if (user.status?.toLowerCase() == 'trial' && !premiumFlowShown) {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (_) => PremiumSubscriptionFlow(
-                  onComplete: () async {      premium_flow_shown = 'true';
-                    await SecureStorage.write(premiumFlagKey, 'true');
-                    navigationService.pushNamedReplacement('MainPage');
-                  },
-                ),
-              ));
-              return;
-            }
+
+          
+           
+       
+           
           }
           // 3. Normal navigation
           final pendingDeepLink = _deepLinkService.pendingDeepLink;

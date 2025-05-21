@@ -18,7 +18,7 @@ import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/router/nav_router.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
-import 'package:itcc/src/interface/components/Drawer/drawer.dart';
+import 'package:itcc/src/interface/screens/main_pages/Drawer/drawer.dart';
 import 'package:itcc/src/interface/components/common/custom_video.dart';
 import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_news.dart';

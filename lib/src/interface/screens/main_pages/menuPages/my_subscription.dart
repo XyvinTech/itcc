@@ -1,669 +1,206 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/subscription_model.dart';
 import 'package:itcc/src/data/services/razorpay.dart';
+import 'package:itcc/src/data/utils/secure_storage.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
-import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:itcc/src/interface/screens/main_pages/menuPages/preimum_plan.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itcc/src/data/api_routes/subscription_api/subscription_api.dart';
 
-class MySubscriptionPage extends StatefulWidget {
+import '../../../components/loading_indicator/loading_indicator.dart';
+
+class MySubscriptionPage extends ConsumerStatefulWidget {
+  const MySubscriptionPage({super.key});
   @override
-  State<MySubscriptionPage> createState() => _MySubscriptionPageState();
+  ConsumerState<MySubscriptionPage> createState() =>
+      _PremiumSubscriptionFlowState();
 }
 
-class _MySubscriptionPageState extends State<MySubscriptionPage> {
-  TextEditingController remarksController = TextEditingController();
+class _PremiumSubscriptionFlowState extends ConsumerState<MySubscriptionPage> {
+  int _currentIndex = 0;
 
-  File? _paymentImage;
-
-  // void _openModalSheet({required String sheet, required subscriptionType}) {
-  //   showModalBottomSheet(
-  //       isScrollControlled: true,
-  //       context: context,
-  //       builder: (context) {
-  //         return ShowPaymentUploadSheet(
-  //           subscriptionType: subscriptionType,
-  //           pickImage: _pickFile,
-  //           textController: remarksController,
-  //           imageType: 'payment',
-  //           paymentImage: _paymentImage,
-  //         );
-  //       });
-  // }
-
-  Future<File?> _pickFile({required String imageType}) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['png', 'jpg', 'jpeg'],
-    );
-
-    if (result != null) {
-      // Check if the file size is more than or equal to 1 MB (1 MB = 1024 * 1024 bytes)
-      // if (result.files.single.size >= 1024 * 1024) {
-      //   CustomSnackbar.showSnackbar(context, 'File size cannot exceed 1MB');
-
-      //   return null; // Exit the function if the file is too large
-      // }
-
-      // Set the selected file if it's within the size limit
-      setState(() {
-        _paymentImage = File(result.files.single.path!);
-      });
-      return _paymentImage;
-    }
-    return null;
-  }
-
-  // String? getRenewalYear(String? period) {
-  //   if (period != null) {
-  //     final parts = period.split('-');
-  //     return parts.isNotEmpty ? parts[0] : null;
-  //   } else {
-  //     return '';
-  //   }
-  // }
-
-  // String? getExpiryYear(String? period) {
-  //   if (period != null) {
-  //     final parts = period.split('-');
-  //     return parts.length > 1 ? parts[1] : null;
-  //   } else {
-  //     return '';
-  //   }
-  // }
-
-  Subscription? membershipSubscription;
-  Subscription? appSubscription;
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final asyncSubscriptions = ref.watch(getUserSubscriptionProvider);
-        return Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                "My Subscription",
-                style: TextStyle(fontSize: 15),
-              ),
-              backgroundColor: Colors.white,
-              scrolledUnderElevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-            backgroundColor: Colors.white,
-            body: asyncSubscriptions.when(
-                data: (subscriptions) {
-                  if (subscriptions.isNotEmpty) {
-                    membershipSubscription = subscriptions.firstWhere(
-                      (subscription) => subscription.category == "membership",
-                      orElse: () => Subscription(),
-                    );
+    final subscriptionsAsync = ref.watch(fetchSubscriptionsProvider);
 
-                    appSubscription = subscriptions.firstWhere(
-                      (subscription) => subscription.category == "app",
-                      orElse: () => Subscription(),
-                    );
-                  }
-
-                  return SingleChildScrollView(
-                    child: Column(
+    return Scaffold(
+      backgroundColor: kPrimaryLightColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 32),
+                Text(
+                  'Get ITCC Premium for Your Business',
+                  style: kDisplayTitleM.copyWith(fontSize: 27),
+                ),
+                const SizedBox(height: 32),
+                subscriptionsAsync.when(
+                  data: (subscriptions) {
+                    if (subscriptions.isEmpty) {
+                      return const Center(
+                        child: Text('No subscriptions available'),
+                      );
+                    }
+                    return Column(
                       children: [
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(left: 25, right: 25, top: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                'MEMBERSHIP SUBSCRIPTION',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: 400,
+                            viewportFraction: 1.0,
+                            enableInfiniteScroll: false,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _currentIndex = index;
+                              });
+                            },
                           ),
+                          items: subscriptions.map((subscription) {
+                            return _SubscriptionCard(
+                              subscription: subscription,
+                              // onComplete: widget.onComplete,
+                            );
+                          }).toList(),
                         ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 25, right: 25, top: 20),
-                            child: Container(
-                              padding: const EdgeInsets.all(16.0),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: subscriptions.asMap().entries.map((entry) {
+                            return Container(
+                              width: 8.0,
+                              height: 8.0,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
                               decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  const BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
+                                shape: BoxShape.circle,
+                                color: kPrimaryColor.withOpacity(
+                                  _currentIndex == entry.key ? 0.9 : 0.4,
+                                ),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  // Icon Image Section
-                                  Image.asset('assets/pngs/basic.png'),
-                                  const SizedBox(height: 10),
-
-                                  // Plan Title
-                                  const Text(
-                                    'Membership Fee',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                  const SizedBox(height: 5),
-
-                                  // Price Section
-                                  const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            fontWeight: FontWeight.w600),
-                                        '₹1000  ',
-                                      ),
-                                      Text(
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600),
-                                        'per year',
-                                      ),
-                                    ],
-                                  ),
-
-                                  const SizedBox(height: 10),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: const Color.fromARGB(
-                                              255, 218, 206, 206)),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                'Membership status:',
-                                                style: TextStyle(fontSize: 13),
-                                              ),
-                                              const Spacer(),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 4),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  border: Border.all(
-                                                    color: Colors.green,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                ),
-                                                child: Text(
-                                                  membershipSubscription
-                                                              ?.status ==
-                                                          'paid'
-                                                      ? 'Active'
-                                                      : 'Inactive',
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.green,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                          // Row(
-                                          //   children: [
-                                          //     const Text(
-                                          //       'Last renewed on:',
-                                          //       style:
-                                          //           TextStyle(fontSize: 13),
-                                          //     ),
-                                          //     const Spacer(),
-                                          //     Text(
-                                          //       getRenewalYear(
-                                          //               membershipSubscription
-                                          //                   ?.parentSub
-                                          //                   ?.academicYear) ??
-                                          //           '',
-                                          //       style: const TextStyle(
-                                          //         decorationColor:
-                                          //             kPrimaryColor,
-                                          //         decoration: TextDecoration
-                                          //             .underline, // Adds underline
-                                          //         fontStyle: FontStyle
-                                          //             .italic, // Makes text italic
-                                          //         fontSize: 12,
-                                          //         fontWeight: FontWeight.w600,
-                                          //         color: kPrimaryColor,
-                                          //       ),
-                                          //     ),
-                                          //   ],
-                                          // ),
-                                          if (membershipSubscription != null)
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                          if (membershipSubscription != null)
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Next renewal on:',
-                                                  style:
-                                                      TextStyle(fontSize: 13),
-                                                ),
-                                                const Spacer(),
-                                                if (membershipSubscription !=
-                                                    null)
-                                                  Text(
-                                                    DateFormat('dd/MM/yyyy')
-                                                        .format(
-                                                            membershipSubscription!
-                                                                .expiryDate!),
-                                                    style: const TextStyle(
-                                                      decorationColor:
-                                                          kPrimaryColor,
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: kPrimaryColor,
-                                                    ),
-                                                  ),
-                                              ],
-                                            )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  // Features List
-                                  Container(
-                                    padding: const EdgeInsets.all(12.0),
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 233, 246, 255),
-                                      borderRadius: BorderRadius.circular(2),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        _buildBasicCard(
-                                            'Self-manage products and services'),
-                                        _buildBasicCard(
-                                            'Product and Business enquiries'),
-                                        _buildBasicCard(
-                                            'Direct Messaging Access'),
-
-                                        // _buildPremiumCard(
-                                        //     'Provide feedback to ITCC office'),
-                                        // _buildPremiumCard('Chat with everyone'),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-
-                                  // Action Button
-                                  SizedBox(
-                                      width: double.infinity,
-                                      child: customButton(
-                                          sideColor:
-                                              membershipSubscription?.status ==
-                                                      'active'
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                          buttonColor:
-                                              membershipSubscription?.status ==
-                                                      'active'
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                          label: 'SUBSCRIBE',
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RazorpayScreen(
-                                                            amount: 1000,
-                                                            category:
-                                                                'membership')));
-
-                                            // if (membershipSubscription
-                                            //         ?.status !=
-                                            //     'accepted') {
-                                            //   // _openModalSheet(
-                                            //   //     sheet: 'payment',
-                                            //   //     subscriptionType:
-                                            //   //         'membership');
-                                            // }
-                                          })),
-                                ],
-                              ),
-                            ),
-                          ),
+                            );
+                          }).toList(),
                         ),
-                        // const Padding(
-                        //   padding:
-                        //       EdgeInsets.only(left: 25, right: 25, top: 20),
-                        //   child: Row(
-                        //     children: [
-                        //       Text(
-                        //         'UPGRADE APP SUBSCRIPTION',
-                        //         style: TextStyle(fontWeight: FontWeight.bold),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //       left: 25, right: 25, top: 20),
-                        //   child: Center(
-                        //     child: Container(
-                        //       padding: const EdgeInsets.all(16.0),
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.white,
-                        //         borderRadius: BorderRadius.circular(12),
-                        //         boxShadow: [
-                        //           const BoxShadow(
-                        //             color: Colors.black12,
-                        //             blurRadius: 10,
-                        //             spreadRadius: 2,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       child: Column(
-                        //         mainAxisSize: MainAxisSize.min,
-                        //         children: [
-                        //           // Icon Image Section
-                        //           Image.asset(
-                        //             'assets/pngs/premium.png',
-                        //             height: 80,
-                        //           ),
-                        //           const SizedBox(height: 10),
-
-                        //           // Plan Title
-                        //           const Text(
-                        //             style: TextStyle(
-                        //                 fontWeight: FontWeight.w600,
-                        //                 fontSize: 17),
-                        //             'App’s Premium Fee',
-                        //           ),
-                        //           const SizedBox(height: 5),
-
-                        //           // Price Section
-                        //           const Row(
-                        //             mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               Text(
-                        //                 style: TextStyle(
-                        //                     fontWeight: FontWeight.w600,
-                        //                     fontSize: 26),
-                        //                 '₹1000 ',
-                        //               ),
-                        //               Text(
-                        //                 style: TextStyle(
-                        //                     fontWeight: FontWeight.w600,
-                        //                     fontSize: 15),
-                        //                 'per year',
-                        //               ),
-                        //             ],
-                        //           ),
-                        //           const SizedBox(height: 10),
-                        //           Container(
-                        //             decoration: BoxDecoration(
-                        //               color: Colors.white,
-                        //               border: Border.all(
-                        //                   color: const Color.fromARGB(
-                        //                       255, 218, 206, 206)),
-                        //               borderRadius: BorderRadius.circular(5),
-                        //             ),
-                        //             child: Padding(
-                        //               padding: const EdgeInsets.all(15.0),
-                        //               child: Column(
-                        //                 children: [
-                        //                   Row(
-                        //                     mainAxisAlignment:
-                        //                         MainAxisAlignment.center,
-                        //                     children: [
-                        //                       const Text(
-                        //                         'App Subscription status:',
-                        //                         style: TextStyle(fontSize: 13),
-                        //                       ),
-                        //                       const Spacer(),
-                        //                       Container(
-                        //                           padding: const EdgeInsets
-                        //                               .symmetric(
-                        //                               horizontal: 12,
-                        //                               vertical: 5),
-                        //                           decoration: BoxDecoration(
-                        //                             color: Colors.white,
-                        //                             border: Border.all(
-                        //                               color: Colors.green,
-                        //                             ),
-                        //                             borderRadius:
-                        //                                 BorderRadius.circular(
-                        //                                     16),
-                        //                           ),
-                        //                           child: Text(
-                        //                             appSubscription?.status ==
-                        //                                     'active'
-                        //                                 ? 'Active'
-                        //                                 : 'Inactive',
-                        //                             style: const TextStyle(
-                        //                               fontSize: 12,
-                        //                               color: Colors.green,
-                        //                               fontWeight:
-                        //                                   FontWeight.bold,
-                        //                             ),
-                        //                           )),
-                        //                     ],
-                        //                   ),
-                        //                   SizedBox(
-                        //                     height: 10,
-                        //                   ),
-                        //                   if (appSubscription
-                        //                           ?.parentSub?.academicYear !=
-                        //                       null)
-                        //                     Row(
-                        //                       children: [
-                        //                         const Text(
-                        //                           'Last renewed on:',
-                        //                           style:
-                        //                               TextStyle(fontSize: 13),
-                        //                         ),
-                        //                         const Spacer(),
-                        //                         Text(
-                        //                           getExpiryYear(appSubscription
-                        //                                   ?.parentSub
-                        //                                   ?.academicYear) ??
-                        //                               '',
-                        //                           style: const TextStyle(
-                        //                             decorationColor:
-                        //                                 kPrimaryColor,
-                        //                             decoration: TextDecoration
-                        //                                 .underline, // Adds underline
-                        //                             fontStyle: FontStyle
-                        //                                 .italic, // Makes text italic
-                        //                             fontSize: 12,
-                        //                             fontWeight: FontWeight.w600,
-                        //                             color: kPrimaryColor,
-                        //                           ),
-                        //                         ),
-                        //                       ],
-                        //                     ),
-                        //                   if (appSubscription
-                        //                           ?.parentSub?.academicYear !=
-                        //                       null)
-                        //                     const SizedBox(
-                        //                       height: 10,
-                        //                     ),
-                        //                   if (appSubscription
-                        //                           ?.parentSub?.academicYear !=
-                        //                       null)
-                        //                     Row(
-                        //                       children: [
-                        //                         const Text(
-                        //                           'Next renewal on:',
-                        //                           style:
-                        //                               TextStyle(fontSize: 13),
-                        //                         ),
-                        //                         const Spacer(),
-                        //                         Text(
-                        //                           getRenewalYear(appSubscription
-                        //                                   ?.parentSub
-                        //                                   ?.academicYear) ??
-                        //                               '',
-                        //                           style: const TextStyle(
-                        //                             decorationColor:
-                        //                                 kPrimaryColor,
-                        //                             decoration: TextDecoration
-                        //                                 .underline, // Adds underline
-                        //                             fontStyle: FontStyle
-                        //                                 .italic, // Makes text italic
-                        //                             fontSize: 12,
-                        //                             fontWeight: FontWeight.w600,
-                        //                             color: kPrimaryColor,
-                        //                           ),
-                        //                         ),
-                        //                       ],
-                        //                     )
-                        //                 ],
-                        //               ),
-                        //             ),
-                        //           ),
-                        //           const SizedBox(
-                        //             height: 20,
-                        //           ),
-                        //           // Features List
-                        //           Container(
-                        //             padding: const EdgeInsets.all(12.0),
-                        //             decoration: BoxDecoration(
-                        //               color: const Color.fromARGB(
-                        //                   255, 255, 231, 192),
-                        //               borderRadius: BorderRadius.circular(8),
-                        //             ),
-                        //             child: Column(
-                        //               children: [
-                        //                 _buildPremiumCard(
-                        //                     'Self-manage products and services'),
-                        //                 _buildPremiumCard(
-                        //                     'Post requirements (admin approval needed)'),
-                        //                 _buildPremiumCard(
-                        //                     'Search and send enquiries to suppliers'),
-                        //                 _buildPremiumCard(
-                        //                     'Receive product and service enquiries'),
-                        //                 _buildPremiumCard(
-                        //                     'Premium profile features'),
-                        //                 // _buildPremiumCard(
-                        //                 //     'Provide feedback to ITCC office'),
-                        //                 // _buildPremiumCard('Chat with everyone'),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //           const SizedBox(height: 15),
-                        //           SizedBox(
-                        //               width: double.infinity,
-                        //               child: customButton(
-                        //                   buttonHeight: 40,
-                        //                   sideColor: const Color(0xFFF76412),
-                        //                   buttonColor: const Color(0xFFF76412),
-                        //                   label: appSubscription?.status !=
-                        //                           'Premium'
-                        //                       ? 'SUBSCRIBE'
-                        //                       : appSubscription?.status ??
-                        //                           'SUBSCRIBE',
-                        //                   onPressed: () {
-                        //                     if (appSubscription?.status !=
-                        //                         'Premium') {
-                        //                       Navigator.push(
-                        //                           context,
-                        //                           MaterialPageRoute(
-                        //                             builder: (context) =>
-                        //                                 const PremiumPlanPage(
-                        //                               subcriptionType: 'app',
-                        //                             ),
-                        //                           ));
-                        //                     }
-                        //                     // if (appSubscription?.status !=
-                        //                     //     'active') {
-                        //                     //   _openModalSheet(
-                        //                     //       sheet: 'payment',
-                        //                     //       subscriptionType: 'app');
-                        //                     // }
-                        //                   })),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          height: 20,
-                        )
                       ],
-                    ),
-                  );
-                },
-                loading: () => const Center(child: LoadingAnimation()),
-                error: (error, stackTrace) {
-                  return const Center(
-                      child: Text('Something Went Wrong, Please try again'));
-                }));
-      },
-    );
-  }
-
-  Widget _buildBasicCard(String feature) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          const Icon(Icons.check_circle, color: kPrimaryColor, size: 18),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              feature,
+                    );
+                  },
+                  loading: () =>
+                      const Center(child: LoadingAnimation()),
+                  error: (error, stack) => Center(
+                    child: Text('Error: ${error.toString()}'),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'Discover the right subscription to boost your business visibility and network.',
+                  style: kBodyTextStyle.copyWith(fontSize: 12),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
+}
 
-  Widget _buildPremiumCard(String feature) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
+class _SubscriptionCard extends StatelessWidget {
+  final SubscriptionModel subscription;
+
+  const _SubscriptionCard({
+    Key? key,
+    required this.subscription,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        border: Border.all(color: kPrimaryColor, width: 1),
+        borderRadius: BorderRadius.circular(20),
+        color: kWhite,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.check_circle, color: Colors.orange, size: 18),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              feature,
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text('BEST PLAN',
+                  style: kSmallTitleR.copyWith(color: kWhite)),
             ),
+          ),
+          const SizedBox(height: 16),
+          Text(subscription.name,
+              style: kDisplayTitleSB.copyWith(fontSize: 20)),
+          const SizedBox(height: 8),
+          Text(subscription.description, style: kSmallTitleR),
+          const SizedBox(height: 18),
+          Row(
+            children: [
+              Text('₹${subscription.price}',
+                  style: kDisplayTitleSB.copyWith(fontSize: 24)),
+              Text('/${subscription.days} days',
+                  style: kBodyTextStyle.copyWith(fontSize: 18)),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: (subscription.benefits).map((benefit) {
+              return _PlanBenefit(text: benefit);
+            }).toList(),
+          ),
+          
+          customButton(
+            label: 'Select This Plan',
+            onPressed: () async {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RazorpayScreen(parentSubId: subscription.id,
+                          amount: subscription.price.toDouble(),
+                          category: 'membership')));
+            },
+            buttonColor: kPrimaryColor,
+            fontSize: 16,
           ),
         ],
       ),
     );
   }
 }
+
+class _PlanBenefit extends StatelessWidget {
+  final String text;
+  const _PlanBenefit({required this.text});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        children: [
+          Icon(Icons.check_circle, color: kPrimaryColor, size: 15),
+          const SizedBox(width: 10),
+          Text(text, style: kBodyTextStyle.copyWith(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+}
+
+const kBodyTextStyle = TextStyle(fontSize: 15, color: kGreyDark, height: 1.5);

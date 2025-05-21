@@ -458,26 +458,6 @@ final getPaymentYearsProvider =
 // ignore: unused_element
 typedef GetPaymentYearsRef
     = AutoDisposeFutureProviderRef<List<PaymentYearModel>>;
-String _$getUserSubscriptionHash() =>
-    r'e8001bdc2ebca2c6febc1764b84d991de1fc151c';
-
-/// See also [getUserSubscription].
-@ProviderFor(getUserSubscription)
-final getUserSubscriptionProvider =
-    AutoDisposeFutureProvider<List<Subscription>>.internal(
-  getUserSubscription,
-  name: r'getUserSubscriptionProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getUserSubscriptionHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetUserSubscriptionRef
-    = AutoDisposeFutureProviderRef<List<Subscription>>;
 String _$searchBusinessTagsHash() =>
     r'9b4bdf90162c8d87456436c9f64310165656c21d';
 
