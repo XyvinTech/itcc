@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/services/hex_to_color.dart';
+
 class VerifiedName extends StatelessWidget {
   final String label;
   final TextStyle? textStyle;
   final Color? labelColor;
   final double? iconSize;
   final bool showBlueTick;
+  
+  final String? tickColor;
 
   const VerifiedName({
-    Key? key,
+    super.key,
     required this.label,
     this.textStyle,
     this.labelColor,
+    this.tickColor,
     this.iconSize = 16,
     this.showBlueTick = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +35,15 @@ class VerifiedName extends StatelessWidget {
             maxLines: 3,
           ),
         ),
+        if (tickColor!=null && tickColor!='')
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Icon(
+              Icons.verified,
+              color: hexToColor(tickColor??''),
+              size: iconSize,
+            ),
+          ),
         if (showBlueTick)
           Padding(
             padding: const EdgeInsets.only(left: 4),

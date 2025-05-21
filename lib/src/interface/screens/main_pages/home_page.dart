@@ -260,14 +260,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       left: 15, top: 10, bottom: 10),
                                   child: Row(
                                     children: [
-                                      VerifiedName(
-                                        label: widget.user.name ?? '',
-                                        textStyle: kBodyTitleR.copyWith(
+                                         VerifiedName(tickColor:widget. user.parentSub?.color??'',
+                                                  label:widget. user.name ?? '',
+                                                  textStyle:  kBodyTitleR.copyWith(
                                             color: kPrimaryColor),
-                                        iconSize: 18,
-                                        showBlueTick:
-                                            widget.user.blueTick ?? false,
-                                      ),
+                                             
+                                                  iconSize: 18,
+                                                        showBlueTick:widget. user.blueTick??false,
+                                                ),
                                       if (widget.user.adminType != null &&
                                           widget.user.adminType != "")
                                         Text(
@@ -669,6 +669,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                     );
                                                   }).toList(),
                                                   options: CarouselOptions(
+                                                    enableInfiniteScroll: false,
                                                     height: 268,
                                                     scrollPhysics: events
                                                                 .length >
@@ -678,7 +679,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                     autoPlay: events.length > 1
                                                         ? true
                                                         : false,
-                                                    viewportFraction: 1,
+                                                    viewportFraction: .85,
                                                     autoPlayInterval:
                                                         const Duration(
                                                             seconds: 3),

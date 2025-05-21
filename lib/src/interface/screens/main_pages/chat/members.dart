@@ -688,10 +688,11 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                                 ),
                               ),
                             ),
-                            title: VerifiedName(
-                              label: user.name ?? '',
-                                showBlueTick: user.blueTick??false,
-                            ),
+                            title:            VerifiedName(tickColor: user.parentSub?.color??'',
+                                                  label: user.name ?? '',
+                                                
+                                                        showBlueTick: user.blueTick??false,
+                                                ),
                             subtitle: Text('${user.chapter?.name ?? ''}',
                                 style:
                                     kSmallerTitleB.copyWith(color: kGreyDark)),

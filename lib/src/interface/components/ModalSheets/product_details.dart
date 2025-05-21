@@ -224,12 +224,13 @@ class _ProductDetailsModalState extends ConsumerState<ProductDetailsModal> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                VerifiedName(
-                                  label: user.name ?? '',
-                                  textStyle: kSmallerTitleM,
-                                  iconSize: 18,
-                                showBlueTick: user.blueTick??false,
-                                ),
+                                         VerifiedName(tickColor: user.parentSub?.color??'',
+                                                  label: user.name ?? '',
+                                                  textStyle: kSmallerTitleM,
+                                                  labelColor: kWhite,
+                                                  iconSize: 18,
+                                                        showBlueTick: user.blueTick??false,
+                                                ),
                                 if (user.company != null)
                                   if (user.company!.isNotEmpty)
                                     Text('${user.company?[0].name ?? ''}'),

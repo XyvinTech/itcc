@@ -52,13 +52,14 @@ class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
       body: jsonEncode({
         'amount': widget.amount,
         'category': widget.category,
-        'parentSubId':widget.parentSubId
+        'parentSub':widget.parentSubId
       }),
     );
 
     final responseData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       final payment = responseData['data'];
+      log('${payment['_id']}',name:"payment ID");
       payment_id = payment['_id'];
       var options = {
         'key': dotenv.env['RZP_KEY'] ?? '',

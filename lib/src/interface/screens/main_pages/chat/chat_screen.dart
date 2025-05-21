@@ -244,11 +244,13 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                                 ),
                               );
                             },
-                            child: VerifiedName(
-                              label: user.name ?? '',
-                              iconSize: 18,
-                              showBlueTick: user.blueTick ?? false,
-                            ),
+                            child:           VerifiedName(tickColor: user.parentSub?.color??'',
+                                                  label: user.name ?? '',
+                                               
+                                                  labelColor: kWhite,
+                                                  iconSize: 18,
+                                                        showBlueTick: user.blueTick??false,
+                                                ),
                           );
                         },
                         loading: () => Text(

@@ -40,12 +40,13 @@ Widget buildUserInfo(UserModel user, Business feed, context) {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VerifiedName(
-                      label: user.name ?? '',
-                      textStyle: kSmallTitleR,
-                      iconSize: 18,
-                      showBlueTick: user.blueTick??false,
-                    ),
+                       VerifiedName(tickColor: user.parentSub?.color??'',
+                                                  label: user.name ?? '',
+                                                  textStyle: kSmallTitleR,
+                                                 
+                                                  iconSize: 18,
+                                                        showBlueTick: user.blueTick??false,
+                                                ),
                     if (user.company != null &&
                         user.company!.isNotEmpty &&
                         user.company![0].name != null)

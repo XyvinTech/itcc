@@ -169,13 +169,13 @@ class ProfilePreview extends ConsumerWidget {
                                           borderColor: Colors.white,
                                           borderWidth: 3.0,
                                         ),
-                                        VerifiedName(
-                                          label: user.name ?? '',
-                                          textStyle: kHeadTitleSB,
-                                          labelColor: Colors.white,
-                                          iconSize: 18,
-                                           showBlueTick: user.blueTick??false,
-                                        ),
+                                   VerifiedName(tickColor: user.parentSub?.color??'',
+                                                  label: user.name ?? '',
+                                                  textStyle: kHeadTitleSB,
+                                                  labelColor: kWhite,
+                                                  iconSize: 18,
+                                                        showBlueTick: user.blueTick??false,
+                                                ),
                                         const SizedBox(height: 5),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(

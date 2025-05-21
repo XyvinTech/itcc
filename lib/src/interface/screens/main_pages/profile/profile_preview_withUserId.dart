@@ -10,6 +10,7 @@ import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/services/extract_level_details.dart';
+import 'package:itcc/src/data/services/hex_to_color.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/services/save_contact.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
@@ -176,10 +177,10 @@ class ProfilePreviewUsingId extends ConsumerWidget {
                                                   borderColor: Colors.white,
                                                   borderWidth: 3.0,
                                                 ),
-                                                VerifiedName(
+                                                VerifiedName(tickColor: user.parentSub?.color??'',
                                                   label: user.name ?? '',
                                                   textStyle: kHeadTitleSB,
-                                                  labelColor: Colors.white,
+                                                  labelColor: kWhite,
                                                   iconSize: 18,
                                                         showBlueTick: user.blueTick??false,
                                                 ),

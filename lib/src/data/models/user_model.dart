@@ -29,6 +29,33 @@ class Link {
   }
 }
 
+class ParentSubModel {
+  final String? id;
+  final String? name;
+  final String? color;
+
+
+  ParentSubModel( {this.id, this.name, this.color,});
+
+  factory ParentSubModel.fromJson(Map<String, dynamic> json) {
+    return ParentSubModel(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+    
+          color:json['color'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+
+      'name': name,
+      'color': color,
+    };
+  }
+}
+
 class UserChapterModel {
   final String? id;
   final String? name;
@@ -139,6 +166,7 @@ class UserModel {
   final bool? isAdmin;
   final bool? blueTick;
   final UserChapterModel? chapter;
+  final ParentSubModel? parentSub;
   final String? image;
   final String? email;
   final String? phone;
@@ -177,6 +205,7 @@ class UserModel {
     this.isAdmin,
     this.blueTick,
     this.chapter,
+    this.parentSub,
     this.image,
     this.email,
     this.phone,
@@ -218,6 +247,9 @@ class UserModel {
       blueTick: json['blueTick'] as bool? ?? false,
       chapter: json['chapter'] != null
           ? UserChapterModel.fromJson(json['chapter'])
+          : null,
+      parentSub: json['parentSub'] != null
+          ? ParentSubModel.fromJson(json['parentSub'])
           : null,
       image: json['image'] as String? ?? '',
       email: json['email'] as String? ?? '',

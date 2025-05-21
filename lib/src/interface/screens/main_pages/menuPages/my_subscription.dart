@@ -29,81 +29,82 @@ class _PremiumSubscriptionFlowState extends ConsumerState<MySubscriptionPage> {
     return Scaffold(
       backgroundColor: kPrimaryLightColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 32),
-                Text(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
                   'Get ITCC Premium for Your Business',
                   style: kDisplayTitleM.copyWith(fontSize: 27),
                 ),
-                const SizedBox(height: 32),
-                subscriptionsAsync.when(
-                  data: (subscriptions) {
-                    if (subscriptions.isEmpty) {
-                      return const Center(
-                        child: Text('No subscriptions available'),
-                      );
-                    }
-                    return Column(
-                      children: [
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: 400,
-                            viewportFraction: 1.0,
-                            enableInfiniteScroll: false,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _currentIndex = index;
-                              });
-                            },
-                          ),
-                          items: subscriptions.map((subscription) {
-                            return _SubscriptionCard(
-                              subscription: subscription,
-                              // onComplete: widget.onComplete,
-                            );
-                          }).toList(),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: subscriptions.asMap().entries.map((entry) {
-                            return Container(
-                              width: 8.0,
-                              height: 8.0,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: kPrimaryColor.withOpacity(
-                                  _currentIndex == entry.key ? 0.9 : 0.4,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
+              ),
+              const SizedBox(height: 32),
+              subscriptionsAsync.when(
+                data: (subscriptions) {
+                  if (subscriptions.isEmpty) {
+                    return const Center(
+                      child: Text('No subscriptions available'),
                     );
-                  },
-                  loading: () =>
-                      const Center(child: LoadingAnimation()),
-                  error: (error, stack) => Center(
-                    child: Text('Error: ${error.toString()}'),
-                  ),
+                  }
+                  return Column(
+                    children: [
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          height: 400,
+                          viewportFraction: .9,
+                          enableInfiniteScroll: false,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _currentIndex = index;
+                            });
+                          },
+                        ),
+                        items: subscriptions.map((subscription) {
+                          return _SubscriptionCard(
+                            subscription: subscription,
+                            // onComplete: widget.onComplete,
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: subscriptions.asMap().entries.map((entry) {
+                          return Container(
+                            width: 8.0,
+                            height: 8.0,
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: kPrimaryColor.withOpacity(
+                                _currentIndex == entry.key ? 0.9 : 0.4,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  );
+                },
+                loading: () => const Center(child: LoadingAnimation()),
+                error: (error, stack) => Center(
+                  child: Text('Error: ${error.toString()}'),
                 ),
-                const SizedBox(height: 24),
-                Text(
+              ),
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
                   'Discover the right subscription to boost your business visibility and network.',
                   style: kBodyTextStyle.copyWith(fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 16),
-              ],
-            ),
+              ),
+              const SizedBox(height: 16),
+            ],
           ),
         ),
       ),
@@ -121,65 +122,71 @@ class _SubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        border: Border.all(color: kPrimaryColor, width: 1),
-        borderRadius: BorderRadius.circular(20),
-        color: kWhite,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: kPrimaryColor,
-                borderRadius: BorderRadius.circular(16),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          border: Border.all(color: kPrimaryColor, width: 1),
+          borderRadius: BorderRadius.circular(20),
+          color: kWhite,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text('BEST PLAN',
+                    style: kSmallTitleR.copyWith(color: kWhite)),
               ),
-              child: Text('BEST PLAN',
-                  style: kSmallTitleR.copyWith(color: kWhite)),
             ),
-          ),
-          const SizedBox(height: 16),
-          Text(subscription.name,
-              style: kDisplayTitleSB.copyWith(fontSize: 20)),
-          const SizedBox(height: 8),
-          Text(subscription.description, style: kSmallTitleR),
-          const SizedBox(height: 18),
-          Row(
-            children: [
-              Text('₹${subscription.price}',
-                  style: kDisplayTitleSB.copyWith(fontSize: 24)),
-              Text('/${subscription.days} days',
-                  style: kBodyTextStyle.copyWith(fontSize: 18)),
-            ],
-          ),
-          const SizedBox(height: 18),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: (subscription.benefits).map((benefit) {
-              return _PlanBenefit(text: benefit);
-            }).toList(),
-          ),
-          
-          customButton(
-            label: 'Select This Plan',
-            onPressed: () async {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RazorpayScreen(parentSubId: subscription.id,
-                          amount: subscription.price.toDouble(),
-                          category: 'membership')));
-            },
-            buttonColor: kPrimaryColor,
-            fontSize: 16,
-          ),
-        ],
+            const SizedBox(height: 16),
+            Text(subscription.name,
+                style: kDisplayTitleSB.copyWith(fontSize: 20)),
+            const SizedBox(height: 8),
+            Text(subscription.description, style: kSmallTitleR),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Text('₹${subscription.price}',
+                    style: kDisplayTitleSB.copyWith(fontSize: 24)),
+                Text('/${subscription.days} days',
+                    style: kBodyTextStyle.copyWith(fontSize: 18)),
+              ],
+            ),
+            const SizedBox(height: 18),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: (subscription.benefits).map(
+                (benefit) {
+                return _PlanBenefit(text: benefit);
+              }).toList(),
+            ),
+            Spacer(),
+            customButton(
+              label: 'Select This Plan',
+              onPressed: () async {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RazorpayScreen(
+                            parentSubId: subscription.id,
+                            amount: subscription.price.toDouble(),
+                            category: 'membership')));
+              },
+              buttonColor: kPrimaryColor,
+              fontSize: 16,
+            ),
+          ],
+        ),
       ),
     );
   }
