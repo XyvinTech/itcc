@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:itcc/src/data/api_routes/chat_api/chat_api.dart';
 import 'package:itcc/src/data/api_routes/levels_api/levels_api.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/edit_user.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/user_model.dart';
@@ -413,7 +414,10 @@ class _MainPageState extends ConsumerState<MainPage> {
           log('im inside details main page error $error $stackTrace');
           return PhoneNumberScreen();
         },
-        data: (user) {
+        data: (user) {   if(user.fcm==null || user.fcm==''){
+               
+      editUser({"fcm": fcmToken,"name":user.name,"phone":user.phone});
+          }
           // Force name completion before anything else
           if (user.name == null || user.name!.trim().isEmpty) {
             // Show the non-skippable profile completion screen

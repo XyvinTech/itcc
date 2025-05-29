@@ -7,28 +7,25 @@ import 'package:itcc/src/data/models/product_model.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 
 class UserNotifier extends StateNotifier<AsyncValue<UserModel>> {
-  final StateNotifierProviderRef<UserNotifier, AsyncValue<UserModel>> ref;
+  final Ref< AsyncValue<UserModel>> ref;
 
   UserNotifier(this.ref) : super(const AsyncValue.loading()) {
     _initializeUser();
   }
 
-  /// Initializes the user when the notifier is first created
   Future<void> _initializeUser() async {
     if (mounted) {
       await _fetchUserDetails();
     }
   }
 
-  /// Refresh user details by re-fetching them and updating the state
   Future<void> refreshUser() async {
     if (mounted) {
-      state = const AsyncValue.loading(); // Set state to loading during refresh
+      state = const AsyncValue.loading(); 
       await _fetchUserDetails();
     }
   }
 
-  /// Helper function to fetch user details and update the state
   Future<void> _fetchUserDetails() async {
     try {
       log('Fetching user details');

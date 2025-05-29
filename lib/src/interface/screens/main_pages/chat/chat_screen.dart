@@ -244,13 +244,13 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                                 ),
                               );
                             },
-                            child:           VerifiedName(tickColor: user.parentSub?.color??'',
-                                                  label: user.name ?? '',
-                                               
-                                                  labelColor: kWhite,
-                                                  iconSize: 18,
-                                                        showBlueTick: user.blueTick??false,
-                                                ),
+                            child: VerifiedName(
+                              tickColor: user.parentSub?.color ?? '',
+                              label: user.name ?? '',
+                              labelColor: kWhite,
+                              iconSize: 18,
+                              showBlueTick: user.blueTick ?? false,
+                            ),
                           );
                         },
                         loading: () => Text(
@@ -517,10 +517,10 @@ class _IndividualPageState extends ConsumerState<IndividualPage> {
                     width: 40,
                   ),
                   iconCreation(Icons.location_pin, Colors.teal, "Location"),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.person, Colors.blue, "Contact"),
+                  // const SizedBox(
+                  //   width: 40,
+                  // ),
+                  // iconCreation(Icons.person, Colors.blue, "Contact"),
                 ],
               ),
             ],
