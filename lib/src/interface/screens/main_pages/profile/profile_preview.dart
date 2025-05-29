@@ -84,19 +84,19 @@ class ProfilePreview extends ConsumerWidget {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           flexibleSpace: Container(),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                size: 20,
-                Icons.edit,
-                color: kPrimaryColor,
-              ),
-              onPressed: () {
-                NavigationService navigationService = NavigationService();
-                navigationService.pushNamed('EditUser');
-              },
-            )
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(
+          //       size: 20,
+          //       Icons.edit,
+          //       color: kPrimaryColor,
+          //     ),
+          //     onPressed: () {
+          //       NavigationService navigationService = NavigationService();
+          //       navigationService.pushNamed('EditUser');
+          //     },
+          //   )
+          // ],
           centerTitle: true,
           elevation: 0,
           scrolledUnderElevation: 0,

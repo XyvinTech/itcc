@@ -26,7 +26,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   bool isAppUpdateRequired = false;
   bool hasVersionCheckError = false;
   String errorMessage = '';
-  final DeepLinkService _deepLinkService = DeepLinkService();
 
   bool isPermissionCheckComplete = false;
 
@@ -273,6 +272,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Future<void> initialize() async {
+    final deepLinkService = ref.watch(deepLinkServiceProvider);
     NavigationService navigationService = NavigationService();
     await checktoken();
     Timer(Duration(seconds: 2), () async {
@@ -300,11 +300,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             }
           }
           // 3. Normal navigation
-          final pendingDeepLink = _deepLinkService.pendingDeepLink;
+          final pendingDeepLink = deepLinkService.pendingDeepLink;
           if (pendingDeepLink != null) {
             navigationService.pushNamedReplacement('MainPage').then((_) {
-              _deepLinkService.handleDeepLink(pendingDeepLink);
-              _deepLinkService.clearPendingDeepLink();
+              deepLinkService.handleDeepLink(pendingDeepLink);
+              deepLinkService.clearPendingDeepLink();
             });
           } else {
             navigationService.pushNamedReplacement('MainPage');

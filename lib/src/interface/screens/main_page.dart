@@ -343,7 +343,9 @@ class _MainPageState extends ConsumerState<MainPage> {
                     onPressed: () async {
                       await SecureStorage.delete('token');
                       await SecureStorage.delete('id');
-
+       await editUser({
+                "fcm":"","name":user.name,"phone":user.phone
+              });
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

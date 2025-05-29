@@ -2,17 +2,23 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itcc/src/data/services/deep_link_service.dart';
 import 'package:flutter/material.dart';
+final notificationServiceProvider = Provider<NotificationService>((ref) {
+  // Get the deepLinkService from its provider
+  final deepLinkService = ref.watch(deepLinkServiceProvider);
+  return NotificationService(deepLinkService);
+});
 
 class NotificationService {
-  static final NotificationService _instance = NotificationService._internal();
-  factory NotificationService() => _instance;
-  NotificationService._internal();
+  final DeepLinkService _deepLinkService;
+  
+  // Constructor now takes DeepLinkService
+  NotificationService(this._deepLinkService);
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final DeepLinkService _deepLinkService = DeepLinkService();
 
   Future<void> initialize() async {
     try {

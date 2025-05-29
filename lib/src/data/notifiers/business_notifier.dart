@@ -1,14 +1,16 @@
 import 'dart:developer';
-import 'package:itcc/src/data/api_routes/business_api/business_api.dart';
+
 import 'package:itcc/src/data/models/business_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../api_routes/business_api/business_api.dart';
 part 'business_notifier.g.dart';
 
 @riverpod
 class BusinessNotifier extends _$BusinessNotifier {
   List<Business> businesses = [];
   bool isLoading = false;
-    bool isFirstLoad = true;
+  bool isFirstLoad = true;
   int pageNo = 1;
   final int limit = 5;
   bool hasMore = true;
@@ -26,10 +28,18 @@ class BusinessNotifier extends _$BusinessNotifier {
     try {
       final newBusinesses = await ref
           .read(fetchBusinessProvider(pageNo: pageNo, limit: limit).future);
-      businesses = [...businesses, ...newBusinesses];
-      pageNo++;
-      hasMore = newBusinesses.length == limit;
-      state = businesses;      isFirstLoad = false;
+      
+      if (newBusinesses.isEmpty) {
+        hasMore = false;
+      } else {
+        businesses = [...businesses, ...newBusinesses];
+        pageNo++;
+        // Only set hasMore to false if we get fewer items than the limit
+        hasMore = newBusinesses.length >= limit;
+      }
+      
+      isFirstLoad = false;
+      state = businesses;
     } catch (e, stackTrace) {
       log(e.toString());
       log(stackTrace.toString());
@@ -47,9 +57,11 @@ class BusinessNotifier extends _$BusinessNotifier {
       pageNo = 1;
       final refreshedBusinesses = await ref
           .read(fetchBusinessProvider(pageNo: pageNo, limit: limit).future);
+      
       businesses = refreshedBusinesses;
-      hasMore = refreshedBusinesses.length == limit;
-      state = businesses; // Update the state with the refreshed feed\
+      hasMore = refreshedBusinesses.length >= limit;
+      isFirstLoad = false;
+      state = businesses;
       log('refreshed');
     } catch (e, stackTrace) {
       log(e.toString());

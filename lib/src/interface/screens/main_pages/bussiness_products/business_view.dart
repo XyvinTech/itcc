@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:itcc/src/data/api_routes/user_api/user_data/user_activities.dart';
-import 'package:itcc/src/interface/components/ModalSheets/bussiness_enquiry_modal.dart';
-import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
-import 'package:itcc/src/interface/screens/main_pages/notification_page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:itcc/src/data/api_routes/user_api/user_data/user_activities.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
@@ -17,23 +15,23 @@ import 'package:itcc/src/data/models/business_model.dart';
 import 'package:itcc/src/data/models/chat_model.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/notifiers/business_notifier.dart';
-import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/interface/components/Dialogs/upgrade_dialog.dart';
 import 'package:itcc/src/interface/components/DropDown/block_repor_dropDown.dart';
 import 'package:itcc/src/interface/components/ModalSheets/addBusinessSheet.dart';
-import 'package:itcc/src/interface/components/ModalSheets/business_details.dart';
-import 'package:itcc/src/interface/components/animations/widget_animations.dart';
 import 'package:itcc/src/interface/components/custom_widgets/user_tile.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:itcc/src/interface/components/expandable_text.dart';
+import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 import 'package:itcc/src/interface/screens/crop_image_screen.dart';
+import 'package:itcc/src/interface/screens/main_pages/notification_page.dart';
+
 import 'package:path_provider/path_provider.dart';
 
 import 'package:shimmer/shimmer.dart';
-import 'package:itcc/src/data/services/user_access_service.dart';
-import 'package:itcc/src/interface/components/Dialogs/permission_denied_dialog.dart';
+
+import '../../../components/ModalSheets/bussiness_enquiry_modal.dart';
 
 class BusinessView extends ConsumerStatefulWidget {
-  BusinessView({super.key});
+  const BusinessView({super.key});
 
   @override
   ConsumerState<BusinessView> createState() => _BusinessViewState();
@@ -42,21 +40,12 @@ class BusinessView extends ConsumerStatefulWidget {
 class _BusinessViewState extends ConsumerState<BusinessView> {
   final TextEditingController feedContentController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  bool _canPostRequirement = false;
-
   @override
   void initState() {
     super.initState();
+
     _scrollController.addListener(_onScroll);
     _fetchInitialUsers();
-    _checkPermissions();
-  }
-
-  Future<void> _checkPermissions() async {
-    final hasPermission = await UserAccessService.canPostRequirement();
-    setState(() {
-      _canPostRequirement = hasPermission;
-    });
   }
 
   Future<void> _fetchInitialUsers() async {
@@ -119,15 +108,6 @@ class _BusinessViewState extends ConsumerState<BusinessView> {
   }
 
   void _openModalSheet({required String sheet}) {
-    if (!_canPostRequirement) {
-      PermissionDeniedDialog.show(
-        context,
-        message:
-            'You do not have permission to post requirements. Please contact your administrator for access.',
-      );
-      return;
-    }
-
     feedContentController.clear();
     _feedImage = null;
     showModalBottomSheet(
@@ -196,7 +176,7 @@ class _BusinessViewState extends ConsumerState<BusinessView> {
                               controller: _scrollController,
                               padding: const EdgeInsets.all(16.0),
                               itemCount: filteredFeeds.length +
-                                  2, // +2 for Ad and spacer
+                                  1, // +2 for Ad and spacer
                               itemBuilder: (context, index) {
                                 if (index == filteredFeeds.length) {
                                   return isLoading
@@ -228,15 +208,6 @@ class _BusinessViewState extends ConsumerState<BusinessView> {
               bottom: 30,
               child: GestureDetector(
                 onTap: () {
-                  if (!_canPostRequirement) {
-                    PermissionDeniedDialog.show(
-                      context,
-                      message:
-                          'You do not have permission to post requirements. Please contact your administrator for access.',
-                    );
-                    return;
-                  }
-
                   if (subscriptionType != 'free') {
                     _openModalSheet(sheet: 'post');
                   } else {
@@ -597,7 +568,7 @@ class _ReusableBusinessPostState extends ConsumerState<ReusableBusinessPost>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 5),
-                _buildExpandableText(widget.business.content!),
+                ExpandableText(text: widget.business.content ?? ''),
                 const SizedBox(height: 16),
                 _buildActionButtons(),
                 GestureDetector(
@@ -617,18 +588,11 @@ class _ReusableBusinessPostState extends ConsumerState<ReusableBusinessPost>
                     children: [
                       ClipOval(
                         child: Container(
-                          width: 30,
-                          height: 30,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          child: Image.network(
-                            widget.author.image ?? '',
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return SvgPicture.asset(
-                                  'assets/svg/icons/dummy_person_small.svg');
-                            },
-                          ),
-                        ),
+                            width: 30,
+                            height: 30,
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            child: SvgPicture.asset(
+                                'assets/svg/icons/dummy_person_small.svg')),
                       ),
                       GestureDetector(
                         onTap: () => _openCommentModal(),
@@ -682,52 +646,6 @@ class _ReusableBusinessPostState extends ConsumerState<ReusableBusinessPost>
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildExpandableText(String text) {
-    final textSpan = TextSpan(
-      text: text,
-      style: const TextStyle(fontSize: 14),
-    );
-
-    final textPainter = TextPainter(
-      text: textSpan,
-      maxLines: 2,
-      textDirection: TextDirection.ltr,
-    )..layout(maxWidth: MediaQuery.of(context).size.width - 32);
-
-    final isOverflowing = textPainter.didExceedMaxLines;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          _isExpanded
-              ? text
-              : textPainter.text!.toPlainText().substring(
-                      0,
-                      textPainter.text!.toPlainText().length > 50
-                          ? 50
-                          : textPainter.text!.toPlainText().length) +
-                  (isOverflowing ? '...' : ''),
-          style: const TextStyle(fontSize: 14),
-          maxLines: _isExpanded ? null : 2,
-          overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-        ),
-        if (isOverflowing)
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _isExpanded = !_isExpanded;
-              });
-            },
-            child: Text(
-              _isExpanded ? 'Read less' : 'Read more',
-              style: const TextStyle(color: kBlue, fontSize: 14),
-            ),
-          ),
-      ],
     );
   }
 
@@ -813,13 +731,13 @@ class _ReusableBusinessPostState extends ConsumerState<ReusableBusinessPost>
                   ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(
-                '${widget.business.likes?.length ?? 0} Likes',
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10, right: 10),
+            //   child: Text(
+            //     '${widget.business.likes?.length ?? 0} Likes',
+            //     style: const TextStyle(fontWeight: FontWeight.w600),
+            //   ),
+            // ),
           ],
         ),
         const Spacer(),

@@ -18,7 +18,9 @@ Future<List<Business>> fetchBusiness(FetchBusinessRef ref,
       "Authorization": "Bearer $token"
     },
   );
-
+  log(
+      name: "Requesting Feeds:",
+      '$baseUrl/feeds/list?pageNo=$pageNo&limit=$limit');
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     print(response.body);

@@ -5,15 +5,20 @@ import 'package:itcc/src/data/api_routes/events_api/events_api.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/chat_model.dart';
+import 'package:itcc/src/data/router/nav_router.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/data/utils/secure_storage.dart';
+final deepLinkServiceProvider = Provider<DeepLinkService>((ref) {
+  return DeepLinkService(ref);
+});
 
 class DeepLinkService {
-  static final DeepLinkService _instance = DeepLinkService._internal();
-  factory DeepLinkService() => _instance;
-  DeepLinkService._internal();
-
+  final Ref _ref;
   final _appLinks = AppLinks();
   Uri? _pendingDeepLink;
+
+  // Constructor that takes a Ref
+  DeepLinkService(this._ref);
 
   Uri? get pendingDeepLink => _pendingDeepLink;
   void clearPendingDeepLink() {
@@ -41,25 +46,33 @@ class DeepLinkService {
 
   Future<void> handleDeepLink(Uri uri) async {
     try {
+  if (token.isEmpty) {
+ 
+        String? savedtoken = await SecureStorage.read('token');
+        String? savedId = await SecureStorage.read('id');
+        if (savedtoken != null && savedtoken.isNotEmpty && savedId != null) {
+          token = savedtoken;
+          id = savedId;
+          LoggedIn = true;
+        }
+      }
+
       final pathSegments = uri.pathSegments;
       if (pathSegments.isEmpty) return;
 
+      debugPrint('Handling deep link: ${uri.toString()}');
+      debugPrint('Path segments: $pathSegments');
+
       // Check if app is in the foreground
-      bool isAppForeground =
-          NavigationService.navigatorKey.currentState?.overlay != null;
+      bool isAppForeground = NavigationService.navigatorKey.currentState?.overlay != null;
 
       if (!isAppForeground) {
+        debugPrint('App is not in foreground, navigating to mainpage first');
         // App is in the background or terminated, go through splash & mainpage
-        NavigationService.navigatorKey.currentState?.pushNamedAndRemoveUntil(
-          'Splash',
+       NavigationService. navigatorKey.currentState?.pushNamedAndRemoveUntil(
+          '/mainpage',
           (route) => false,
         );
-
-        await Future.delayed(
-            Duration(seconds: 2)); // Simulating splash processing
-
-        NavigationService.navigatorKey.currentState
-            ?.pushReplacementNamed('MainPage');
 
         await Future.delayed(Duration(milliseconds: 500)); // Ensure stability
       }
@@ -128,6 +141,14 @@ class DeepLinkService {
           }
 
           break;
+        case 'news':
+          try {
+            _ref.read(selectedIndexProvider.notifier).updateIndex(3);
+          } catch (e) {
+            debugPrint('Error updating tab: $e');
+            _showError('Unable to navigate to requirements');
+          }
+          break;
 
         case 'mainpage':
           break;
@@ -162,11 +183,16 @@ class DeepLinkService {
         return 'itcc://app/my_subscription';
       case 'my_products':
         return 'itcc://app/my_products';
+         case 'in-app':
+        return 'itcc://app/notification';
       case 'my_feeds':
         return 'itcc://app/my_feeds';
       case 'mainpage':
         return 'itcc://app/mainpage';
-
+      case 'products':
+        return id != null ? 'itcc://app/products/$id' : 'itcc://app/products';
+      case 'news':
+        return 'itcc://app/news';
       default:
         return null;
     }

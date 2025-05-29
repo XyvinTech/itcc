@@ -259,8 +259,9 @@ class _AnimatedNewsContentState extends State<AnimatedNewsContent>
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate =
-        DateFormat('MMM dd, yyyy, hh:mm a').format(widget.newsItem.updatedAt!);
+    final formattedDate = DateFormat('MMM dd, yyyy, hh:mm a')
+        .format(widget.newsItem.updatedAt!.toLocal());
+
     final minsToRead =
         calculateReadingTimeAndWordCount(widget.newsItem.content ?? '');
 
