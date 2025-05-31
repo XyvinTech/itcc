@@ -9,18 +9,13 @@ import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/services/notification_service.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:itcc/src/data/router/router.dart' as router;
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:itcc/src/data/utils/secure_storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
+  await Firebase.initializeApp(name: 'itcc-23d56',
     options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await FirebaseAppCheck.instance.activate(
-    androidProvider: AndroidProvider.playIntegrity,
-    appleProvider: AppleProvider.appAttest,
   );
   await loadSecureData();
   await dotenv.load(fileName: ".env");

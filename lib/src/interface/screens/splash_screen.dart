@@ -1,6 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
+
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/app_version_model.dart';
 import 'package:itcc/src/data/models/user_model.dart';
@@ -8,10 +16,6 @@ import 'package:itcc/src/data/notifiers/user_notifier.dart';
 import 'package:itcc/src/data/services/deep_link_service.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/utils/secure_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/services/getFcmToken.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
@@ -22,8 +26,11 @@ class SplashScreen extends ConsumerStatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen>
+    with WidgetsBindingObserver {
   bool isAppUpdateRequired = false;
+  String isFirstLaunch = 'false';
+  bool openedAppSettings = false;
   bool hasVersionCheckError = false;
   String errorMessage = '';
 
@@ -217,7 +224,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         log('Failed to fetch app version: ${response.statusCode}');
         setState(() {
           hasVersionCheckError = true;
-          errorMessage = 'Server is down please try again later';
+          errorMessage = 'Server is down. Please try again later.';
         });
       }
     } catch (e) {
@@ -237,7 +244,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     log('New version: ${response.version}');
 
     if (currentVersion < response.version && response.force) {
-      // Pause initialization and show update dialog
       isAppUpdateRequired = true;
       showUpdateDialog(response, context);
     }
@@ -246,14 +252,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void showUpdateDialog(AppVersionResponse response, BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false, // Force update requirement
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: Text('Update Required'),
         content: Text(response.updateMessage),
         actions: [
           TextButton(
             onPressed: () {
-              // Redirect to app store
               launchURL(response.applink);
             },
             child: Text('Update Now'),
@@ -268,7 +273,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       hasVersionCheckError = false;
       errorMessage = '';
     });
-    await checkAppVersion(context);
+    proceedWithAppFlow();
   }
 
   Future<void> initialize() async {
@@ -279,14 +284,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       if (!isAppUpdateRequired) {
         print('Logged in : $LoggedIn');
         if (LoggedIn) {
-          // Fetch user data
           final container = ProviderContainer();
           final asyncUser = container.read(userProvider);
           UserModel? user;
           if (asyncUser is AsyncData<UserModel>) {
             user = asyncUser.value;
           } else {
-            // fallback: try to refresh and get user
             await container.read(userProvider.notifier).refreshUser();
             final refreshed = container.read(userProvider);
             if (refreshed is AsyncData<UserModel>) {
@@ -298,9 +301,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               navigationService.pushNamedReplacement('MySubscriptionPage');
               return;
             }
+
+          
+           
+       
+           
           }
           // 3. Normal navigation
-          final pendingDeepLink = deepLinkService.pendingDeepLink;
+          final pendingDeepLink = _deepLinkService.pendingDeepLink;
           if (pendingDeepLink != null) {
             navigationService.pushNamedReplacement('MainPage').then((_) {
               deepLinkService.handleDeepLink(pendingDeepLink);
@@ -360,7 +368,26 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       ),
                     ),
                     SizedBox(height: 16),
-                    // customButton(label: 'Retry', onPressed: retryVersionCheck)
+                    ElevatedButton(
+                      onPressed: retryVersionCheck,
+                      child: Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+   ),
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: retryVersionCheck,
+                      child: Text('Retry'),
+                    ),
                   ],
                 ),
               ),
