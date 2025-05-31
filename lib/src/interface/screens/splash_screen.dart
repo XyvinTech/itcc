@@ -18,8 +18,7 @@ import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/utils/secure_storage.dart';
 import 'package:itcc/src/data/services/getFcmToken.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
-import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:itcc/src/data/globals.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   @override
@@ -34,17 +33,27 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   bool hasVersionCheckError = false;
   String errorMessage = '';
 
-  bool isPermissionCheckComplete = false;
-
-  // Add a flag to track first launch
-  String isFirstLaunch = 'false';
-
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     checkFirstLaunch().then((_) {
       handlePermissions();
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && openedAppSettings) {
+      openedAppSettings = false;
+      handlePermissions();
+    }
   }
 
   Future<void> checkFirstLaunch() async {
@@ -55,160 +64,121 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   Future<void> handlePermissions() async {
-    if (isFirstLaunch == 'true') {
-      // For first launch, directly request permission using the system dialog
-      await getToken();
-      setState(() {
-        isPermissionCheckComplete = true;
-      });
-      proceedWithAppFlow();
+    if (Platform.isIOS) {
+      await handleIOSPermissions();
     } else {
-      // For subsequent launches, check status first
-      final status = await Permission.notification.status;
-      if (status.isGranted) {
-        await getToken();
-        setState(() {
-          isPermissionCheckComplete = true;
-        });
-        proceedWithAppFlow();
-      } else if (status.isPermanentlyDenied) {
-        // Show custom dialog if permission was permanently denied
-        if (mounted) {
-          await showPermissionDialog();
-        }
-      } else {
-        // For other cases (like first denial), try system dialog again
-        await getToken();
-        setState(() {
-          isPermissionCheckComplete = true;
-        });
-        proceedWithAppFlow();
+      await handleAndroidPermissions();
+    }
+  }
+
+  Future<void> handleIOSPermissions() async {
+    final settings = await FirebaseMessaging.instance.getNotificationSettings();
+
+    if (settings.authorizationStatus == AuthorizationStatus.notDetermined) {
+      final newSettings = await FirebaseMessaging.instance.requestPermission();
+      if (newSettings.authorizationStatus == AuthorizationStatus.authorized) {
+        await setupFCM();
       }
+    } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      await showiOSPermissionDialog();
+    } else if (settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional) {
+      await setupFCM();
+    }
+
+    proceedWithAppFlow();
+  }
+
+  Future<void> handleAndroidPermissions() async {
+    final status = await Permission.notification.status;
+
+    if (status.isGranted) {
+      await setupFCM();
+      proceedWithAppFlow();
+    } else if (status.isPermanentlyDenied) {
+      await showAndroidPermissionDialog();
+    } else {
+      final result = await Permission.notification.request();
+      if (result.isGranted) {
+        await setupFCM();
+      }
+      proceedWithAppFlow();
+    }
+  }
+
+  Future<void> showiOSPermissionDialog() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text('Enable Notifications'),
+        content: Text(
+            'You have previously denied notification permissions. Please enable them in Settings.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              proceedWithAppFlow();
+            },
+            child: Text('Skip'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+              openedAppSettings = true;
+              await openAppSettings();
+            },
+            child: Text('Open Settings'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> showAndroidPermissionDialog() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text('Enable Notifications'),
+        content: Text(
+            'Please enable notification permissions from app settings.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              proceedWithAppFlow();
+            },
+            child: Text('Skip'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await openAppSettings();
+            },
+            child: Text('Open Settings'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> setupFCM() async {
+    try {
+      await getToken(context);
+      print("FCM Token: $token");
+    } catch (e) {
+      print('Error getting FCM token: $e');
+      fcmToken = '';
     }
   }
 
   void proceedWithAppFlow() {
     checkAppVersion(context).then((_) {
-      if (!isAppUpdateRequired) {
+      if (!isAppUpdateRequired && !hasVersionCheckError) {
         initialize();
       }
     });
-  }
-
-  Future<void> showPermissionDialog() async {
-    await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        elevation: 8,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Icon at the top
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.notifications_outlined,
-                  color: Colors.blue.shade700,
-                  size: 40,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Title
-              Text(
-                "Enable Notifications",
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade800,
-                    ),
-              ),
-              const SizedBox(height: 12),
-
-              // Content
-              Text(
-                "Would you like to enable notifications to stay updated with important information?",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey.shade700,
-                      height: 1.4,
-                    ),
-              ),
-              const SizedBox(height: 24),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-
-                        setState(() {
-                          isPermissionCheckComplete = true;
-                        });
-
-                        proceedWithAppFlow();
-                      },
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        side: BorderSide(color: Color(0xFF004797)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(color: Color(0xFF004797)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        await openAppSettings();
-
-                        final newStatus = await Permission.notification.status;
-                        if (newStatus.isGranted) {
-                          await getToken();
-                        }
-
-                        setState(() {
-                          isPermissionCheckComplete = true;
-                        });
-
-                        proceedWithAppFlow();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        backgroundColor: Color(0xFF004797),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text("Enable"),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Future<void> checkAppVersion(context) async {
@@ -277,7 +247,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   Future<void> initialize() async {
-    final deepLinkService = ref.watch(deepLinkServiceProvider);
+    final _deepLinkService=ref.watch(deepLinkServiceProvider);
     NavigationService navigationService = NavigationService();
     await checktoken();
     Timer(Duration(seconds: 2), () async {
@@ -296,23 +266,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
               user = refreshed.value;
             }
           }
-          if (user != null) {
-            if (user.status?.toLowerCase() == 'awaiting_payment') {
-              navigationService.pushNamedReplacement('MySubscriptionPage');
-              return;
-            }
-
-          
-           
-       
-           
+          if (user != null &&
+              user.status?.toLowerCase() == 'awaiting_payment') {
+            navigationService.pushNamedReplacement('MySubscriptionPage');
+            return;
           }
-          // 3. Normal navigation
+
           final pendingDeepLink = _deepLinkService.pendingDeepLink;
           if (pendingDeepLink != null) {
             navigationService.pushNamedReplacement('MainPage').then((_) {
-              deepLinkService.handleDeepLink(pendingDeepLink);
-              deepLinkService.clearPendingDeepLink();
+              _deepLinkService.handleDeepLink(pendingDeepLink);
+              _deepLinkService.clearPendingDeepLink();
             });
           } else {
             navigationService.pushNamedReplacement('MainPage');
@@ -366,22 +330,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         color: Colors.red,
                         fontSize: 16,
                       ),
-                    ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: retryVersionCheck,
-                      child: Text('Retry'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-   ),
                     ),
                     SizedBox(height: 16),
                     ElevatedButton(
