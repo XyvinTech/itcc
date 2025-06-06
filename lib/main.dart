@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,12 +15,12 @@ import 'package:itcc/src/data/utils/secure_storage.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(name: 'itcc-23d56',
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await loadSecureData();
   await dotenv.load(fileName: ".env");
-
+  FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: false);
   runApp(ProviderScope(child: MyApp()));
 }
 
