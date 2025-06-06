@@ -292,7 +292,7 @@ SPEC CHECKSUMS:
   contact_add: 2e039080bf10ee48ee5fa5f617e30b43c310fa49
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
-  file_picker: 9b3292d7c8bc68c8a7bf8eb78f730e49c8efc517
+  file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
   Firebase: d80354ed7f6df5f9aca55e9eb47cc4b634735eaf
   firebase_auth: 5b67bc214b9244cee89e93d699f12ab623bbfcb5
   firebase_core: 6cbed78b4f298ed103a9fd034e6dbc846320480f
@@ -306,7 +306,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 6c963bd2a86aca0481eef4f48f5a4df783ae5917
   FirebaseMessaging: 487b634ccdf6f7b7ff180fdcb2a9935490f764e8
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_local_notifications: 395056b3175ba4f08480a7c5de30cd36d69827e4
+  flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
   flutter_upgrade_version: 7535dbf7636d9c54e5bf5288c584141ba8b08377
   fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
