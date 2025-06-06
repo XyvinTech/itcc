@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:itcc/src/data/api_routes/business_api/business_api.dart';
 
 import 'package:itcc/src/data/constants/color_constants.dart';
+import 'package:itcc/src/data/services/image_service.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:path/path.dart';
@@ -180,7 +181,7 @@ class _ShowAdddBusinessSheetState extends State<ShowAdddBusinessSheet> {
                         print(selectedType);
 
                         if (selectedImage != null) {
-                          mediaUrl = await imageUpload(
+                          mediaUrl = await MediaService.mediaUpload(
                             selectedImage!.path,
                           );
                         }

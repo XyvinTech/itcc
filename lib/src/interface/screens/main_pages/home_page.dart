@@ -247,37 +247,47 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 15, top: 10),
-                                  child: Text('Welcome, ',
-                                      style: kLargeTitleB.copyWith(
-                                          color: kPrimaryColor)),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 10),
+                                      child:
+                                          Text('Welcome, ${widget.user.name}',
+                                              style: kLargeTitleB.copyWith(
+                                                color: kBlack,
+                                              )),
+                                    ),
+                                    VerifiedName(
+                                      tickColor:
+                                          widget.user.parentSub?.color ?? '',
+                                      label: '',
+                                      textStyle: kBodyTitleR.copyWith(
+                                          color: kPrimaryColor),
+                                      iconSize: 18,
+                                      showBlueTick:
+                                          widget.user.blueTick ?? false,
+                                    ),
+                                  ],
                                 ),
 
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 15, top: 10, bottom: 10),
+                                      left: 15, top: 10, right: 20),
                                   child: Row(
                                     children: [
-                                         VerifiedName(tickColor:widget. user.parentSub?.color??'',
-                                                  label:widget. user.name ?? '',
-                                                  textStyle:  kBodyTitleR.copyWith(
-                                            color: kPrimaryColor),
-                                             
-                                                  iconSize: 18,
-                                                        showBlueTick:widget. user.blueTick??false,
-                                                ),
-                                      if (widget.user.adminType != null &&
-                                          widget.user.adminType != "")
-                                        Text(
-                                          ' - (${widget.user.adminType?.toUpperCase() ?? ''})',
-                                          style: kBodyTitleR.copyWith(
-                                              color: kPrimaryColor),
+                                      Expanded(
+                                        child: Text(
+                                          'Connect with the Heart of ITCC\'s Business World.',
+                                          style: kSmallTitleUL.copyWith(
+                                            color: kBlack54,
+                                          ),
                                         ),
+                                      ),
                                     ],
                                   ),
                                 ),
+
                                 // if (widget.user.freeTrialEndDate != null)
                                 // Center(
                                 //   child: Container(
@@ -634,7 +644,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                       padding:
                                                           const EdgeInsets.only(
                                                               left: 15,
-                                                              top: 10),
+                                                              top: 30),
                                                       child: Text(
                                                           'Latest Events',
                                                           style: kSubHeadingB

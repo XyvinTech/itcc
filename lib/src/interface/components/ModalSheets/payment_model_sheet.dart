@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
+import 'package:itcc/src/data/services/image_service.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -183,7 +184,7 @@ class _ShowPaymentUploadSheetState extends State<ShowPaymentUploadSheet> {
               }
 
               try {
-                final String paymentImageUrl = await imageUpload(
+                final String paymentImageUrl = await MediaService.mediaUpload(
                   widget.paymentImage!.path,
                 );
                 // Attempt to upload the payment details

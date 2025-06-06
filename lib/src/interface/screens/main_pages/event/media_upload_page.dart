@@ -7,6 +7,8 @@ import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/loading_indicator/loading_indicator.dart';
 
+import '../../../../data/services/image_service.dart';
+
 class MediaUploadPage extends ConsumerStatefulWidget {
   final String eventId;
 
@@ -54,7 +56,7 @@ class _MediaUploadPageState extends ConsumerState<MediaUploadPage>
     if (image != null) {
       setState(() => _isUploading = true);
       try {
-        final String imageUrl = await imageUpload(image.path);
+        final String imageUrl = await MediaService.mediaUpload(image.path);
         setState(() {
           _selectedImages.add(imageUrl);
         });

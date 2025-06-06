@@ -43,6 +43,29 @@ class NotificationPage extends StatelessWidget {
                 children: [
                   asyncNotification.when(
                     data: (notifications) {
+                      if (notifications.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 80.0),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.notifications_off, size: 64, color: Colors.grey[400]),
+                                SizedBox(height: 16),
+                                Text(
+                                  'No notifications',
+                                  style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'You have no notifications at the moment.',
+                                  style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),

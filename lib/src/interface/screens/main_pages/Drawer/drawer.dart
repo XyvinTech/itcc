@@ -23,7 +23,7 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
               'assets/pngs/itcc_logo_group.png',
-              scale: 20,
+              scale: 15,
             ),
           ),
           SizedBox(
@@ -195,10 +195,6 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
           //   onTap: () {},
           // ),
 
-          SizedBox(
-            height: 40,
-          ),
-
           _buildDrawerItem(
             icon: 'assets/svg/icons/about_us.svg',
             label: 'About Us',
@@ -223,6 +219,13 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
             },
           ),
           _buildDrawerItem(
+            icon: 'assets/svg/icons/phone_icon.svg',
+            label: 'Change Number',
+            onTap: () {
+              navigationService.pushNamed('ChangeNumber');
+            },
+          ),
+          _buildDrawerItem(
             icon: 'assets/svg/icons/logout.svg',
             label: 'Logout',
             onTap: () async {
@@ -235,13 +238,7 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
               });
             },
           ),
-          _buildDrawerItem(
-            icon: 'assets/svg/icons/phone_icon.svg',
-            label: 'Change Number',
-            onTap: () {
-              navigationService.pushNamed('ChangeNumber');
-            },
-          ),
+
           _buildDrawerItem(
             icon: 'assets/svg/icons/delete_account.svg',
             label: 'Delete Account',

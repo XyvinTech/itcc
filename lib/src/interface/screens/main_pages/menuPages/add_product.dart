@@ -6,6 +6,7 @@ import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/product_model.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/data/services/image_service.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/Dialogs/premium_dialog.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
@@ -84,7 +85,7 @@ class _EnterProductsPageState extends ConsumerState<EnterProductsPage> {
       offerPrice: productOfferPriceController.text,
       description: productDescriptionController.text,
       moq: productMoqController.text,
-      productImage: await imageUpload(productImage!.path),
+      productImage: await MediaService.mediaUpload(productImage!.path),
       productPriceType: productPriceType.text,
     );
     if (createdProduct == null) {
@@ -93,7 +94,7 @@ class _EnterProductsPageState extends ConsumerState<EnterProductsPage> {
       final newProduct = Product(
         id: createdProduct.id,
         name: productNameController.text,
-        image: await imageUpload(productImage!.path),
+        image: await  MediaService.mediaUpload(productImage!.path),
         description: productDescriptionController.text,
         moq: int.parse(productMoqController.text),
         offerPrice: double.parse(productOfferPriceController.text),
@@ -475,7 +476,7 @@ class _EnterProductsPageState extends ConsumerState<EnterProductsPage> {
                                     productOfferPriceController.text),
                                 productPriceType: productPriceType.text,
                                 image: productImage != null
-                                    ? await imageUpload(productImage!.path)
+                                    ? await MediaService.mediaUpload(productImage!.path)
                                     : widget.product?.image,
                                 seller: widget.product?.seller,
                                 status:

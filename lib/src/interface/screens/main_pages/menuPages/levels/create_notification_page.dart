@@ -10,6 +10,7 @@ import 'package:itcc/src/data/api_routes/levels_api/levels_api.dart';
 import 'package:itcc/src/data/api_routes/notification_api/notification_api.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/models/level_models/level_model.dart';
+import 'package:itcc/src/data/services/image_service.dart';
 import 'package:itcc/src/data/services/image_upload.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
 import 'package:itcc/src/interface/components/custom_widgets/custom_textFormField.dart';
@@ -329,7 +330,7 @@ class _CreateNotificationPageState
                 onPressed: () async {
                   if (notificationImage != null) {
                     notificationImageUrl =
-                        await imageUpload(notificationImage!.path);
+                        await MediaService.mediaUpload(notificationImage!.path);
                   }
                   createLevelNotification(
                       level: widget.level,

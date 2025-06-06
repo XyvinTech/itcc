@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/models/user_model.dart';
+import 'package:itcc/src/data/services/image_service.dart';
 import 'package:itcc/src/data/services/image_upload.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/interface/components/Buttons/primary_button.dart';
@@ -323,7 +324,7 @@ class _MemberCreationPageState extends State<MemberCreationPage> {
                             selectedSubCategory != null &&
                             selectedStatus != null) {
                           String profileImageUrl =
-                              await imageUpload(_profileImage!.path);
+                              await MediaService.mediaUpload(_profileImage!.path);
                           navigationService.pushNamed('MemberAllocation',
                               arguments: UserModel(
                                   name: nameController.text,

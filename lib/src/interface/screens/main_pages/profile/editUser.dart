@@ -1,3 +1,4 @@
+import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/notifiers/user_notifier.dart';
+import 'package:itcc/src/data/services/image_service.dart';
 import 'package:itcc/src/data/services/image_upload.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
@@ -176,37 +178,53 @@ class _EditUserState extends ConsumerState<EditUser> {
 
   Future<File?> _pickFile(
       {required String imageType, int? companyIndex}) async {
+    final cropController = CustomImageCropController();
     final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (image != null) {
-      if (imageType == 'profile') {
-        setState(() {
-          _isProfileImageLoading = true;
-          _profileImageFile = File(image.path);
-        });
-        try {
-          String profileUrl = await imageUpload(_profileImageFile!.path);
+    if (imageType == 'profile') {
+      setState(() {
+        _isProfileImageLoading = true;
+      });
+      try {
+        final File? croppedFile = await MediaService.pickAndCropImage(
+          context: context,
+          cropController: cropController,
+          source: ImageSource.gallery,
+          shape: CustomCropShape.Circle,
+        );
+
+        if (croppedFile != null) {
+          _profileImageFile = croppedFile;
+          String profileUrl = await MediaService.mediaUpload(_profileImageFile!.path);
           _profileImageSource = ImageSource.gallery;
           ref.read(userProvider.notifier).updateProfilePicture(profileUrl);
-          print((profileUrl));
           return _profileImageFile;
-        } catch (e) {
-          print('Error uploading profile image: $e');
-          snackbarService.showSnackBar('Failed to upload profile image');
-        } finally {
-          setState(() {
-            _isProfileImageLoading = false;
-          });
         }
-      } else if (imageType == 'company') {
-        if (companyIndex != null) {
-          setState(() {
-            _companyLogoLoadingStates[companyIndex] = true;
-            _companyImageFile = File(image.path);
-          });
-          try {
-            String companyUrl = await imageUpload(_companyImageFile!.path);
+      } catch (e) {
+        print('Error uploading profile image: $e');
+        snackbarService.showSnackBar('Failed to upload profile image');
+      } finally {
+        setState(() {
+          _isProfileImageLoading = false;
+        });
+      }
+    } else if (imageType == 'company') {
+      if (companyIndex != null) {
+        setState(() {
+          _companyLogoLoadingStates[companyIndex] = true;
+        });
+        try {
+          final File? croppedFile = await MediaService.pickAndCropImage(
+            context: context,
+            cropController: cropController,
+            source: ImageSource.gallery,
+            shape: CustomCropShape.Square,
+            ratio:  Ratio(width: 1, height: 1)
+          );
+
+          if (croppedFile != null) {
+            _companyImageFile = croppedFile;
+            String companyUrl = await MediaService.mediaUpload(_companyImageFile!.path);
             _companyImageSource = ImageSource.gallery;
             final companyList = ref.read(userProvider).value?.company ?? [];
 
@@ -224,34 +242,42 @@ class _EditUserState extends ConsumerState<EditUser> {
               websites: existingCompany?.websites,
             );
 
-
             final insertIndex =
                 (existingCompany == null) ? companyList.length : companyIndex!;
             ref
                 .read(userProvider.notifier)
                 .updateCompany(updatedCompany, insertIndex);
             return _companyImageFile;
-          } catch (e) {
-            print('Error uploading company logo: $e');
-            snackbarService.showSnackBar('Failed to upload company logo');
-          } finally {
-            setState(() {
-              _companyLogoLoadingStates[companyIndex] = false;
-            });
           }
-        } else {
-          log('Warning: No company index provided for logo update');
+        } catch (e) {
+          print('Error uploading company logo: $e');
+          snackbarService.showSnackBar('Failed to upload company logo');
+        } finally {
+          setState(() {
+            _companyLogoLoadingStates[companyIndex] = false;
+          });
         }
-      } else if (imageType == 'award') {
+      } else {
+        log('Warning: No company index provided for logo update');
+      }
+    } else if (imageType == 'award') {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
         _awardImageFIle = File(image.path);
         _awardImageSource = ImageSource.gallery;
         return _awardImageFIle;
-      } else if (imageType == 'certificate') {
+      }
+    } else if (imageType == 'certificate') {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
         _certificateImageFIle = File(image.path);
         _certificateSource = ImageSource.gallery;
         return _certificateImageFIle;
-      } else {
-        _brochurePdfFile = File(image.path);
+      }
+    } else {
+      final XFile? file = await _picker.pickImage(source: ImageSource.gallery);
+      if (file != null) {
+        _brochurePdfFile = File(file.path);
         return _brochurePdfFile;
       }
     }
@@ -267,7 +293,7 @@ class _EditUserState extends ConsumerState<EditUser> {
   // }
 
   Future<void> _addNewAward() async {
-    await imageUpload(_awardImageFIle!.path).then((url) {
+    await  MediaService.mediaUpload(_awardImageFIle!.path).then((url) {
       final String awardUrl = url;
       final newAward = Award(
         name: awardNameController.text,
@@ -325,7 +351,7 @@ class _EditUserState extends ConsumerState<EditUser> {
   }
 
   Future<void> _addNewCertificate() async {
-    await imageUpload(_certificateImageFIle!.path).then((url) {
+    await  MediaService.mediaUpload(_certificateImageFIle!.path).then((url) {
       final String certificateUrl = url;
       final newCertificate =
           Link(name: certificateNameController.text, link: certificateUrl);
@@ -2301,7 +2327,7 @@ class _EditUserState extends ConsumerState<EditUser> {
     if (_awardImageFIle != null) {
       // If a new image is selected, upload it
       try {
-        final String awardUrl = await imageUpload(_awardImageFIle!.path);
+        final String awardUrl = await  MediaService.mediaUpload(_awardImageFIle!.path);
         final newAward = Award(
           name: awardNameController.text,
           image: awardUrl,
@@ -2385,7 +2411,7 @@ class _EditUserState extends ConsumerState<EditUser> {
             // If a new image is selected, upload it
             try {
               final String certificateUrl =
-                  await imageUpload(_certificateImageFIle!.path);
+                  await  MediaService.mediaUpload(_certificateImageFIle!.path);
               final newCertificate = Link(
                   name: certificateNameController.text, link: certificateUrl);
               ref
