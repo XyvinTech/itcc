@@ -11,10 +11,11 @@ import 'package:itcc/src/data/services/notification_service.dart';
 import 'package:itcc/src/data/services/snackbar_service.dart';
 import 'package:itcc/src/data/router/router.dart' as router;
 import 'package:itcc/src/data/utils/secure_storage.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+ WakelockPlus.enable();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
