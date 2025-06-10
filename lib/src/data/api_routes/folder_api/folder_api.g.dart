@@ -335,5 +335,26 @@ class _GetFilesProviderElement extends AutoDisposeFutureProviderElement<Folder>
   @override
   String? get type => (origin as GetFilesProvider).type;
 }
+
+String _$fetchLearningCornerFoldersHash() =>
+    r'b3fbc1a8304b8dfb9a5048ad7334ac08dc08d30e';
+
+/// See also [fetchLearningCornerFolders].
+@ProviderFor(fetchLearningCornerFolders)
+final fetchLearningCornerFoldersProvider =
+    AutoDisposeFutureProvider<List<LearningCornerModel>>.internal(
+  fetchLearningCornerFolders,
+  name: r'fetchLearningCornerFoldersProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$fetchLearningCornerFoldersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FetchLearningCornerFoldersRef
+    = AutoDisposeFutureProviderRef<List<LearningCornerModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -29,9 +29,8 @@ class MyApp extends ConsumerWidget {
   
   @override
   Widget build(BuildContext context,WidgetRef ref) { 
-        final notificationService = ref.watch(notificationServiceProvider);
+    final notificationService = ref.watch(notificationServiceProvider);
     
- 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notificationService.initialize();
     });
@@ -48,6 +47,14 @@ class MyApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
+      builder: (context, child) {
+        return SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: child,
+          ),
+        );
+      },
     );
   }
 }

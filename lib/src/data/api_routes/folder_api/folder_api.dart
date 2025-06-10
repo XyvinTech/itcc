@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:itcc/src/data/globals.dart';
 import 'package:itcc/src/data/models/folder_model.dart';
+import 'package:itcc/src/data/models/learning_corner_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'folder_api.g.dart';
@@ -100,6 +101,18 @@ class FolderApiService {
       throw Exception(decoded['message'] ?? 'Failed to delete files');
     }
   }
+
+  static Future<List<LearningCornerModel>> getLearningCornerFolders() async {
+    final url = Uri.parse('https://api.itccconnect.com/api/v1/folder/learning-corner');
+    final response = await http.get(url, headers: _headers());
+    final decoded = json.decode(response.body);
+    if (response.statusCode == 200) {
+      final List data = decoded['data'];
+      return data.map((item) => LearningCornerModel.fromJson(item)).toList();
+    } else {
+      throw Exception(decoded['message'] ?? 'Failed to fetch learning corner folders');
+    }
+  }
 }
 
 @riverpod
@@ -126,4 +139,9 @@ Future<Folder> getFiles(
     folderId: folderId,
     type: type,
   );
+}
+
+@riverpod
+Future<List<LearningCornerModel>> fetchLearningCornerFolders(Ref ref) async {
+  return FolderApiService.getLearningCornerFolders();
 }

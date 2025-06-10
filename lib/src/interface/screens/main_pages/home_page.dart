@@ -10,6 +10,7 @@ import 'package:itcc/src/data/api_routes/news_api/news_api.dart';
 import 'package:itcc/src/data/api_routes/notification_api/notification_api.dart';
 import 'package:itcc/src/data/api_routes/promotion_api/promotion_api.dart';
 import 'package:itcc/src/data/api_routes/user_api/user_data/user_data.dart';
+import 'package:itcc/src/data/api_routes/folder_api/folder_api.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/globals.dart';
@@ -18,6 +19,7 @@ import 'package:itcc/src/data/models/user_model.dart';
 import 'package:itcc/src/data/router/nav_router.dart';
 import 'package:itcc/src/data/services/launch_url.dart';
 import 'package:itcc/src/data/services/navgitor_service.dart';
+import 'package:itcc/src/interface/components/custom_widgets/learning_corner_card.dart';
 import 'package:itcc/src/interface/screens/main_pages/Drawer/drawer.dart';
 import 'package:itcc/src/interface/components/common/custom_video.dart';
 import 'package:itcc/src/interface/components/custom_widgets/blue_tick_names.dart';
@@ -36,6 +38,8 @@ import 'package:itcc/src/interface/components/shimmers/dashboard_shimmer.dart';
 import 'package:itcc/src/interface/components/ModalSheets/date_filter_sheet.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
 import 'package:itcc/src/interface/screens/web_view_screen.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/learning_corner/learning_corner_list_page.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/learning_corner/learning_corner_detail_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   final UserModel user;
@@ -551,7 +555,166 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     ],
                                   ),
 
-                                const SizedBox(height: 16),
+                                const SizedBox(height: 30),
+
+                                // Learning Corner Card
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Consumer(
+                                    builder: (context, ref, child) {
+                                      final asyncLearningCorners = ref.watch(
+                                          fetchLearningCornerFoldersProvider);
+                                      return asyncLearningCorners.when(
+                                        data: (folders) {
+                                          if (folders.isEmpty) {
+                                            return const SizedBox.shrink();
+                                          }
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Learning Corner',
+                                                    style:
+                                                        kSubHeadingB.copyWith(
+                                                            color:
+                                                                kPrimaryColor),
+                                                  ),
+                                                  const Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const LearningCornerListPage(),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                      'View All',
+                                                      style:
+                                                          kSmallTitleR.copyWith(
+                                                              color:
+                                                                  kPrimaryColor),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 16),
+                                              CarouselSlider(
+                                                items: folders.map((folder) {
+                                                  return LearningCornerCard(
+                                                      onLearnMorePressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                LearningCornerDetailPage(
+                                                                    learningCorner:
+                                                                        folder),
+                                                          ),
+                                                        );
+                                                      },
+                                                      folder: folder);
+                                                }).toList(),
+                                                options: CarouselOptions(
+                                                  height: 300,
+                                                  viewportFraction: 1,
+                                                  enableInfiniteScroll:
+                                                      folders.length > 1,
+                                                  autoPlay: folders.length > 1,
+                                                  autoPlayInterval:
+                                                      const Duration(
+                                                          seconds: 3),
+                                                  autoPlayAnimationDuration:
+                                                      const Duration(
+                                                          milliseconds: 800),
+                                                  autoPlayCurve:
+                                                      Curves.fastOutSlowIn,
+                                                  enlargeCenterPage: true,
+                                                  enlargeFactor: 0.1,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                ),
+                                              ),
+                                              if (folders.length > 1)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 16.0),
+                                                  child: Center(
+                                                    child: SmoothPageIndicator(
+                                                      controller:
+                                                          PageController(
+                                                              initialPage: 0),
+                                                      count: folders.length,
+                                                      effect: WormEffect(
+                                                        dotHeight: 10,
+                                                        dotWidth: 10,
+                                                        activeDotColor:
+                                                            kPrimaryColor,
+                                                        dotColor: Colors.grey,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          );
+                                        },
+                                        loading: () => Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16)),
+                                          elevation: 4,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                height: 160,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius:
+                                                      const BorderRadius
+                                                          .vertical(
+                                                          top: Radius.circular(
+                                                              16)),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(16.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      height: 20,
+                                                      width: 200,
+                                                      color: Colors.grey[300],
+                                                    ),
+                                                    const SizedBox(height: 8),
+                                                    Container(
+                                                      height: 40,
+                                                      color: Colors.grey[300],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        error: (error, stackTrace) =>
+                                            const SizedBox.shrink(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 40),
 
                                 // Notices Carousel
                                 if (notices.isNotEmpty)
