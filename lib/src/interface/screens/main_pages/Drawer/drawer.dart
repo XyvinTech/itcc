@@ -189,11 +189,14 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
               navigationService.pushNamed('MyEvents');
             },
           ),
-          // _buildDrawerItem(
-          //   icon: 'assets/svg/icons/my_transactions.svg',
-          //   label: 'My Transactions',
-          //   onTap: () {},
-          // ),
+
+          _buildDrawerItem(
+            icon: 'assets/svg/icons/analytics.svg',
+            label: 'Learning Corner',
+            onTap: () {
+              navigationService.pushNamed('LearningCornerListPage');
+            },
+          ),
 
           _buildDrawerItem(
             icon: 'assets/svg/icons/about_us.svg',

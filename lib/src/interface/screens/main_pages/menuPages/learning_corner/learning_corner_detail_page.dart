@@ -43,21 +43,32 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
   void initState() {
     super.initState();
     mainVideoIndex = 0;
-    final mainVideoUrl = widget.learningCorner.files[mainVideoIndex];
-    final mainVideoId = _extractVideoId(mainVideoUrl);
-    if (mainVideoId != null && mainVideoId.isNotEmpty) {
-      _controller = PodPlayerController(
-        playVideoFrom: PlayVideoFrom.youtube(mainVideoUrl),
-        podPlayerConfig: const PodPlayerConfig(
-          videoQualityPriority: [720, 480, 360],
-          autoPlay: true,
-          isLooping: false,
-        ),
-      )..initialise();
-    } else {
+    final files = widget.learningCorner.files
+        .where((url) =>
+            _extractVideoId(url) != null && _extractVideoId(url)!.isNotEmpty)
+        .toList();
+    
+    if (files.isEmpty) {
       _controller = PodPlayerController(
         playVideoFrom: PlayVideoFrom.network(''),
       );
+    } else {
+      final mainVideoUrl = files[mainVideoIndex];
+      final mainVideoId = _extractVideoId(mainVideoUrl);
+      if (mainVideoId != null && mainVideoId.isNotEmpty) {
+        _controller = PodPlayerController(
+          playVideoFrom: PlayVideoFrom.youtube(mainVideoUrl),
+          podPlayerConfig: const PodPlayerConfig(
+            videoQualityPriority: [720, 480, 360],
+            autoPlay: true,
+            isLooping: false,
+          ),
+        )..initialise();
+      } else {
+        _controller = PodPlayerController(
+          playVideoFrom: PlayVideoFrom.network(''),
+        );
+      }
     }
     _fetchVideoTitles();
   }
@@ -90,11 +101,17 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
   }
 
   void _changeMainVideo(int index) {
+    final files = widget.learningCorner.files
+        .where((url) =>
+            _extractVideoId(url) != null && _extractVideoId(url)!.isNotEmpty)
+        .toList();
+    
+    if (files.isEmpty || index >= files.length) return;
+    
     setState(() {
       mainVideoIndex = index;
       _controller.changeVideo(
-        playVideoFrom:
-            PlayVideoFrom.youtube(widget.learningCorner.files[index]),
+        playVideoFrom: PlayVideoFrom.youtube(files[index]),
       );
     });
   }
