@@ -902,11 +902,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                                     kPrimaryColor)),
                                                     const Spacer(),
                                                     InkWell(
-                                                      onTap: () => ref
-                                                          .read(
-                                                              selectedIndexProvider
-                                                                  .notifier)
-                                                          .updateIndex(3),
+                                                      onTap: () {
+                                                        ref
+                                                            .read(
+                                                                selectedIndexProvider
+                                                                    .notifier)
+                                                            .updateIndex(3);
+                                                      },
                                                       child: const Text(
                                                           'see all',
                                                           style: kSmallTitleR),
@@ -943,6 +945,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                                 .read(selectedIndexProvider
                                                                     .notifier)
                                                                 .updateIndex(3);
+                                                            ref
+                                                                .read(currentNewsIndexProvider
+                                                                    .notifier)
+                                                                .state = index;
                                                           },
                                                           imageUrl:
                                                               individualNews

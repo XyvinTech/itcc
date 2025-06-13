@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:itcc/src/data/constants/color_constants.dart';
 import 'package:itcc/src/data/constants/style_constants.dart';
 import 'package:itcc/src/data/models/learning_corner_model.dart';
-import 'package:pod_player/pod_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/learning_corner/video_player.dart';
 
 class LearningCornerDetailPage extends StatefulWidget {
   final LearningCornerModel learningCorner;
@@ -17,9 +18,11 @@ class LearningCornerDetailPage extends StatefulWidget {
 
 class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
   late int mainVideoIndex;
-  late PodPlayerController _controller;
   final yt = YoutubeExplode();
   Map<String, String> videoTitles = {};
+  List<String> validVideoUrls = [];
+  // Add a key to force widget rebuild
+  Key _playerKey = UniqueKey();
 
   String? _extractVideoId(String url) {
     final uri = Uri.parse(url);
@@ -43,34 +46,15 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
   void initState() {
     super.initState();
     mainVideoIndex = 0;
-    final files = widget.learningCorner.files
+    _initializeValidVideos();
+    _fetchVideoTitles();
+  }
+
+  void _initializeValidVideos() {
+    validVideoUrls = widget.learningCorner.files
         .where((url) =>
             _extractVideoId(url) != null && _extractVideoId(url)!.isNotEmpty)
         .toList();
-    
-    if (files.isEmpty) {
-      _controller = PodPlayerController(
-        playVideoFrom: PlayVideoFrom.network(''),
-      );
-    } else {
-      final mainVideoUrl = files[mainVideoIndex];
-      final mainVideoId = _extractVideoId(mainVideoUrl);
-      if (mainVideoId != null && mainVideoId.isNotEmpty) {
-        _controller = PodPlayerController(
-          playVideoFrom: PlayVideoFrom.youtube(mainVideoUrl),
-          podPlayerConfig: const PodPlayerConfig(
-            videoQualityPriority: [720, 480, 360],
-            autoPlay: true,
-            isLooping: false,
-          ),
-        )..initialise();
-      } else {
-        _controller = PodPlayerController(
-          playVideoFrom: PlayVideoFrom.network(''),
-        );
-      }
-    }
-    _fetchVideoTitles();
   }
 
   Future<void> _fetchVideoTitles() async {
@@ -95,37 +79,22 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
 
   @override
   void dispose() {
-    _controller.dispose();
     yt.close();
     super.dispose();
   }
 
   void _changeMainVideo(int index) {
-    final files = widget.learningCorner.files
-        .where((url) =>
-            _extractVideoId(url) != null && _extractVideoId(url)!.isNotEmpty)
-        .toList();
-    
-    if (files.isEmpty || index >= files.length) return;
-    
-    setState(() {
-      mainVideoIndex = index;
-      _controller.changeVideo(
-        playVideoFrom: PlayVideoFrom.youtube(files[index]),
-      );
-    });
+    if (index >= 0 && index < validVideoUrls.length) {
+      setState(() {
+        mainVideoIndex = index;
+        // Generate a new key to force the player widget to rebuild
+        _playerKey = UniqueKey();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Filter out invalid video URLs
-    final files = widget.learningCorner.files
-        .where((url) =>
-            _extractVideoId(url) != null && _extractVideoId(url)!.isNotEmpty)
-        .toList();
-    final hasValidMainVideo = files.isNotEmpty &&
-        _extractVideoId(files[mainVideoIndex]) != null &&
-        _extractVideoId(files[mainVideoIndex])!.isNotEmpty;
     return Scaffold(
       backgroundColor: kWhite,
       appBar: AppBar(
@@ -137,7 +106,7 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
         ),
         centerTitle: true,
       ),
-      body: files.isEmpty
+      body: validVideoUrls.isEmpty
           ? const Center(child: Text('No valid videos available.'))
           : Column(
               children: [
@@ -148,6 +117,7 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
                     children: [
                       Text(
                         widget.learningCorner.name,
+                        textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -156,6 +126,7 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
                       const SizedBox(height: 8),
                       Text(
                         widget.learningCorner.description ?? '',
+                        textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black87,
@@ -164,32 +135,29 @@ class _LearningCornerDetailPageState extends State<LearningCornerDetailPage> {
                     ],
                   ),
                 ),
-                hasValidMainVideo
-                    ? AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: PodVideoPlayer(controller: _controller),
-                      )
-                    : const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text('Invalid or missing video.'),
-                      ),
+                // Add the key to force rebuild when video changes
+                YouTubePlayerWidget(
+                  key: _playerKey,
+                  videoId: _extractVideoId(validVideoUrls[mainVideoIndex])!,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    files.isNotEmpty
-                        ? (videoTitles[files[mainVideoIndex]] ?? '')
-                        : '',
+                    videoTitles[validVideoUrls[mainVideoIndex]] ?? '',
+                    textAlign: TextAlign.left,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 17),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: files.length,
+                    itemCount: validVideoUrls.length,
                     itemBuilder: (context, index) {
                       if (index == mainVideoIndex)
                         return const SizedBox.shrink();
-                      final fileUrl = files[index];
+                      final fileUrl = validVideoUrls[index];
                       final thumbnailUrl = _getYoutubeThumbnail(fileUrl);
                       return ListTile(
                         leading: thumbnailUrl != null
