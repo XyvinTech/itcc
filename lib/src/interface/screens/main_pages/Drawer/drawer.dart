@@ -191,7 +191,7 @@ Widget customDrawer({required UserModel user, required BuildContext context}) {
           ),
 
           _buildDrawerItem(
-            icon: 'assets/svg/icons/analytics.svg',
+            icon: 'assets/svg/icons/learning_corner.svg',
             label: 'Learning Corner',
             onTap: () {
               navigationService.pushNamed('LearningCornerListPage');

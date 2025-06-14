@@ -12,6 +12,7 @@ import 'package:itcc/src/interface/screens/main_pages/login_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/about_us.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/add_product.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/analytics/analytics.dart';
+import 'package:itcc/src/interface/screens/main_pages/menuPages/learning_corner/learning_corner_list_page.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/send_analytic_req.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/change_number.dart';
 import 'package:itcc/src/interface/screens/main_pages/menuPages/levels/activity_page.dart';
@@ -132,6 +133,9 @@ Route<dynamic> generateRoute(RouteSettings? settings) {
 
     case 'PrivacyPolicy':
       return MaterialPageRoute(builder: (context) => PrivacyPolicyPage());
+
+    case 'LearningCornerListPage':
+      return MaterialPageRoute(builder: (context) => LearningCornerListPage());
 
     case 'ProfileAnalytics':
       UserModel user = settings?.arguments as UserModel;
