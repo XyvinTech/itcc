@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:itcc/src/data/models/learning_corner_model.dart';
-
-import 'package:flutter/material.dart';
-import 'package:itcc/src/interface/screens/main_pages/menuPages/learning_corner/learning_corner_detail_page.dart';
-
 import '../../../data/constants/color_constants.dart';
 
 class LearningCornerCard extends StatelessWidget {
@@ -25,6 +21,7 @@ class LearningCornerCard extends StatelessWidget {
         border: Border.all(color: kTertiary),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
@@ -39,7 +36,7 @@ class LearningCornerCard extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  height: 160,
+                  height: 140,
                   width: double.infinity,
                   color: Colors.grey[300],
                   child: const Icon(
@@ -54,6 +51,7 @@ class LearningCornerCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -69,43 +67,51 @@ class LearningCornerCard extends StatelessWidget {
                 Text(
                   folder.description,
                   style: TextStyle(color: Colors.grey[700], fontSize: 10),
-                  maxLines: 2,
+                  maxLines: 3, // Limit description to 3 lines
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        folder.speakerImage,
-                      ),
+                      backgroundImage: NetworkImage(folder.speakerImage),
                       radius: 20,
                     ),
                     const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          folder.speaker,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text(
-                          folder.designation,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            folder.speaker,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                          Text(
+                            folder.designation,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                    const Spacer(),
+                    const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: onLearnMorePressed ?? () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF1A237E),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
                         ),
                       ),
                       child: const Text(
