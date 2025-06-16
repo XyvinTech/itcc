@@ -7,10 +7,10 @@ class LearningCornerCard extends StatelessWidget {
   final VoidCallback? onLearnMorePressed;
 
   const LearningCornerCard({
-    Key? key,
+    super.key,
     required this.folder,
     this.onLearnMorePressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class LearningCornerCard extends StatelessWidget {
                 Text(
                   folder.description,
                   style: TextStyle(color: Colors.grey[700], fontSize: 10),
-                  maxLines: 3, // Limit description to 3 lines
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 16),

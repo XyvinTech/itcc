@@ -66,7 +66,7 @@ class _MediaUploadPageState extends ConsumerState<MediaUploadPage>
         );
       } finally {
         setState(() => _isUploading = false);
-      }
+      } 
     }
   }
 
