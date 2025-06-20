@@ -23,16 +23,17 @@ Future<void> getToken(BuildContext context) async {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       // Get FCM token (common for both platforms)
-      String? token = await messaging.getToken();
-      fcmToken = token ?? '';
-      print("FCM Token: $token");
-
-      if (isIOS) {
+           if (isIOS) {
         // Get APNs token (iOS-specific)
         String? apnsToken = await messaging.getAPNSToken();
         print("APNs Token: $apnsToken");
         // Optionally: send APNs token to your server if needed
       }
+      String? token = await messaging.getToken();
+      fcmToken = token ?? '';
+      print("FCM Token: $token");
+
+ 
     } else {
       print('User declined or has not accepted permission');
     }
