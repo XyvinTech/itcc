@@ -39,17 +39,20 @@ class LearningCornerListPage extends ConsumerWidget {
                     itemCount: folders.length,
                     itemBuilder: (context, index) {
                       final folder = folders[index];
-                      return LearningCornerCard(
-                        folder: folder,
-                        onLearnMorePressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LearningCornerDetailPage(
-                                  learningCorner: folder),
-                            ),
-                          );
-                        },
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: LearningCornerCard(
+                          folder: folder,
+                          onLearnMorePressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LearningCornerDetailPage(
+                                    learningCorner: folder),
+                              ),
+                            );
+                          },
+                        ),
                       );
                     },
                   );
