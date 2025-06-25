@@ -15,16 +15,22 @@ class Folder {
     this.videoCount,
   });
 
-  factory Folder.fromJson(Map<String, dynamic> json) {
+  factory Folder.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return Folder(name: '', event: '', files: []);
+    }
+
     return Folder(
       id: json['_id'] as String?,
-      name: json['name'] as String,
-      event: json['event'] as String,
+      name: json['name'] as String? ?? '',
+      event: json['event'] as String? ?? '',
       files: (json['files'] as List<dynamic>?)
-          ?.map((e) => EventFile.fromJson(e as Map<String, dynamic>))
-          .toList() ?? [],
-      imageCount: json['imageCount'] as int?,
-      videoCount: json['videoCount'] as int?,
+              ?.map((e) => EventFile.fromJson(e as Map<String, dynamic>?))
+              .whereType<EventFile>()
+              .toList() ??
+          [],
+      imageCount: json['imageCount'] is int ? json['imageCount'] as int : null,
+      videoCount: json['videoCount'] is int ? json['videoCount'] as int : null,
     );
   }
 
@@ -53,11 +59,15 @@ class EventFile {
     this.user,
   });
 
-  factory EventFile.fromJson(Map<String, dynamic> json) {
+  factory EventFile.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return EventFile(type: '', url: '');
+    }
+
     return EventFile(
       id: json['_id'] as String?,
-      type: json['type'] as String,
-      url: json['url'] as String,
+      type: json['type'] as String? ?? '',
+      url: json['url'] as String? ?? '',
       user: json['user'] as String?,
     );
   }
@@ -70,4 +80,4 @@ class EventFile {
       'user': user,
     };
   }
-} 
+}

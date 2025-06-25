@@ -33,7 +33,7 @@ Future<Map<String, String>> submitPhoneNumber(
     },
     codeAutoRetrievalTimeout: (String verificationID) {
       if (!verificationIdcompleter.isCompleted) {
-        verificationIdcompleter.complete(''); // Timeout without sending code
+        verificationIdcompleter.complete(''); 
       }
     },
   );
