@@ -83,6 +83,7 @@ class UserService {
     final body = {
       'content': reportedItemId.isNotEmpty ? reportedItemId : ' ',
       'reportType': reportType,
+      
     };
 
     try {

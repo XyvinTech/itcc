@@ -146,7 +146,6 @@ class ReportPersonDialog extends StatelessWidget {
   }
 }
 
-// Function to show the BlockPersonDialog
 void showReportPersonDialog({
   required BuildContext context,
   String? userId,

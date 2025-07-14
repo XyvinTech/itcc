@@ -47,7 +47,7 @@ class ProductsNotifier extends _$ProductsNotifier {
   Future<void> searchProducts(String query) async {
     isLoading = true;
     pageNo = 1;
-    products = []; // Reset the product list when searching
+    products = []; 
 
     try {
       final newProducts = await ref.read(
